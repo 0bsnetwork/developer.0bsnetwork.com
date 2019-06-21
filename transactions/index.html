@@ -60,7 +60,7 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../devintro/">Components and Services</a>
+    <a class="" href="../componentsandservices/">Components and Services</a>
 	    </li>
           
             <li class="toctree-l1 current">
@@ -73,6 +73,8 @@
         <ul>
         
             <li><a class="toctree-l3" href="#transaction-types">Transaction Types</a></li>
+        
+            <li><a class="toctree-l3" href="#transaction-formats">Transaction Formats</a></li>
         
         </ul>
     
@@ -262,6 +264,26 @@
 </tbody>
 </table>
 <p>Extra Fee: 0.01</p>
+<h2 id="transaction-formats">Transaction Formats</h2>
+<p>The below sections demonstrate the JSON transaction format that is required to make a transaction. When signing a transaction on a Node, you can exclude the signature/proofs field as the server will give you this back.</p>
+<h3 id="issue-transaction">Issue Transaction</h3>
+<pre><code>{
+    &quot;senderPublicKey&quot;:&quot;2M25DqL2W4rGFLCFadgATboS8EPqyWAN3DjH12AH5Kdr&quot;,
+    &quot;quantity&quot;:50000
+    &quot;fee&quot;:100000000,
+    &quot;description&quot;:&quot;Script true.&quot;,
+    &quot;type&quot;:3,
+    &quot;version&quot;:2,
+    &quot;reissuable&quot;:true,
+    &quot;script&quot;:&quot;base64:AQa3b8tH&quot;,
+    &quot;sender&quot;:&quot;3Mz9N7YPfZPWGd4yYaX6H53Gcgrq6ifYiH7&quot;,
+    &quot;feeAssetId&quot;:null,
+    &quot;chainId&quot;:84,
+    &quot;proofs&quot;:[&quot;4yjVxzrLuXUq5y2QCa2LDn1Fp9P63hPBmqDLGQCqn41EB1uZ1pys79NP81h7FxRBnZSbpNGbz1xjwckHcPAQHmFX&quot;],&quot;assetId&quot;:&quot;7Xpp9PPeZbG4wboJrcbRQdq3SxCJqbeFRUjjKccM1DsD&quot;,
+    &quot;decimals&quot;:2,
+    &quot;name&quot;:&quot;Smart&quot;
+    }
+</code></pre>
               
             </div>
           </div>
@@ -272,7 +294,7 @@
         <a href="../smartcontracts/" class="btn btn-neutral float-right" title="Smart Contracts">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../devintro/" class="btn btn-neutral" title="Components and Services"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../componentsandservices/" class="btn btn-neutral" title="Components and Services"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -298,7 +320,7 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../devintro/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../componentsandservices/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../smartcontracts/" style="color: #fcfcfc">Next &raquo;</a></span>
