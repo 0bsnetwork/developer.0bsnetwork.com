@@ -21,3 +21,4 @@ Each transaction type is given an integer to represent it as follows
 | 15               | SetAsset      | Set a script on an asset                     | 10.00       |
 | 16               | ContractInvoke| Run a contract                               | 0.10        |
 
+Extra Fee: 0.01
