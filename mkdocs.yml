@@ -2,7 +2,7 @@ site_name: 0bsNetwork Developer Site
 nav:
     - Home: index.md
     - About 0bsNetwork: about.md
-    - Components and Services: devintro.md
+    - Components and Services: componentsandservices.md
     - Transactions: transactions.md
     - Smart Contracts: smartcontracts.md
     - Full Node Operation: fullnode.md
