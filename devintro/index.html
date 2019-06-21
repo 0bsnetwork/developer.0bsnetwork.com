@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Components and Services - 0bsNetwork Developer Site</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Components and Services";
+    var mkdocs_page_input_path = "devintro.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> 0bsNetwork Developer Site</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../about/">About 0bsNetwork</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Components and Services</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#introduction">Introduction</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#key-players">Key Players</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../transactions/">Transactions</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../smartcontracts/">Smart Contracts</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../fullnode/">Full Node Operation</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../nodeapi/">Full Node REST API</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../javascript/">Javascript Libraries</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../java/">Java Library</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../python/">Python Library</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../cs/">C# Library</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../dataservice/">Data Service API</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../link/">0bsLink</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../tutorials/">Tutorials</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">0bsNetwork Developer Site</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Components and Services</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="introduction">Introduction</h1>
+<p>This section will explain all the parts of our platform from a developers point of view.</p>
+<h2 id="key-players">Key Players</h2>
+<h3 id="full-node">Full Node</h3>
+<p>This is the 'core' of our platform. Each node processes transactions into blocks. A node contains a wallet. A collection of nodes create ...</p>
+<h3 id="the-network">The Network</h3>
+<p>We have 2 networks, MainNet and TestNet. Testnet is where all development can take place as the coins are worthless, and you can afford to make mistakes. You can think of MainNet as 'Production'. For MainNet you can replace testnet- in all the URLs in this documentation.</p>
+<h3 id="full-node-api">Full Node API</h3>
+<p>Our full node exposes an API for;
+ - Transactions (Creating and Broadcasting)
+ - Node, Network and Address information
+ - Node operation and configuration</p>
+<p>However, in some cases, to get aggregate data such as data from data transactions, you are better using the data service API listed below.</p>
+<h3 id="client-wallet">Client / Wallet</h3>
+<p>A hosted version of a wallet for those that do not run a full node, it connects to our full node to get its information by default but you can also point it at your own node. Here you can view your balances, create tokens, Send and receive, Trade and view blockchain info</p>
+<p><a href="https://client.testnet-0bsnetwork.com">https://client.testnet-0bsnetwork.com</a></p>
+<h3 id="block-explorer">Block Explorer</h3>
+<p>Our block explorer lists all the blocks within our network, you can drill down to transaction level and see all the details. This is useful to look into transactions as you are developing to check you get the expected result.</p>
+<p><a href="https://explorer.0bsnetwork.com">https://explorer.0bsnetwork.com (Select testnet from dropdown)</a></p>
+<h3 id="ide-smart-contracts">IDE / Smart Contracts</h3>
+<p>Our smart contracts are written in a language called RIDE and can be applied to either an Asset to create a 'Smart Asset' or an account (Address) to create a 'Smart Account' This enables us to create behaviours on a token (Trading restraints for example) or an account (Multi Signature)</p>
+<p>You can have a play and use our REPL at the below link. There's also some sample scripts and you can deploy right from the IDE page.</p>
+<p><a href="https://ide.0bsnetwork.com">https://ide.0bsnetwork.com</a></p>
+<h3 id="data-service">Data Service</h3>
+<p>This is a nice fast rest API that exposes information from our blockchain such as;</p>
+<ul>
+<li>Data from data transactions (Ability to query and filter)</li>
+<li>Information about Assets</li>
+<li>Trading Information (Stats, Prices, Volume)</li>
+</ul>
+<p>See the <a href="../dataservice/">Data Service API</a> Section for details</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../transactions/" class="btn btn-neutral float-right" title="Transactions">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../about/" class="btn btn-neutral" title="About 0bsNetwork"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../about/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../transactions/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>
