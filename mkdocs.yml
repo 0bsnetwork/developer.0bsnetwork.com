@@ -14,4 +14,7 @@ nav:
     - Data Service API: dataservice.md
     - 0bsLink: link.md
     - Tutorials: tutorials.md
+    - Glossary: glossary.md
 theme: readthedocs
+extra_css:
+  - 'stylesheets/extra.css'

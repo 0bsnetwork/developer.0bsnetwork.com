@@ -1,6 +1,6 @@
 # Introduction
 
-This section will explain all the parts of our platform from a developers point of view.
+This section will explain all the parts of our platform from a developers point of view. To check the status of any of our central services you can visit [https://status.0bsnetwork.com/](https://status.0bsnetwork.com/) And you can also run any of these services yourself.
 
 ## Key Players
 
@@ -27,6 +27,10 @@ A hosted version of a wallet for those that do not run a full node, it connects 
 
 [https://client.testnet-0bsnetwork.com](https://client.testnet-0bsnetwork.com)
 
+### Faucet
+
+A 'Faucet' allows you to obtain free testnet coins in order to build your project. You can go to [https://explorer.0bsnetwork.com/testnet/faucet](https://explorer.0bsnetwork.com/testnet/faucet) and simply enter your address to obtain 250 free testnet coins
+
 ### Block Explorer
 
 Our block explorer lists all the blocks within our network, you can drill down to transaction level and see all the details. This is useful to look into transactions as you are developing to check you get the expected result.
@@ -50,3 +54,24 @@ This is a nice fast rest API that exposes information from our blockchain such a
 - Trading Information (Stats, Prices, Volume)
 
 See the [Data Service API](dataservice.md) Section for details
+
+### Matcher
+
+The matcher is our trading 'engine' taking orders for sells and buys and matching them up, the matcher hosts the orderbook and also has an API
+
+[https://matcher.testnet-0bsnetwork.com](https://matcher.testnet-0bsnetwork.com)
+
+### Libraries
+
+We have a library for many differnet languages and platforms and more are being added every day. The libraries are firstly an interface to the Node and Matcher API, with the addition of the ability to sign transactions and broadcast them to the node (Signing transactions manually is a little tricky)
+
+### 0bsLink
+
+0bsLink is a browser add-on / extension that is essentially a wallet, however it comes with an API so you can build a wabpage to interact with this extension, to build 0bsNetwork powered web applicaitons witout having to deal with any of the complexity.
+
+### IDE & REPL
+
+This is where you can code and test smart contracts, as well as use our REPL.. This tool comes with plenty of examples and help, so dive right in and check it out. Always worth having this open in a tab during development!
+
+[https://ide.testnet-0bsnetwork.com](https://ide.testnet-0bsnetwork.com)
+
