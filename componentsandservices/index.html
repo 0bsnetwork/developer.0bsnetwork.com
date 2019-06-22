@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../stylesheets/extra.css" rel="stylesheet">
   
   <script>
     // Current page data
@@ -130,6 +131,11 @@
     <a class="" href="../tutorials/">Tutorials</a>
 	    </li>
           
+            <li class="toctree-l1">
+		
+    <a class="" href="../glossary/">Glossary</a>
+	    </li>
+          
         </ul>
       </div>
       &nbsp;
@@ -163,7 +169,7 @@
             <div class="section">
               
                 <h1 id="introduction">Introduction</h1>
-<p>This section will explain all the parts of our platform from a developers point of view.</p>
+<p>This section will explain all the parts of our platform from a developers point of view. To check the status of any of our central services you can visit <a href="https://status.0bsnetwork.com/">https://status.0bsnetwork.com/</a> And you can also run any of these services yourself.</p>
 <h2 id="key-players">Key Players</h2>
 <h3 id="full-node">Full Node</h3>
 <p>This is the 'core' of our platform. Each node processes transactions into blocks. A node contains a wallet. A collection of nodes create ...</p>
@@ -178,6 +184,8 @@
 <h3 id="client-wallet">Client / Wallet</h3>
 <p>A hosted version of a wallet for those that do not run a full node, it connects to our full node to get its information by default but you can also point it at your own node. Here you can view your balances, create tokens, Send and receive, Trade and view blockchain info</p>
 <p><a href="https://client.testnet-0bsnetwork.com">https://client.testnet-0bsnetwork.com</a></p>
+<h3 id="faucet">Faucet</h3>
+<p>A 'Faucet' allows you to obtain free testnet coins in order to build your project. You can go to <a href="https://explorer.0bsnetwork.com/testnet/faucet">https://explorer.0bsnetwork.com/testnet/faucet</a> and simply enter your address to obtain 250 free testnet coins</p>
 <h3 id="block-explorer">Block Explorer</h3>
 <p>Our block explorer lists all the blocks within our network, you can drill down to transaction level and see all the details. This is useful to look into transactions as you are developing to check you get the expected result.</p>
 <p><a href="https://explorer.0bsnetwork.com">https://explorer.0bsnetwork.com (Select testnet from dropdown)</a></p>
@@ -193,6 +201,16 @@
 <li>Trading Information (Stats, Prices, Volume)</li>
 </ul>
 <p>See the <a href="../dataservice/">Data Service API</a> Section for details</p>
+<h3 id="matcher">Matcher</h3>
+<p>The matcher is our trading 'engine' taking orders for sells and buys and matching them up, the matcher hosts the orderbook and also has an API</p>
+<p><a href="https://matcher.testnet-0bsnetwork.com">https://matcher.testnet-0bsnetwork.com</a></p>
+<h3 id="libraries">Libraries</h3>
+<p>We have a library for many differnet languages and platforms and more are being added every day. The libraries are firstly an interface to the Node and Matcher API, with the addition of the ability to sign transactions and broadcast them to the node (Signing transactions manually is a little tricky)</p>
+<h3 id="0bslink">0bsLink</h3>
+<p>0bsLink is a browser add-on / extension that is essentially a wallet, however it comes with an API so you can build a wabpage to interact with this extension, to build 0bsNetwork powered web applicaitons witout having to deal with any of the complexity.</p>
+<h3 id="ide-repl">IDE &amp; REPL</h3>
+<p>This is where you can code and test smart contracts, as well as use our REPL.. This tool comes with plenty of examples and help, so dive right in and check it out. Always worth having this open in a tab during development!</p>
+<p><a href="https://ide.testnet-0bsnetwork.com">https://ide.testnet-0bsnetwork.com</a></p>
               
             </div>
           </div>

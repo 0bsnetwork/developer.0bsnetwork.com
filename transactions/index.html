@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../stylesheets/extra.css" rel="stylesheet">
   
   <script>
     // Current page data
@@ -76,6 +77,8 @@
         
             <li><a class="toctree-l3" href="#transaction-formats">Transaction Formats</a></li>
         
+            <li><a class="toctree-l3" href="#signing-transactions">Signing Transactions</a></li>
+        
         </ul>
     
 
@@ -130,6 +133,11 @@
             <li class="toctree-l1">
 		
     <a class="" href="../tutorials/">Tutorials</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../glossary/">Glossary</a>
 	    </li>
           
         </ul>
@@ -266,23 +274,249 @@
 <p>Extra Fee: 0.01</p>
 <h2 id="transaction-formats">Transaction Formats</h2>
 <p>The below sections demonstrate the JSON transaction format that is required to make a transaction. When signing a transaction on a Node, you can exclude the signature/proofs field as the server will give you this back.</p>
-<h3 id="issue-transaction">Issue Transaction</h3>
+<h3 id="issue-reissue-transaction">Issue / ReIssue Transaction</h3>
+<p>Issue and ReIssue take the same format apart from the type</p>
 <pre><code>{
     &quot;senderPublicKey&quot;:&quot;2M25DqL2W4rGFLCFadgATboS8EPqyWAN3DjH12AH5Kdr&quot;,
-    &quot;quantity&quot;:50000
-    &quot;fee&quot;:100000000,
-    &quot;description&quot;:&quot;Script true.&quot;,
-    &quot;type&quot;:3,
+    &quot;quantity&quot;: 50000
+    &quot;fee&quot;: 50000000000,
+    &quot;description&quot;:&quot;My New Token&quot;,
+    &quot;type&quot;:3 / 5,
     &quot;version&quot;:2,
     &quot;reissuable&quot;:true,
-    &quot;script&quot;:&quot;base64:AQa3b8tH&quot;,
+    &quot;script&quot;:&quot;base64:AQa3b8tH&quot;, // Optional Script for 'Smart Assets'
     &quot;sender&quot;:&quot;3Mz9N7YPfZPWGd4yYaX6H53Gcgrq6ifYiH7&quot;,
-    &quot;feeAssetId&quot;:null,
-    &quot;chainId&quot;:84,
-    &quot;proofs&quot;:[&quot;4yjVxzrLuXUq5y2QCa2LDn1Fp9P63hPBmqDLGQCqn41EB1uZ1pys79NP81h7FxRBnZSbpNGbz1xjwckHcPAQHmFX&quot;],&quot;assetId&quot;:&quot;7Xpp9PPeZbG4wboJrcbRQdq3SxCJqbeFRUjjKccM1DsD&quot;,
+    &quot;feeAssetId&quot;:null, // When paying using custom fees
+    &quot;chainId&quot;:84, // 84 (T) for testnet 90 (Z) for mainnet
+    &quot;proofs&quot;:[&quot;4yjVxzrLuXUq5y2QCa2LDn1Fp9P63hPBmqDLGQCqn41EB1uZ1pys79NP81h7FxRBnZSbpNGbz1xjwckHcPAQHmFX&quot;],
     &quot;decimals&quot;:2,
-    &quot;name&quot;:&quot;Smart&quot;
+    &quot;name&quot;:&quot;MyTestToken&quot;
     }
+</code></pre>
+
+<h3 id="transfer-transaction">Transfer Transaction</h3>
+<pre><code>{
+    &quot;senderPublicKey&quot;:&quot;4c5K4kGeRdrnSYZ9wngQKSozikVgfxmDEuViirsyUHwd&quot;,
+    &quot;amount&quot;:110000000
+    fee&quot;:500000,
+    &quot;type&quot;:4,
+    &quot;version&quot;:2,
+    &quot;attachment&quot;:&quot;&quot;,
+    &quot;sender&quot;:&quot;3MyT3r1S8xvKtiKnLgVNNiSAiQdnMbffBQy&quot;,
+    &quot;feeAssetId&quot;:null,
+    &quot;proofs&quot;:[&quot;2KFbYWi9BJwDG9dbiJQzC9qJPpu4Ug8Ybs331fQbX9FAkEpEtrj9DKvwNG7cb2m98DV6NCoKH4MBVtGGFsnQWPV6&quot;],
+    &quot;assetId&quot;:null, // If we are sending an asset, null for ZBS
+    &quot;recipient&quot;:&quot;3MqEisFsWdhvDMAKBwZzZv4niVsfJJtxcaw&quot;,
+    &quot;feeAsset&quot;:null
+}
+
+</code></pre>
+
+<h3 id="burn-transaction">Burn Transaction</h3>
+<p>Burning tokens can be useful for systems where a token is used to activate or fund a service and once the service has been used the token can be burnt.</p>
+<pre><code>{
+    &quot;senderPublicKey&quot;:&quot;HQWkhM5q6rtv8Z4MgKicfWdDyUABtr8md7ddgMDmZhuA&quot;,
+    &quot;amount&quot;:1000000,
+    &quot;fee&quot;:500000000,
+    &quot;type&quot;:6,
+    &quot;version&quot;:2,
+    &quot;sender&quot;:&quot;3MpS4Bx7WtJtnFqxTTHWrMdiJBmpdWFbd35&quot;,
+    &quot;feeAssetId&quot;:null,
+    &quot;chainId&quot;: 84, // 84 (T) for testnet 90 (Z) for mainnet
+    &quot;proofs&quot;:[&quot;5VXSiBmexMLYRpYrFeTbz5Psf4MRxhpiwXjasDGMJHTnmQcjtRx8HkubEu4zYBT2NUQYpPUmwmSbowgts6YhxdHS&quot;],&quot;assetId&quot;:&quot;CS9Nc8aiK1FmvBHsj7JN4zE7u2dQnDJ2557dWcZxFHGy&quot; // The AssetId we wish to burn
+}
+</code></pre>
+
+<h3 id="exchange-transaction">Exchange Transaction</h3>
+<pre><code>{
+    &quot;senderPublicKey&quot;:&quot;8QUAqtTckM5B8gvcuP7mMswat9SjKUuafJMusEoSn1Gy&quot;,
+    &quot;amount&quot;:1000000000,
+    &quot;fee&quot;:300000,
+    &quot;type&quot;:7,
+    &quot;version&quot;:2,
+    &quot;sellMatcherFee&quot;:30000,
+    &quot;buyMatcherFee&quot;:300000,
+    &quot;sender&quot;:&quot;3N8aZG6ZDfnh8YxS6aNcteobN8eXTWHaBBd&quot;,
+    &quot;feeAssetId&quot;:null,
+    &quot;proofs&quot;:[&quot;4kBxzWXSzbM4jQbi8SmNtZeRJEwUkMzCezf8AQYeu5z124ajpKG9GVJZbHdnRWz9R1Key5opySDbKj6B4zTtZsNF&quot;],
+    &quot;price&quot;:90,
+    &quot;id&quot;:&quot;28biMwpgZVjAUk5iJnWvphaFgr8Tybwqe6s5JxGTdDWJ&quot;,
+    &quot;order2&quot;:
+        {&quot;version&quot;:2,
+        &quot;id&quot;:&quot;GaCXusGNDkYZ8iciV3cuUKb7r4awESwocghJXnFyLxYk&quot;,
+        &quot;sender&quot;:&quot;3MwBD8xZByEHAnwB69eexgVPAPD5ucw1Rna&quot;,&quot;senderPublicKey&quot;:&quot;HHonWv97CD2XXgRNbny7aCWP8amgYatCaTEthq38P1Do&quot;,&quot;matcherPublicKey&quot;:&quot;8QUAqtTckM5B8gvcuP7mMswat9SjKUuafJMusEoSn1Gy&quot;, //Obtained from https://matcher.testnet-0bsnetwork.com/matcher
+        &quot;assetPair&quot;:
+            {
+                &quot;amountAsset&quot;:&quot;4CFzLzP3vBHBev9GyeWm6AP7hm72qn6xELU1je5Wmq8L&quot;,
+                &quot;priceAsset&quot;:null
+            },
+            &quot;orderType&quot;:&quot;sell&quot;,
+            &quot;amount&quot;:10000000000,
+            &quot;price&quot;:90,
+            &quot;timestamp&quot;:1548657730301,
+            &quot;expiration&quot;:1551163330301,
+            &quot;matcherFee&quot;:300000,&quot;signature&quot;:&quot;2uX8CedW8oPXqktAwJLm9emFArUimxcXD9pqHnd2mEWJYYJuBChzk59fzB7DVeKnczmosJa4vfAvCzqY8DSoq4Rr&quot;,&quot;proofs&quot;:[&quot;2uX8CedW8oPXqktAwJLm9emFArUimxcXD9pqHnd2mEWJYYJuBChzk59fzB7DVeKnczmosJa4vfAvCzqY8DSoq4Rr&quot;]
+        },
+    &quot;order1&quot;:
+        {
+            &quot;version&quot;:2,
+            &quot;id&quot;:&quot;4EFqAQLW8S2Swo3dh5RZ5DXNtfQRDij7Y28RayN3vW7G&quot;,
+            &quot;sender&quot;:&quot;3N5h5G6ToFR7cMMzdzR1hvUaMNuz7quCt4H&quot;,&quot;senderPublicKey&quot;:&quot;He5xRqcQBzk1VbdH7GP3XdGbB7dLwsvEbyLfNAbVkunJ&quot;,&quot;matcherPublicKey&quot;:&quot;8QUAqtTckM5B8gvcuP7mMswat9SjKUuafJMusEoSn1Gy&quot;, //Obtained from https://matcher.testnet-0bsnetwork.com/matcher
+            &quot;assetPair&quot;:
+                {
+                    &quot;amountAsset&quot;:&quot;4CFzLzP3vBHBev9GyeWm6AP7hm72qn6xELU1je5Wmq8L&quot;,
+                    &quot;priceAsset&quot;:null
+                },
+            &quot;orderType&quot;:&quot;buy&quot;,
+            &quot;amount&quot;:1000000000,
+            &quot;price&quot;:100,
+            &quot;timestamp&quot;:1548661139113,
+            &quot;expiration&quot;:1548661439111,
+            &quot;matcherFee&quot;:300000,&quot;signature&quot;:&quot;23mzQgZgjsKBCTLRLS8ktbtP6EZx3gABT9AF63UF4nuhS1o7XJgEGby2umhijo4t8yKuw1CmZ3UVab4A6vtod3H8&quot;,&quot;proofs&quot;:[&quot;23mzQgZgjsKBCTLRLS8ktbtP6EZx3gABT9AF63UF4nuhS1o7XJgEGby2umhijo4t8yKuw1CmZ3UVab4A6vtod3H8&quot;]
+            }
+    }
+</code></pre>
+
+<h3 id="lease-transaction">Lease Transaction</h3>
+<pre><code>{
+    &quot;senderPublicKey&quot;:&quot;FB5ErjREo817duEBBQUqUdkgoPctQJEYuG3mU7w3AYjc&quot;,
+    &quot;amount&quot;:1,
+    &quot;fee&quot;:500000000,
+    &quot;type&quot;:8,
+    &quot;version&quot;:2,
+    &quot;sender&quot;:&quot;3Mps7CZqB9nUbEirYyCMMoA7VbqrxLvJFSB&quot;,
+    &quot;feeAssetId&quot;:null,
+    &quot;proofs&quot;:[&quot;fkWj6RkV722jhv72BY6Eo5BZ6N4T8nTPcmQVmoBs14Cv53W2VfRE7C9rT1TN4CZfAW2Y2YhVFm24NGZh75eBHq4&quot;],&quot;recipient&quot;:&quot;3NCKpqzSnHmXhZEmqYy4U6RUKUAJDTxWgWP&quot;
+}
+</code></pre>
+
+<h2 id="signing-transactions">Signing Transactions</h2>
+<p>Signing transactions manually is quite complex, and usually its best to use a library to do so, however if you find you dont have a library available for your platform of choice, you may need to do it manually. The process involves concatenting the byte values of fields from the transaction to create a long byte array, and signing this using Curve25519 and your private key, and inserting this into the transaction payload.</p>
+<p>Rather than include excessive details here on how to do that, the below code sample in C Sharp should be readable enough to understand how the process works, and you can also examine the code of our other libraries as they are all open source. If you need specific details or guidance, please do contact us using the details on the <a href="..">Front Page</a></p>
+<pre><code>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Security.Cryptography;
+using System.Numerics;
+using DictionaryObject = System.Collections.Generic.Dictionary&lt;string, object&gt;;
+using org.whispersystems.curve25519.csharp;
+using System.Reflection;
+using org.whispersystems.curve25519;
+using System.IO;
+using Program;
+
+namespace ZbsSignAndBroadcastDataTransaction
+{
+    class Program
+    {
+
+
+        /// &lt;summary&gt;
+        ///  This is a raw demonstration of a Data transaction. It's purpose is to save data to the blockchain (Variable TransactionData) - The signing procedure is demonstrated below.
+        /// &lt;/summary&gt;
+
+
+        // 3MqSRBfLsTzXssscX8crUH88zJegvyrd5WK
+        // Seed Phrase: despair olive coconut design rubber proud silver rotate glow gloom extra income effort about summer
+        // Private Key: Bq6dvj1v48EAyS34Nu6bZS7tWtaxgQnChQrJvxr5x1pM
+        // Public Key: 7cgFXWXTGXemR2yHq1MYx8o7jVKq6Y4Y5bTyaJ478aeG
+        // Replenish Balance: https://explorer.testnet-0bsnetwork.com/faucet
+
+        private static readonly Curve25519 Cipher = Curve25519.getInstance(Curve25519.BEST);
+
+        static void Main(string[] args)
+        {
+
+            byte Version = 1;
+            byte TxType = 12;
+            byte[] SenderPrivateKey;
+            byte[] SenderPublicKey;
+            byte[] transactionBytes;
+
+            DateTime Timestamp = DateTime.UtcNow;
+
+
+            SenderPrivateKey = Base58.Decode(&quot;Bq6dvj1v48EAyS34Nu6bZS7tWtaxgQnChQrJvxr5x1pM&quot;); // These are obtained from the client. X25519 Keys
+            SenderPublicKey = Base58.Decode(&quot;7cgFXWXTGXemR2yHq1MYx8o7jVKq6Y4Y5bTyaJ478aeG&quot;);
+
+
+
+            var TransactionData = new DictionaryObject
+            {
+                { &quot;test num&quot;, (long)1 },
+                { &quot;test true&quot;, true },
+                { &quot;test bytes&quot;, new byte[] { 1, 2, 3, 4, 5}},
+                { &quot;test string&quot;, &quot;Hello!&quot;}
+            };
+
+
+            // To create a signature, we create a byte array.
+
+            using (var stream = new MemoryStream())
+            using (var writer = new BinaryWriter(stream))
+            {
+                writer.Write(TxType);  // First we add the Transaction Type (Its a number.. 12 is Data transaction)
+                writer.Write(Version);  // Transaction version is set to 1
+                writer.Write(SenderPublicKey);
+                writer.WriteShort((short)TransactionData.Count); // Next we set the number of data items we are sending, in this case, theres 4 (TransactionData)
+
+                foreach (var pair in TransactionData)  // For each data item we need to add its Length, Key and its value
+                {
+                    var key = Encoding.UTF8.GetBytes(pair.Key);
+                    writer.WriteShort((short)key.Length);
+                    writer.Write(key);
+                    writer.WriteObject(pair.Value);
+                }
+
+                writer.WriteLong(Timestamp.ToLong());
+                writer.WriteLong(3000000); //Arbitary fee
+
+                transactionBytes = stream.ToArray();
+
+            }
+
+
+            // Next we take the byte array and sign it to generate a Proof.
+            var proof = Cipher.calculateSignature(SenderPrivateKey, transactionBytes);
+
+
+            // And finally, create a JSON payload to broadcast the transaction to the network
+
+
+            var finalTransaction = new DictionaryObject
+            {
+                {&quot;type&quot;, (byte) 12},
+                {&quot;version&quot;, Version},
+                {&quot;senderPublicKey&quot;, SenderPublicKey.ToBase58() },
+                {&quot;sender&quot;, &quot;3MqSRBfLsTzXssscX8crUH88zJegvyrd5WK&quot; },
+                {&quot;data&quot;, TransactionData.Select(pair =&gt; new DictionaryObject // Add each data entry to the JSON payload
+                {
+                    {&quot;key&quot;, pair.Key},
+                    {&quot;type&quot;, pair.Value is long ? &quot;integer&quot; : (pair.Value is bool ? &quot;boolean&quot; : (pair.Value is string ? &quot;string&quot;  : &quot;binary&quot;))},
+                    {&quot;value&quot;, pair.Value is byte[] bytes ? bytes.ToBase64() : pair.Value }
+                })},
+                {&quot;fee&quot;, 3000000}, //Arbitary fee
+                {&quot;timestamp&quot;, Timestamp.ToLong()},
+                {&quot;proofs&quot;, new string[] { proof.ToBase58()} } // Add the signature to the JSON
+
+            };
+
+
+
+            String TestNetHost = &quot;https://node1.testnet-0bsnetwork.com&quot;;
+
+            var response = Http.Post(TestNetHost + &quot;/transactions/broadcast&quot;, finalTransaction); // Broadcast the transaction to a public node on the network
+
+            Console.Write(response); // Output the response
+            Console.Read();
+
+
+    }
+    }
+}
+
 </code></pre>
               
             </div>

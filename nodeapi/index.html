@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../stylesheets/extra.css" rel="stylesheet">
   
   <script>
     // Current page data
@@ -83,6 +84,17 @@
     <a class="current" href="./">Full Node REST API</a>
     <ul class="subnav">
             
+    <li class="toctree-l2"><a href="#full-node-api">Full Node API</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#signing-transactions-on-the-node">Signing Transactions on the Node</a></li>
+        
+            <li><a class="toctree-l3" href="#matcher-api">Matcher API</a></li>
+        
+        </ul>
+    
+
     </ul>
 	    </li>
           
@@ -121,6 +133,11 @@
     <a class="" href="../tutorials/">Tutorials</a>
 	    </li>
           
+            <li class="toctree-l1">
+		
+    <a class="" href="../glossary/">Glossary</a>
+	    </li>
+          
         </ul>
       </div>
       &nbsp;
@@ -153,7 +170,63 @@
           <div role="main">
             <div class="section">
               
-                
+                <h2 id="full-node-api">Full Node API</h2>
+<p>The full node exposes an API that allows you to manage the node, get information about its status, get information about the blockchain, and interact with the blockchain.</p>
+<p>The node comes with its own API documentation which goes some way to explain the features and functions and that can be found on port 7431 on your own node, or you can use our public node API here;</p>
+<p><a href="https://node1.testnet-0bsnetwork.com">https://node1.testnet-0bsnetwork.com</a></p>
+<p>To enable the API on your own node, you need to enable it, set its API key, and ensure its listening and exposed on the firewall. Within your nodes configuration file, find the rest-api section and set;</p>
+<ul>
+<li>enable = yes</li>
+<li>bind-address = Your IP or 0.0.0.0 to listen on all IPs</li>
+<li>double check the port its 7431 for testnet and 7441 for mainnet and open up that port on your firewall (ufw allow 7431)</li>
+<li>Initially set api-key-hash to some gibberish to protect your API, and we can set it properly in the next step.</li>
+</ul>
+<pre><code> rest-api {
+    enable = yes
+    bind-address = &quot;127.0.0.1&quot;
+    port = 7431
+    api-key-hash = &quot;86GJVSoboK12zXHYJFzoucAKaFS1yyXA2NztWSt9tGiX&quot;
+  }
+
+</code></pre>
+
+<p>Once you restart your node, you should be able to access the swagger interface at http://yournode:7431</p>
+<p>Now we need to setup the API key, and the API conveniently has a feature to do that, open up the 'utils' section on the API page, and find;</p>
+<p><code>utils/hash/secure</code></p>
+<p>Enter your desired API key and hit 'try it out' and it should give you a hash in response. Paste that into the api-key-hash in your config file and restart your node again, you can now use the API key in API calls that require it.</p>
+<p>This API key gives you access to features on your node using the nodes wallet, for example, you can have the node sign a transaction</p>
+<h3 id="signing-transactions-on-the-node">Signing Transactions on the Node</h3>
+<p>You can send a transaction to your node to sign, and it will be signed using the private key of the nodes wallet (Ensure the nodes wallet has funds... You can get its address from the nodes API /addresses endpoint) The steps to do this are as below.</p>
+<blockquote>
+<p>Note: Its not possible to sign transactions on our public nodes as the node does these oprations using its own private key</p>
+</blockquote>
+<ul>
+<li>Obtain the correct JSON transaction format from <a href="../transactions/">Transactions</a></li>
+<li>POST the json to the <code>/transactions/sign</code> endpoint (Including your API key in the header X-API-Key)</li>
+<li>The node returns a signed transaction</li>
+<li>POST the signed transaction to the nodes <code>/transactions/broadcast</code> endpoint</li>
+</ul>
+<p>Below is an example of the <code>transactions/sign</code> endpoint</p>
+<pre><code>curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' --header 'X-API-Key: myapikey' -d '{ \
+     &quot;senderPublicKey&quot;:&quot;4c5K4kGeRdrnSYZ9wngQKSozikVgfxmDEuViirsyUHwd&quot;, \
+     &quot;amount&quot;:110000000 \
+     fee&quot;:500000, \
+     &quot;type&quot;:4, \
+     &quot;version&quot;:2, \
+     &quot;attachment&quot;:&quot;&quot;, \
+     &quot;sender&quot;:&quot;3MyT3r1S8xvKtiKnLgVNNiSAiQdnMbffBQy&quot;, \
+     &quot;feeAssetId&quot;:null, \
+     &quot;proofs&quot;:[&quot;2KFbYWi9BJwDG9dbiJQzC9qJPpu4Ug8Ybs331fQbX9FAkEpEtrj9DKvwNG7cb2m98DV6NCoKH4MBVtGGFsnQWPV6&quot;], \
+     &quot;assetId&quot;:null, // If we are sending an asset, null for ZBS \
+     &quot;recipient&quot;:&quot;3MqEisFsWdhvDMAKBwZzZv4niVsfJJtxcaw&quot;, \
+     &quot;feeAsset&quot;:null \
+ }' 'https://node1.testnet-0bsnetwork.com/transactions/sign'
+</code></pre>
+
+<p>Of course this is not ideal for many situations, and you need to sign the transaction on the client side, and only use the node to broadcast the transaction. Our libraries help with this, or check out <a href="../transactions/">Transactions</a> For more details on manually signing transactions.</p>
+<h3 id="matcher-api">Matcher API</h3>
+<p>Matcher also has an API to create orders, and get orderbook information. The documentation for this is hosted by the matcher at;</p>
+<p><a href="https://matcher.testnet-0bsnetwork.com">https://matcher.testnet-0bsnetwork.com</a></p>
               
             </div>
           </div>

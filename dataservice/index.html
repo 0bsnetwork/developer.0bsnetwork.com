@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../stylesheets/extra.css" rel="stylesheet">
   
   <script>
     // Current page data
@@ -108,6 +109,9 @@
     <a class="current" href="./">Data Service API</a>
     <ul class="subnav">
             
+    <li class="toctree-l2"><a href="#data-service-api">Data Service API</a></li>
+    
+
     </ul>
 	    </li>
           
@@ -119,6 +123,11 @@
             <li class="toctree-l1">
 		
     <a class="" href="../tutorials/">Tutorials</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../glossary/">Glossary</a>
 	    </li>
           
         </ul>
@@ -153,7 +162,27 @@
           <div role="main">
             <div class="section">
               
-                
+                <h2 id="data-service-api">Data Service API</h2>
+<p>Here's a quick demo of our data API. This is a small docker container that runs alongside a node (NodeJS + PostGreSQL) and either you could run your own if your data querying requirements are large, or use our public one for smaller queries (There's smaller limits in place on the public one)</p>
+<p>So, Lets say we want to get all data transactions for a particular ID, in this case, I've been saving data from my orange tree, which has a 'plantId' of '23456-f344f3'</p>
+<p>So the filters we have available on the data transaction endpoint are as follows</p>
+<ul>
+<li><code>sender</code> - public address of the data transaction sender</li>
+<li><code>timeStart</code> - Start Time (e.g. 2019-05-29T03:51:05.303Z) or just date</li>
+<li><code>timeEnd</code> - End Time (As Above)</li>
+<li><code>key</code> - Filter by Key</li>
+<li><code>type</code> - Filter by data type</li>
+<li><code>value</code> - Filer by value</li>
+<li><code>after</code> - Insert the previous pages cursor (lastCursor) to get the next set of records (depending on limit)</li>
+<li><code>limit</code> - How many to return (Default 100 Max 1000)</li>
+</ul>
+<p>So, if we want to get all data transactions on the 27th May for my plant, we can query like this (Lets say we want them in pages of 5) .. Go ahead and click the URL to try it!</p>
+<p><a href="https://api.testnet-0bsnetwork.com/v0/transactions/data?key=plantid&amp;type=string&amp;value=23456-f344f3&amp;timeStart=2019-05-27&amp;limit=5">https://api.testnet-0bsnetwork.com/v0/transactions/data?key=plantid&amp;type=string&amp;value=23456-f344f3&amp;timeStart=2019-05-27&amp;limit=5</a></p>
+<p>We can see we get 5 results, and only data for that plant based on its plantId, we can see the Temp, Humidity and Soil Moisture. If we now want to get the next 5 records, we take the 'lastCursor' value of the response, and use it for the 'after' paramter in the next call</p>
+<p><a href="https://api.testnet-0bsnetwork.com/v0/transactions/data?key=plantid&amp;type=string&amp;value=23456-f344f3&amp;timeStart=2019-05-27&amp;limit=5&amp;after=MjAxOS0wNS0yOVQwNDo1MTowNS42NzJaOjoyZnA2OUJEVjJ3M0tjZ1h0eWozdGJrSER1b3g0NnNtdDFUOUNKcWh3NGtDajo6ZGVzYw==">https://api.testnet-0bsnetwork.com/v0/transactions/data?key=plantid&amp;type=string&amp;value=23456-f344f3&amp;timeStart=2019-05-27&amp;limit=5&amp;after=MjAxOS0wNS0yOVQwNDo1MTowNS42NzJaOjoyZnA2OUJEVjJ3M0tjZ1h0eWozdGJrSER1b3g0NnNtdDFUOUNKcWh3NGtDajo6ZGVzYw==</a></p>
+<p>This now gives us the next 5 records.. we could continue this until we react the end of the data (response.data.count &lt; 5)</p>
+<p>Note: For UI apps its best to only request what the user is viewing on the screen and make subsequent calls to update, most grids support this style of paging. For back end, you can request in chunks of 1000, or run your own data service to increase this limit.</p>
+<p>Finally, all data is always returned with its transactionID, so any transaction can be verififed on the blockchain using any or your own node!</p>
               
             </div>
           </div>
