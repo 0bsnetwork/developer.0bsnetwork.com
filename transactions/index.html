@@ -174,7 +174,7 @@
               
                 <h1 id="transactions">Transactions</h1>
 <h2 id="transaction-types">Transaction Types</h2>
-<p>Each transaction type is given an integer to represent it as follows</p>
+<p>Each transaction type is given an integer to represent it as follows. The transaction fee is included below too, though libraries should have these set by default.</p>
 <table>
 <thead>
 <tr>
@@ -274,6 +274,9 @@
 <p>Extra Fee: 0.01</p>
 <h2 id="transaction-formats">Transaction Formats</h2>
 <p>The below sections demonstrate the JSON transaction format that is required to make a transaction. When signing a transaction on a Node, you can exclude the signature/proofs field as the server will give you this back.</p>
+<blockquote>
+<p>Within the transaction JSON, Fee's are expressed without decimal values, so ZBS has 8 decimal places, and 100000000 represents 1 ZCL within the transaction JSON.</p>
+</blockquote>
 <h3 id="issue-reissue-transaction">Issue / ReIssue Transaction</h3>
 <p>Issue and ReIssue take the same format apart from the type</p>
 <pre><code>{
