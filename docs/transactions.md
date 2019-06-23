@@ -76,7 +76,6 @@ Issue and ReIssue take the same format apart from the type
 ### Burn Transaction
 
 Burning tokens can be useful for systems where a token is used to activate or fund a service and once the service has been used the token can be burnt.
-Example code:
 
 ```
 { type: 6,
