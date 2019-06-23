@@ -1,10 +1,10 @@
 ## Glossary
 
-| Term | Description |
-| ------------|----------- |
+| Term         | Description |
+| ------------ | ----------- |
 | Node  | A network full node, that processes blocks and transactions |
 | POS | Proof of Stake |
-| IDE |Integrated Development Environment  |
+| IDE | Integrated Development Environment  |
 | Smart Contract  | Code that is executed on an address or asset once deployed to the network |
 | Account / Address | Address that identifies a wallet  |
 | ZBS | Our utility Coin/Token that operates the platform |

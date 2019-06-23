@@ -65,7 +65,7 @@ SAtDTKwqmdqJpWtBWYLEy6cfaTTKCQFNH2Lnj2DYgaFRWETGQVQpMMVYFKkk
 
 1. Now let's prepare a JSON request to sign a SetScriptTransaction for the shared account with a given script:
 
-   ```json
+   ```
    {
     "type": 13,
     "version": 1,
@@ -78,7 +78,7 @@ SAtDTKwqmdqJpWtBWYLEy6cfaTTKCQFNH2Lnj2DYgaFRWETGQVQpMMVYFKkk
 
 2. Send it to [/transactions/sign]:
 
-   ```bash
+   ```
    $ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' \
    --header 'X-API-Key: <it is a secret>' \
    -d '{ "type": 13, "version": 1, "sender": "3N7H4jTBMKtZfNCY86K2ND1rWcvFsGjDT3X", "fee": 100000, \
@@ -87,7 +87,7 @@ SAtDTKwqmdqJpWtBWYLEy6cfaTTKCQFNH2Lnj2DYgaFRWETGQVQpMMVYFKkk
 
    and receive a JSON ready to broadcast:
 
-   ```json
+   ```
    {
     "type": 13,
     "id": "8w7yauNiENsJP8oDUpVEfiAzyEzMKoXbJEqS26Ht99mg",
@@ -105,7 +105,7 @@ SAtDTKwqmdqJpWtBWYLEy6cfaTTKCQFNH2Lnj2DYgaFRWETGQVQpMMVYFKkk
 
 3. Then we [broadcast] a prepared request:
 
-   ```bash
+   ```
    $ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' \
    --header 'X-API-Key: <it is a secret>' \
    -d '{ "type": 13, "id": "8w7yauNiENsJP8oDUpVEfiAzyEzMKoXbJEqS26Ht99mg", "sender": "3N7H4jTBMKtZfNCY86K2ND1rWcvFsGjDT3X", \
@@ -117,7 +117,7 @@ SAtDTKwqmdqJpWtBWYLEy6cfaTTKCQFNH2Lnj2DYgaFRWETGQVQpMMVYFKkk
 
 4. And check it was applied:
 
-   ```bash
+   ```
    $ curl http://example.org/addresses/scriptInfo/3N7H4jTBMKtZfNCY86K2ND1rWcvFsGjDT3X
    {
     "address" : "3N7H4jTBMKtZfNCY86K2ND1rWcvFsGjDT3X",
