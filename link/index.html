@@ -114,6 +114,15 @@
     <a class="current" href="./">0bsLink</a>
     <ul class="subnav">
             
+    <li class="toctree-l2"><a href="#0bslink-v109">0bsLink v1.0.9</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#0bslink-api">0bsLink API</a></li>
+        
+        </ul>
+    
+
     </ul>
 	    </li>
           
@@ -159,7 +168,882 @@
           <div role="main">
             <div class="section">
               
-                
+                <h2 id="0bslink-v109">0bsLink v1.0.9</h2>
+<p>0bsLink is an extension that allows users to securely interact with 0bsnetwork-enabled web services from the browser.</p>
+<p>Seed phrases and private keys are encrypted and stored within the extension and cannot be accessed by online dApps and services, making sure that users' funds are always protected from hackers and malicious websites. Completion of a transaction doesn't require entering any sensitive information.</p>
+<p>0bsLink is designed for convenience, so users can sign transactions with just a couple of clicks. Users can create multiple wallets and switch between them easily. And if a user ever forgets the password to the account, it can be recovered from the seed phrase.</p>
+<p>This service is currently in beta and is not yet published to the chrome and firefox app store (Edge and Opera coming soon) However, you can still use the service to develop your application. The extensions are located here;</p>
+<p><a href="../resources/chrome.zip">Chrome</a></p>
+<p><a href="../resources/firefox.zip">FireFox</a></p>
+<ul>
+<li>You can install the chrome extention manually as so;</li>
+<li>Visit chrome://extensions/</li>
+<li>Click 'Load Unpacked'</li>
+<li>Select your folder</li>
+<li>Setup 0bsLink - Remember to select TestNet if you need to!</li>
+</ul>
+<h3 id="0bslink-api">0bsLink API</h3>
+<p>On browser pages that operate under the http/https with 0bsLink extension installed, the 0bsLink global object becomes available, featuring the following methods:</p>
+<ul>
+<li><code>auth</code></li>
+<li><code>publicState</code></li>
+<li><code>signAndPublishCancelOrder</code></li>
+<li><code>signAndPublishOrder</code></li>
+<li><code>signAndPublishTransaction</code></li>
+<li><code>signCancelOrder</code></li>
+<li><code>signOrder</code></li>
+<li><code>signTransaction</code></li>
+<li><code>signRequest</code></li>
+<li><code>signTransactionPackage</code></li>
+<li><code>on</code></li>
+</ul>
+<p>All methods, except for "on" operate asynchronously and return <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise">promises</a>.</p>
+<p>In 0bsLink, for greater security and ease of use, each new website using API has to be allowed by the user. At the first attempt to use API (except "<code>on"</code>), the user will see a request to allow that website's access to 0bsLink. If the user agrees to allow access, the website is considered trusted and can use API on its pages. Otherwise, the website is blocked, and an error message will be displayed in response to all requests <code>{message: "Api rejected by user", code: 12}.</code> The users won't see new notifications. To grant access, the user will mark the website as trusted in the interface.</p>
+<h4 id="description-of-methods">Description of methods</h4>
+<p><strong>publicState</strong></p>
+<p>If a website is trusted, 0bsLink public data are returned.</p>
+<p>Example:</p>
+<pre><code>    zbsLink.publicState()
+        .then(state =&gt; {
+            console.log(state); //displaying the result in the console
+            /*...processing data */
+        }).catch(error =&gt; {
+            console.error(error); // displaying the result in the console
+            /*...processing errors */
+        })
+
+
+</code></pre>
+
+<p>or</p>
+<pre><code>    const getPublicState = async () =&gt; {
+        try {
+            const state = await zbsLink.publicState();
+            console.log(state); // displaying the result in the console
+            /*... processing data*/
+        } catch(error) {
+            console.error(error); // displaying the result in the console
+            /*... processing errors */
+        }
+      }
+
+
+      const result = await getPublicState();
+</code></pre>
+
+<p>REPLY</p>
+<pre><code>{
+    &quot;initialized&quot;: true,
+    &quot;locked&quot;: true,
+    &quot;account&quot;: {
+        &quot;name&quot;: &quot;foo&quot;,
+        &quot;publicKey&quot;: &quot;bar&quot;,
+        &quot;address&quot;: &quot;address&quot;,
+        &quot;networkCode&quot;: &quot;network byte&quot;,
+        &quot;balance&quot;: {
+            &quot;available&quot;: &quot;balance in zbs&quot;,
+            &quot;leasedOut&quot;: &quot;leased balance&quot;
+        }
+    },
+    &quot;network&quot;: {
+        &quot;code&quot;: &quot;T&quot;,
+        &quot;server&quot;: &quot;https://nodes.testnet-0bsnetwork.com/&quot;,
+        &quot;matcher&quot;: &quot;https://matcher.testnet-0bsnetwork.com/&quot;
+    },
+    &quot;messages&quot;: [],
+    &quot;txVersion&quot;: {
+        &quot;3&quot;: [ 2 ],
+        &quot;4&quot;: [ 2 ],
+        &quot;5&quot;: [ 2 ],
+        ...
+    }
+}
+</code></pre>
+
+<p>Description of query return fields</p>
+<ul>
+<li><code>initialized</code> - boolean keeper initialized</li>
+<li><code>locked</code> - boolean keeper in wait mode</li>
+<li><code>account</code> – current account, if the user allowed access to the website, or null</li>
+<li><code>network</code> – current 0bsnetwork, node and matcher addresses</li>
+<li><code>messages</code> – signature request statuses</li>
+<li><code>txVersion</code> – available transaction versions for each type</li>
+</ul>
+<p>Possible errors</p>
+<ul>
+<li><code>{ message: "Init 0bsLink and add account" }</code> – 0bsLink is not initialized</li>
+<li><code>{ message: "Add 0bsLink account" }</code> – 0bsLink accessed, but there are no accounts</li>
+<li><code>{ message: "User denied message" }</code> – the user denied the website operation with 0bsLink</li>
+</ul>
+<p><strong>on</strong></p>
+<p>Allows subscribing to 0bsLink events.</p>
+<p>Supports events:</p>
+<ul>
+<li><code>update</code> – subscribe to updates of the state</li>
+</ul>
+<p>Example:</p>
+<pre><code>   zbsLink.on(&quot;update&quot;, state =&gt; {
+        //state object as from zbsLink.publicState
+   });
+</code></pre>
+
+<p>If a website is not trusted, events won't show.</p>
+<p><strong>auth</strong></p>
+<p>This is a method for obtaining a signature of authorization data while verifying 0bsnetwork user.</p>
+<p>Example:</p>
+<pre><code>    const authData = { data: &quot;Auth on my site&quot; };
+    zbsLink.auth(authData)
+        .then(auth =&gt; {
+            console.log(state); //displaying the result on the console
+            /*...processing data */
+        }).catch(error =&gt; {
+            console.error(error); // displaying the result on the console
+            /*...processing errors */
+        })
+
+
+</code></pre>
+
+<p>or</p>
+<pre><code>    const getAuthData = async authData =&gt; {
+        try {
+            const state = await zbsLink.auth(authData);
+            console.log(state); // displaying the result on the console
+            /*... processing data */
+        } catch(error) {
+            console.error(error); // displaying the result on the console
+            /*... processing errors */
+        }
+    }
+
+
+    const authData = { data: &quot;Auth on my site&quot; };
+    getAuthData(authData);
+</code></pre>
+
+<p><code>auth</code> facilitates input of the following data</p>
+<ul>
+<li><code>name</code> – name of the service (optional field)</li>
+<li><code>data</code> – a line with any data (required field)</li>
+<li><code>referrer</code> – a websites' full URL for redirect (optional field)</li>
+<li><code>icon</code> – path to the logo relative to the <code>referrer</code>or origin of the website (optional field)</li>
+<li><code>successPath</code> – relative path to the website's Auth API (optional field)</li>
+</ul>
+<p>Example</p>
+<pre><code>    const authData = {
+        data: &quot;Generated string from server&quot;,
+        name: &quot;My test App&quot;,
+        icon: &quot;/img/icons/zbs_logo.svg&quot;,
+        referrer: &quot;https://client.testnet-0bsnetwork.com/&quot;,
+        successPath: &quot;login&quot;
+    };
+
+
+    zbsLink.auth(authData).then((data) =&gt; {
+        //data – data from 0bsLink
+        //verifying signature and saving the address...
+        console.log(data);
+    }).catch((error) =&gt; {
+        //processing the error
+    });
+
+
+
+
+</code></pre>
+
+<p>If the verification is successful, 0bsLink will return in the promise an object containing data for signature verification:</p>
+<ul>
+<li><code>host</code> – a host that requested a signature</li>
+<li><code>name</code> – the name of an application that requested a signature</li>
+<li><code>prefix</code> – a prefix participating in the signature</li>
+<li><code>address</code> – an address in 0bsnetwork</li>
+<li><code>publicKey</code> – the user's public key</li>
+<li><code>signature</code> - signature</li>
+<li><code>version</code> – API version</li>
+</ul>
+<p>ERRORS</p>
+<ul>
+<li><code>{message: "Invalid data", data: "[{"field":"data","type":"string","message":"field is required"}]", code: 9}</code> – signature data contain errors</li>
+<li><code>{message: "User denied message", code: 10}</code> – the user denied the request</li>
+<li><code>{message: "Api rejected by user", code: 12} - the website is not trusted</code></li>
+</ul>
+<p><strong>signTransaction</strong></p>
+<p>A method for signing transactions in 0bsNetwork.</p>
+<p>Example:</p>
+<pre><code>    const txData = {
+        type: 4,
+        data: {
+            amount: {
+               assetId: &quot;ZBS&quot;,
+               tokens: &quot;1.567&quot;
+            },
+            fee: {
+                assetId: &quot;ZBS&quot;,
+                tokens: &quot;0.001&quot;
+            },
+            recipient: &quot;test&quot;
+        }
+    };
+    zbsLink.signTransaction(txData).then((data) =&gt; {
+        //data – a line ready for sending to 0bsNetwork's node (server)
+    }).catch((error) =&gt; {
+        //Processing errors
+    });
+</code></pre>
+
+<p>API returns lines, not an object, as in javascript precision is lost in operation with 8-byte integers.</p>
+<p>A description of supported transaction types is below.</p>
+<p>In the example, we are signing a transaction for transferring ZBS to the alias <code>test</code>in 0bsnetwork.</p>
+<p>REPLY <code>{"version":2,"assetId":"", "amount":156700000,"feeAssetId":"",fee:100000, "recipient":"recipient","attachment":"", "timestamp":1548770230589,"senderPublicKey":"public key","proofs":["signature"],"type":4}</code></p>
+<p>ERRORS</p>
+<ul>
+<li><code>{message: "User denied message", code: 10}</code> – The user denied the request.</li>
+<li><code>{message: "Api rejected by user", code: 12}</code> – The website is not trusted.</li>
+<li><code>{message: "Invalid data", data: "Reason", code: 9}</code> – invalid/incomplete request data.</li>
+</ul>
+<p><strong>signAndPublishTransaction</strong></p>
+<p>This is similar to "<code>signTransaction"</code>, but it also broadcasts a transaction to the blockchain.</p>
+<p>Example:</p>
+<pre><code>   const txData = {
+           type: 4,
+           data: {
+               amount: {
+                  assetId: &quot;ZBS&quot;,
+                  tokens: &quot;1.567&quot;
+               },
+               fee: {
+                   assetId: &quot;ZBS&quot;,
+                   tokens: &quot;0.001&quot;
+               },
+               recipient: &quot;test&quot;
+           }
+       };
+       zbsLink.signAndPublishTransaction(txData).then((data) =&gt; {
+           //data - a line ready for sending to 0bsNetwork's node (server)
+       }).catch((error) =&gt; {
+           //processing errors
+       });
+</code></pre>
+
+<p>REPLY A reply from 0bsNetwork returns as a line containing the entire past transaction.</p>
+<p>ERRORS</p>
+<ul>
+<li>Same as <code>signTransaction</code></li>
+<li><code>{message: "Filed request", data: "Error description", code: 15}</code> – a request was signed but not broadcasted</li>
+</ul>
+<p><strong>signTransactionPackage</strong></p>
+<p>A package transaction signature. Sometimes several transactions need to be simultaneously signed, and for users' convenience, up to seven transactions at ones could be signed. Only certain types of transactions are permitted:</p>
+<ul>
+<li><code>3 – token issue</code></li>
+<li><code>4 – token transfer</code></li>
+<li><code>5 – token re-issue</code></li>
+<li><code>6 – token burning</code></li>
+<li><code>10 – creating an alias for an address in 0bsNetwork</code></li>
+<li><code>11 – mass transfer</code></li>
+<li><code>12 - DataTransaction</code></li>
+</ul>
+<p>Example:</p>
+<pre><code>    const name = &quot;For Test&quot;;
+    const tx = [{
+        type: 4,
+        data: {
+            amount: {
+               assetId: &quot;ZBS&quot;,
+               tokens: &quot;1.567&quot;
+            },
+            fee: {
+                assetId: &quot;ZBS&quot;,
+                tokens: &quot;0.001&quot;
+            },
+            recipient: &quot;test&quot;
+    }},{
+        type: 4,
+        data: {
+            amount: {
+               assetId: &quot;ZBS&quot;,
+               tokens: &quot;0.51&quot;
+            },
+            fee: {
+                assetId: &quot;ZBS&quot;,
+                tokens: &quot;0.001&quot;
+            },
+            recipient: &quot;merry&quot;
+        }
+    }];
+
+
+    zbsLink.signTransactionPackage(tx, name)
+</code></pre>
+
+<p>Sign two transaction:</p>
+<ul>
+<li>Transfer 1.567 ZBS to the alias test</li>
+<li>Transfer 0.1 ZBS to the alias merry</li>
+</ul>
+<p>REPLY</p>
+<p>A unit of two lines – transactions that are signed and ready to be broadcasted.</p>
+<p>ERRORS Same as in "<code>signTransaction</code>"</p>
+<p>Every user of 0bsNetwork has a state (balances, assets, data, scripts), and every past transactions changes these data. \
+In 0bsLink API it is different from <a href="../nodeapi/">NODE REST API</a>.</p>
+<p><code>signTransaction</code>, <code>signAndPublishTransaction</code> accept transactions as follows</p>
+<pre><code>{
+    type: number //transaction type,
+    data: {
+        ... //transaction data
+    }
+}
+</code></pre>
+
+<p>Legend keys</p>
+<ul>
+<li>
+<ul>
+<li>optional field, data are automatically supplied from zbsLink. \
+[x,y] – length limit from x to y. \
+[,x] – length limit to x. \
+[y,] – length limit from y. \
+[x-y] – number from x to y. x/y - x or y. (JLM) - JAVA LONG MAX = 9 223 372 036 854 775 807 \
+MoneyLike - price</li>
+</ul>
+</li>
+</ul>
+<p>MoneyLike could look as:</p>
+<ul>
+<li><code>{ tokens: 1, assetId: "ZBS" }</code></li>
+<li><code>{ coins: 100000000, assetId: "ZBS" }</code>;</li>
+</ul>
+<p>In both messages, the same price of 1 ZBS is indicated. You can easily convert <code>coins</code>into <code>tokens</code>and back, if you know in what asset the price is indicated and you have received its precision <code>tokens = coins / (10 ** precision)</code> \
+If the field contains other types than MoneyLike, for instance, string/MoneyLike , the sum is indicated as a number in  <code>coins</code>.</p>
+<hr />
+<p><strong>Type 3 ISSUE – token issue</strong></p>
+<ul>
+<li><code>name</code> [4, 16] string – token name,</li>
+<li><code>description</code> [0, 1000] string – token description,</li>
+<li><code>quantity</code> [0 - (JLM)] number/string - quantity,</li>
+<li><code>precision</code> [0 - 8] number - precision,</li>
+<li><code>reissuable</code> true|false – reissuble,</li>
+<li><code>fee</code> MoneyLike -fee</li>
+<li><code>*script</code> string – asset script</li>
+<li><code>*senderPublicKey</code> string – sender's public key in base58</li>
+<li><code>*timestamp</code> number/string – time in ms</li>
+</ul>
+<p>Example:</p>
+<pre><code>   zbsLink.signAndPublishTransaction({
+        type: 3,
+        data: {
+             &quot;name&quot;: &quot;Best Token&quot;,
+             &quot;description&quot;: &quot;Greate token&quot;,
+             &quot;quantity&quot;: 1000000,
+             &quot;precision&quot;: 2,
+             &quot;reissuable&quot;: true,
+             fee: {
+                 &quot;tokens&quot;: &quot;1&quot;,
+                 &quot;assetId&quot;: &quot;ZBS&quot;
+             }
+        }
+   }).then((tx) =&gt; {
+        console.log(&quot;Hurray! I've created my asset!!!&quot;);
+   }).catch((error) =&gt; {
+        console.error(&quot;Something went wrong&quot;, error);
+   });
+</code></pre>
+
+<p>In case of a success, we are issuing a new asset in the quantity of 1,000,000, and your balance will show 10,000.00 Best Token</p>
+<p><strong>Тype 4 TRANSFER – asset transfer</strong></p>
+<ul>
+<li><code>amount</code> MoneyLike - amount,</li>
+<li><code>recipient</code> string – recipient's address or alias</li>
+<li><code>attachment</code>[,140 bytes в base58] string – additional info</li>
+<li><code>fee</code> MoneyLike - fee</li>
+<li><code>*senderPublicKey</code> string – sender's public key in base58</li>
+<li><code>*timestamp</code> number/string – time in ms</li>
+</ul>
+<p>Example:</p>
+<pre><code>    zbsLink.signAndPublishTransaction({
+        type: 4,
+        data: {
+            amount: { tokens: &quot;3.3333333&quot;, assetId: &quot;ZBS&quot; },
+            fee: { tokens: &quot;0.001&quot;, assetId: &quot;ZBS&quot;},
+            recipient: &quot;merry&quot;
+        }
+    }).then((tx) =&gt; {
+         console.log(&quot;Hurray! I've been able to send ZBS!!!&quot;);
+    }).catch((error) =&gt; {
+         console.error(&quot;Something went wrong&quot;, error);
+    });
+</code></pre>
+
+<p><strong>Тype 5 REISSUE – token reissue</strong></p>
+<ul>
+<li><code>assetId</code> string - "asset ID",</li>
+<li><code>quantity</code> [0 - (JLM)] number/string/MoneyLike - quantity,</li>
+<li><code>reissuable</code> false – deny reissue</li>
+<li><code>fee</code> MoneyLike -fee</li>
+<li><code>*senderPublicKey</code> string – sender's public key in base58</li>
+<li><code>*timestamp</code> number/string – time in ms</li>
+</ul>
+<p>Example:</p>
+<pre><code>      zbsLink.signAndPublishTransaction({
+           type: 5,
+           data: {
+                &quot;quantity&quot;: 1000,
+                &quot;assetId&quot;: &quot;8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS&quot;,
+                &quot;reissuable&quot;: true,
+                fee: {
+                    &quot;tokens&quot;: &quot;1&quot;,
+                    &quot;assetId&quot;: &quot;ZBS&quot;
+                }
+           }
+      }).then((tx) =&gt; {
+           console.log(&quot;Hurray! I've reissued my asset!!!&quot;);
+      }).catch((error) =&gt; {
+           console.error(&quot;Something went wrong&quot;, error);
+      });
+</code></pre>
+
+<p>In case of a success, we are re-issuing a new asset in the quantity of 1,000,000, and your balance will show 10,000.00 Best Token</p>
+<p><strong>Тype 6 BURN – burning tokens</strong></p>
+<ul>
+<li><code>assetId</code> string – asset ID,</li>
+<li><code>amount</code> [0 - (JLM)] number/string/MoneyLike - quantity,</li>
+<li><code>fee</code> MoneyLike -fee</li>
+<li><code>*senderPublicKey</code> string - sender's public key in base58</li>
+<li><code>*timestamp</code> number/string – time in ms</li>
+</ul>
+<p>Example:</p>
+<pre><code>   zbsLink.signAndPublishTransaction({
+        type: 6,
+        data: {
+             amount: 1000,
+             assetId: &quot;8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS&quot;,
+             fee: {
+                 &quot;tokens&quot;: &quot;0.001&quot;,
+                 &quot;assetId&quot;: &quot;ZBS&quot;
+             }
+        }
+   }).then((tx) =&gt; {
+        console.log(&quot;Hurray! I've burned unneeded tokens!!!&quot;);
+   }).catch((error) =&gt; {
+        console.error(&quot;Something went wrong&quot;, error);
+   });
+</code></pre>
+
+<p>In case of a success, 1,000 coins <code>are burned</code>.</p>
+<p><strong>Тype 8 LEASE - Leasing</strong></p>
+<ul>
+<li><code>recipient</code> string – recipient's address or alias,</li>
+<li><code>amount</code> [0 - (JLM)] number/string/MoneyLike - quantity,</li>
+<li><code>fee</code> MoneyLike -fee</li>
+<li><code>*senderPublicKey</code> string - sender's public key in base58</li>
+<li><code>*timestamp</code> number/string – time in ms</li>
+</ul>
+<p>Example:</p>
+<pre><code>   zbsLink.signAndPublishTransaction({
+        type: 8,
+        data: {
+             &quot;amount&quot;: 1000,
+             &quot;recipient&quot;: &quot;merry&quot;,
+             fee: {
+                 &quot;tokens&quot;: &quot;0.001&quot;,
+                 &quot;assetId&quot;: &quot;ZBS&quot;
+             }
+        }
+   }).then((tx) =&gt; {
+        console.log(&quot;Hurray! I've been able to lease tokens!!!&quot;);
+   }).catch((error) =&gt; {
+        console.error(&quot;Something went wrong&quot;, error);
+   });
+</code></pre>
+
+<p>In case of a success, 0.00001000 ZBS is leased.</p>
+<p><strong>Тype 9 LEASE CANCEL – cancel leasing</strong></p>
+<ul>
+<li><code>leaseId</code> string – leasing transaction ID,</li>
+<li><code>fee</code> MoneyLike -fee</li>
+<li><code>*senderPublicKey</code> string - sender's public key in base58</li>
+<li><code>*timestamp</code> number/string – time in ms</li>
+</ul>
+<p>Example:</p>
+<pre><code>   zbsLink.signAndPublishTransaction({
+        type: 9,
+        data: {
+             leaseId: &quot;6frvwF8uicAfyEfTfyC2sXqBJH7V5C8he5K4YH3BkNiS&quot;,
+             fee: {
+                 &quot;tokens&quot;: &quot;0.001&quot;,
+                 &quot;assetId&quot;: &quot;ZBS&quot;
+             }
+        }
+   }).then((tx) =&gt; {
+        console.log(&quot;Hurray! I've cancelled leasing!!!&quot;);
+   }).catch((error) =&gt; {
+        console.error(&quot;Something went wrong &quot;, error);
+   });
+</code></pre>
+
+<p>In case of a success, the leasing transaction is cancelled.</p>
+<p><strong>Тype 10 CREATE ALIAS – creating an alias for an address</strong></p>
+<ul>
+<li><code>alias</code>[4, 30] string - alias</li>
+<li><code>fee</code> MoneyLike -fee</li>
+<li><code>*senderPublicKey</code> string - sender's public key in base58</li>
+<li><code>*timestamp</code> number/string – time in ms</li>
+</ul>
+<p>Example:</p>
+<pre><code>   zbsLink.signAndPublishTransaction({
+        type: 10,
+        data: {
+             alias: &quot;testAlias&quot;,
+             fee: {
+                 &quot;tokens&quot;: &quot;0.001&quot;,
+                 &quot;assetId&quot;: &quot;ZBS&quot;
+             }
+        }
+   }).then((tx) =&gt; {
+        console.log(&quot;Hurray! Now I have an alias!!!&quot;);
+   }).catch((error) =&gt; {
+        console.error(&quot;Something went wrong&quot;, error);
+   });
+</code></pre>
+
+<p>In case of a success, an alias (another name) is created.</p>
+<p><strong>Тype 11 MASS TRANSFER - a mass transfer of an asset</strong></p>
+<ul>
+<li><code>totalAmount</code> moneyLike – total to be sent // instead of calculating the amount you may insert { assetId: "ID of the asset to be sent", coins: 0},</li>
+<li><code>transfers</code>  a mass of objects<ul>
+<li>{ <code>recipient</code>: string - address/alias, amount: number/string/moneyLike }</li>
+</ul>
+</li>
+<li><code>fee</code> MoneyLike -fee</li>
+<li><code>attachment</code> [,140 bytes в base58] string – additional info</li>
+<li><code>*senderPublicKey</code> string - sender's public key in base58</li>
+<li><code>*timestamp</code> number/string – time in ms</li>
+</ul>
+<p>Example:</p>
+<pre><code>   zbsLink.signAndPublishTransaction({
+        type: 11,
+        data: {
+             totalAmount: { assetId: &quot;ZBS&quot;, coins: 0},
+             transfers: [
+                { recipient: &quot;alias1&quot;, amount: &quot;200000&quot; },
+                { recipient: &quot;alias2&quot;, amount: &quot;200000&quot; },
+             ],
+             fee: {
+                 &quot;tokens&quot;: &quot;0.002&quot;,
+                 &quot;assetId&quot;: &quot;ZBS&quot;
+             }
+        }
+   }).then((tx) =&gt; {
+        console.log(&quot;Hurray! I've sent hi to my friends!!!&quot;);
+   }).catch((error) =&gt; {
+        console.error(&quot;Something went wrong&quot;, error);
+   });
+</code></pre>
+
+<p>In case of a success, 0.002 ZBS will be sent to alias1 and alias2.</p>
+<p><strong>Тype 12 DATA TRANSACTION - saving data</strong></p>
+<ul>
+<li><code>data</code>  mass of objects<ul>
+<li><code>type</code> "binary"/string/"integer"/"boolean" - type,</li>
+<li><code>key</code> string – field name</li>
+<li><code>value</code> /string/string/number/boolean depends on the type</li>
+</ul>
+</li>
+<li><code>fee</code> MoneyLike - fee</li>
+<li><code>*senderPublicKey</code> string - sender's public key in base58</li>
+<li><code>*timestamp</code> number/string – time in ms</li>
+</ul>
+<p>Field:</p>
+<pre><code>   zbsLink.signAndPublishTransaction({
+        type: 12,
+        data: {
+             data: [
+                  { key: &quot;string&quot;, value: &quot;testVal&quot;, type: &quot;string&quot; },
+                  { key: &quot;binary&quot;, value: &quot;base64:AbCd&quot;, type: &quot;binary&quot; },
+                  { key: &quot;integer&quot;, value: 20, type: &quot;integer&quot; },
+                  { key: &quot;boolean&quot;, value: false, type: &quot;boolean&quot; },
+             ],
+             fee: {
+                 &quot;tokens&quot;: &quot;0.01&quot;,
+                 &quot;assetId&quot;: &quot;ZBS&quot;
+             }
+        }
+   }).then((tx) =&gt; {
+        console.log(&quot;Hurray! I've saved data!!!&quot;);
+   }).catch((error) =&gt; {
+        console.error(&quot;Something went wrong&quot;, error);
+   });
+</code></pre>
+
+<p>In case of a success, new data will be stored in the state.</p>
+<p><strong>Тype 13 SET SCRIPT – scrypting an account</strong></p>
+<ul>
+<li><code>script</code> string - script</li>
+<li><code>fee</code> MoneyLike -fee</li>
+<li><code>*senderPublicKey</code> string - sender's public key in base58</li>
+<li><code>*timestamp</code> number/string – time in ms</li>
+</ul>
+<p>For cancelling a script the field <code>script</code>has to be "". <a href="https://ide.0bsnetwork.com/">Script development on RIDE</a></p>
+<p>Example:</p>
+<pre><code>   zbsLink.signAndPublishTransaction({
+        type: 13,
+        data: {
+             script: &quot;&quot;,
+             fee: {
+                 &quot;tokens&quot;: &quot;0.04&quot;,
+                 &quot;assetId&quot;: &quot;ZBS&quot;
+             }
+        }
+   }).then((tx) =&gt; {
+        console.log(&quot;Hurray! I've cancelled a script!!!&quot;);
+   }).catch((error) =&gt; {
+        console.error(&quot;Something went wrong&quot;, error);
+   });
+</code></pre>
+
+<p>In case of a success, the script will be removed from the account.</p>
+<p>Example 2:</p>
+<pre><code>   zbsLink.signAndPublishTransaction({
+        type: 13,
+        data: {
+             script: &quot;base64:AQa3b8tH&quot;,
+             fee: {
+                 &quot;tokens&quot;: &quot;0.01&quot;,
+                 &quot;assetId&quot;: &quot;ZBS&quot;
+             }
+        }
+   }).then((tx) =&gt; {
+        console.log(&quot;Hurray! I've added a script!!!&quot;);
+   }).catch((error) =&gt; {
+        console.error(&quot;Something went wrong&quot;, error);
+   });
+</code></pre>
+
+<p>In case of a success, a new script will be added to the account, allowing any transactions without a signature (be careful!).</p>
+<p><strong>Тype 14 Sponsored Fee Transaction - Sponsorship</strong></p>
+<ul>
+<li><code>minSponsoredAssetFee</code> MoneyLike – fee price in the asset.</li>
+<li><code>fee</code> MoneyLike - fee</li>
+<li><code>*senderPublicKey</code> string - sender's public key in base58</li>
+<li><code>*timestamp</code> number/string – time in ms</li>
+</ul>
+<p>Example:</p>
+<pre><code>   zbsLink.signAndPublishTransaction({
+        type: 14,
+        data: {
+             minSponsoredAssetFee: {
+                assetId: &quot;6frvwF8uicAfyEfTfyC2sXqBJH7V5C8he5K4YH3BkNiS&quot;,
+                tokens: 0.1
+             },
+             fee: {
+                 &quot;tokens&quot;: &quot;1&quot;,
+                 &quot;assetId&quot;: &quot;ZBS&quot;
+             }
+        }
+   }).then((tx) =&gt; {
+        console.log(&quot;Hurray! I've become a sponsor!!!&quot;);
+   }).catch((error) =&gt; {
+        console.error(&quot;Something went wrong&quot;, error);
+   });
+</code></pre>
+
+<p>In case of a success, a transfer fee can be paid in the asset.</p>
+<p><strong>Тype 15 SET ASSET SCRIPT – setting a script to an asset</strong></p>
+<ul>
+<li><code>assetId</code> string – asset ID</li>
+<li><code>script</code> string - [script]</li>
+<li><code>fee</code> MoneyLike -fee</li>
+<li><code>*senderPublicKey</code> string - sender's public key in base58</li>
+<li><code>*timestamp</code> number/string – time in ms</li>
+</ul>
+<p>It's now impossible to cancel a script, you can only add a new script. <a href="https://ide.0bsnetwork.com/">Script development on RIDE</a></p>
+<p>Example:</p>
+<pre><code>   zbsLink.signAndPublishTransaction({
+        type: 15,
+        data: {
+             assetId: &quot;&quot;,
+             script: &quot;base64:AQa3b8tH&quot;,
+             fee: {
+                 &quot;tokens&quot;: &quot;0.01&quot;,
+                 &quot;assetId&quot;: &quot;ZBS&quot;
+             }
+        }
+   }).then((tx) =&gt; {
+        console.log(&quot;Hurray! I have reset a script to the asset!!!&quot;);
+   }).catch((error) =&gt; {
+        console.error(&quot;Something went wrong&quot;, error);
+   });
+</code></pre>
+
+<p>In case of a success, the asset's script will be reset.</p>
+<hr />
+<p><strong>signOrder</strong></p>
+<p>0bsLink's method for signing an order to the matcher. As input, it accepts an object similar to a transaction like this:</p>
+<pre><code>    {
+        type: 1002,
+        data: {
+            ...data
+        }
+    }
+
+</code></pre>
+
+<ul>
+<li><code>amount</code> MoneyLike - amount</li>
+<li><code>price</code> MoneyLike - price</li>
+<li><code>orderType</code> 'sell'/'buy' – order type</li>
+<li><code>matcherFee</code> MoneyLike - fee (0.003 ZBS minimum),</li>
+<li><code>matcherPublicKey</code> string - the public key of the exchange service</li>
+<li><code>expiration</code> string/number – the order's expiration time</li>
+<li><code>*timestamp</code> string/number - current time</li>
+<li><code>*senderPublicKey</code> string - public key in base58</li>
+</ul>
+<p>Example:</p>
+<pre><code>   zbsLink.signOrder({
+        type: 1002,
+        data: {
+             matcherPublicKey: &quot;7kPFrHDiGw1rCm7LPszuECwWYL3dMf6iMifLRDJQZMzy&quot;,
+             orderType: &quot;sell&quot;,
+             expiration: Date.now() + 100000,
+             amount: {
+                 tokens: &quot;100&quot;,
+                 assetId: &quot;ZBS&quot;
+             },
+             price: {
+                 tokens: &quot;0.01&quot;,
+                 assetId: &quot;8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS&quot;
+             },
+             matcherFee: {
+                 tokens: &quot;0.03&quot;,
+                 assetId: &quot;ZBS&quot;
+             }
+        }
+   }).then((tx) =&gt; {
+        console.log(&quot;Hurray! I've signed an order!!!&quot;);
+   }).catch((error) =&gt; {
+        console.error(&quot;Something went wrong&quot;, error);
+   });
+</code></pre>
+
+<p>REPLY: A line with data for sending to the matcher.</p>
+<p>ERRORS:</p>
+<ul>
+<li><code>{ message: "User denied message", code: 10 }</code> – the user rejected the request</li>
+<li><code>{ message: "Api rejected by user", code: 12 }</code> – The website is not trusted</li>
+<li><code>{ message: "Invalid data", data: "Reason", code: 9 }</code> - invalid/incomplete request data</li>
+</ul>
+<p><strong>signAndPublishOrder</strong></p>
+<p>0bsLink's method for creating an order to the matcher is identical to <code>signOrder</code>, but it also tries to send data to the matcher.</p>
+<p>REPLY: the matcher's reply line about successful creation of an order.</p>
+<p>ERRORS:</p>
+<ul>
+<li>Same as for <code>signOrder</code></li>
+<li><code>{message: "Filed request", data: "Error description", code: 15}</code> – a request has been signed, but not sent to the matcher</li>
+</ul>
+<p><strong>signCancelOrder</strong></p>
+<p>0bsLink's method for signing cancellation of an order to the matcher. As input, it accepts an object similar to a transaction like this:</p>
+<pre><code>    {
+        type: 1003,
+        data: {
+            ...data
+        }
+    }
+
+</code></pre>
+
+<ul>
+<li><code>id</code> string – order ID</li>
+<li><code>*senderPublicKey</code> - string - sender's public key in base58</li>
+</ul>
+<p>Example:</p>
+<pre><code>    zbsLink.signCancelOrder({
+        type: 1003,
+        data: {
+            id: '31EeVpTAronk95TjCHdyaveDukde4nDr9BfFpvhZ3Sap'
+        }
+    });
+</code></pre>
+
+<p>REPLY: A data line for sending to the matcher.</p>
+<p>ERRORS:</p>
+<ul>
+<li><code>{ message: "User denied message", code: 10 }</code> – the user rejected the request</li>
+<li><code>{ message: "Api rejected by user", code: 12 }</code> – The website is not trusted</li>
+<li><code>{ message: "Invalid data", data: "Reason", code: 9 }</code> - invalid/incomplete request data</li>
+</ul>
+<p><strong>signAndPublishCancelOrder</strong></p>
+<p>0bsLink's method for cancelling an order to the matcher. It works identically to <code>signCancelOrder</code>, but also tries to send data to the matcher.</p>
+<p>Example:</p>
+<pre><code>    zbsLink.signAndPublishCancelOrder({
+        type: 1003,
+        data: {
+            id: '31EeVpTAronk95TjCHdyaveDukde4nDr9BfFpvhZ3Sap'
+        }
+    }).then(() =&gt; {
+        console.log('Hurray! I've cancelled an order');
+    }).catch((error) =&gt; {
+        console.error(&quot;Something went wrong&quot;, error);
+    })
+</code></pre>
+
+<p>REPLY: Data that came from the matcher</p>
+<p>ERRORS:</p>
+<ul>
+<li>Same as for <code>signCancelOrder</code></li>
+<li><code>{message: "Filed request", data: "Error description", code: 15}</code> – a request has been signed, but not sent to the matcher</li>
+</ul>
+<p><strong>signRequest</strong></p>
+<p>0bsLink's method for signing typified data, for signing requests on various services. As input, it accepts an object similar to a transaction like this:</p>
+<pre><code>    {
+        type: number,
+        data: {
+            ...data
+        }
+    }
+</code></pre>
+
+<p>Currently, the method supports the following types:</p>
+<p><strong>1001 – signing data for a request to the matcher for your orders</strong></p>
+<ul>
+<li><code>timestamp</code> number/string</li>
+<li><code>*senderPublicKey</code> string public key in base58</li>
+</ul>
+<p>Example:</p>
+<pre><code>    zbsLink.signRequest({
+        type: 1001,
+        data: {
+            timestamp: 234234242423423
+        }
+    });
+</code></pre>
+
+<p>REPLY: a line with a signature in base58.</p>
+<p>ERRORS:</p>
+<ul>
+<li><code>{ message: "User denied message", code: 10 }</code> – the user rejected the request</li>
+<li><code>{ message: "Api rejected by user", code: 12 }</code> – The website is not trusted</li>
+<li><code>{ message: "Invalid data", data: "Reason", code: 9 }</code> - invalid/incomplete request data</li>
+</ul>
+<p><strong>1004 – signing data for a request to Coinomat</strong></p>
+<ul>
+<li><code>timestamp</code> number/string</li>
+</ul>
+<p>Request:</p>
+<pre><code>    zbsLink.signRequest({
+        type: 1004,
+        data: {
+            timestamp: 234234242423423
+        }
+    });
+</code></pre>
+
+<p>REPLY: a line with a signature in base58.</p>
+<p>ERRORS:</p>
+<ul>
+<li><code>{ message: "User denied message", code: 10 }</code> – the user rejected the request</li>
+<li><code>{ message: "Api rejected by user", code: 12 }</code> – The website is not trusted</li>
+<li><code>{ message: "Invalid data", data: "Reason", code: 9 }</code> - invalid/incomplete request data</li>
+</ul>
               
             </div>
           </div>

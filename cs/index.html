@@ -104,6 +104,17 @@
     <a class="current" href="./">C# Library</a>
     <ul class="subnav">
             
+    <li class="toctree-l2"><a href="#zbscs">ZbsCS</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#getting-started">Getting Started</a></li>
+        
+            <li><a class="toctree-l3" href="#documentation">Documentation</a></li>
+        
+        </ul>
+    
+
     </ul>
 	    </li>
           
@@ -159,7 +170,32 @@
           <div role="main">
             <div class="section">
               
-                
+                <h1 id="zbscs">ZbsCS</h1>
+<p>A C# library for interacting with the 0bsNetwork blockchain</p>
+<p>Supports node interaction, offline transaction signing, Matcher orders, and creating addresses and keys.</p>
+<h2 id="getting-started">Getting Started</h2>
+<p>Include the project in your project, and Add a Reference</p>
+<pre><code>using ZbsCS;
+</code></pre>
+
+<p>For installation via UI Package Manager use this <a href="https://docs.microsoft.com/en-us/nuget/tools/package-manager-ui">instruction</a>.</p>
+<p>Target framework .NET Framework 4.5.1</p>
+<h2 id="documentation">Documentation</h2>
+<p>The library utilizes classes to represent various Zbs data structures and encoding and serialization methods:</p>
+<ul>
+<li>ZbsCS.Node</li>
+<li>ZbsCS.Order</li>
+<li>ZbsCS.OrderBook</li>
+<li>ZbsCS.PrivateKeyAccount</li>
+<li>ZbsCS.Transaction</li>
+<li>ZbsCS.AddressEncoding</li>
+<li>ZbsCS.Base58</li>
+<li>ZbsCS.Utils</li>
+</ul>
+<h4 id="code-example">Code Example</h4>
+<p>Code examples are in <a href="https://github.com/0bsnetwork/ZbsCS/tree/master/ZbsCSTests">ZbsCSTests</a> project and <a href="Examples.md">Examples</a> page.</p>
+<h3 id="source-code">Source code</h3>
+<p>[ZbsCS Github repository](https://github.com/0bsnetwork/ZbsCS</p>
               
             </div>
           </div>

@@ -94,6 +94,22 @@
     <a class="current" href="./">Java Library</a>
     <ul class="subnav">
             
+    <li class="toctree-l2"><a href="#zbsjava">ZbsJava</a></li>
+    
+
+    <li class="toctree-l2"><a href="#zbsjava_1">zbsjava</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#using-zbsjava-in-your-project">Using zbsjava in your project</a></li>
+        
+            <li><a class="toctree-l3" href="#basic-usage">Basic Usage</a></li>
+        
+            <li><a class="toctree-l3" href="#building-the-library">Building the library</a></li>
+        
+        </ul>
+    
+
     </ul>
 	    </li>
           
@@ -159,7 +175,83 @@
           <div role="main">
             <div class="section">
               
-                
+                <h2 id="zbsjava">ZbsJava</h2>
+<h1 id="zbsjava_1">zbsjava</h1>
+<p>A Java library for interacting with the zbsnetwork blockchain.</p>
+<p>Supports node interaction, offline transaction signing, Matcher orders, and creating addresses and keys.</p>
+<h2 id="using-zbsjava-in-your-project">Using zbsjava in your project</h2>
+<p>Use the codes below to add zbsjava as a dependency for your project.</p>
+<h5 id="maven">Maven:</h5>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.zbsnetwork&lt;/groupId&gt;
+    &lt;artifactId&gt;zbsjava&lt;/artifactId&gt;
+    &lt;version&gt;0.10&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<h5 id="gradle">Gradle:</h5>
+<pre><code>compile group: 'com.zbsnetwork', name: 'zbsjava', version: '0.10'
+</code></pre>
+
+<h5 id="sbt">SBT:</h5>
+<pre><code>libraryDependencies += &quot;com.zbsnetwork&quot; % &quot;zbsjava&quot; % &quot;0.10&quot;
+</code></pre>
+
+<p><a href="https://mvnrepository.com/artifact/com.zbsnetwork/zbsjava">This library's page at Maven Central</a></p>
+<h2 id="basic-usage">Basic Usage</h2>
+<p>Create an account from a private key:</p>
+<pre><code>String seed = &quot;health lazy lens fix dwarf salad breeze myself silly december endless rent faculty report beyond&quot;;
+PrivateKeyAccount account = PrivateKeyAccount.fromSeed(seed, 0, Account.MAINNET);
+byte[] publicKey = account.getPublicKey();
+String address = account.getAddress();
+</code></pre>
+
+<p>Create a Node and learn a few things about blockchain:</p>
+<pre><code>Node node = new Node(&quot;https://nodes.testnet-0bsnetwork.com/&quot;, Account.TESTNET);
+System.out.println(&quot;Current height is &quot; + node.getHeight());
+System.out.println(&quot;My balance is &quot; + node.getBalance(address));
+System.out.println(&quot;With 100 confirmations: &quot; + node.getBalance(address, 100));
+</code></pre>
+
+<p>Send some money to a buddy:</p>
+<pre><code>String buddy = &quot;3N9gDFq8tKFhBDBTQxR3zqvtpXjw5wW3syA&quot;;
+String txId = node.transfer(account, buddy, 1_00000000, 100_000, &quot;Here's for you&quot;);
+</code></pre>
+
+<p>Set a script on an account. Be careful with the script you pass here, as it may lock the account forever!</p>
+<pre><code>String setScriptTxId = node.setScript(alice, &quot;tx.type == 13 &amp;&amp; height &gt; &quot; + height, Account.MAINNET, SCRIPT_FEE);
+</code></pre>
+
+<p>Sign a transaction offline:</p>
+<pre><code>Transaction tx = Transaction.makeTransferTx(account, buddy, 1_00000000, Asset.ZBS, 100_000, Asset.ZBS, &quot;&quot;);
+System.out.println(&quot;JSON encoded data: &quot; + tx.getJson());
+System.out.println(&quot;Server endpoint to send this JSON to: &quot; + tx.getEndpoint());
+</code></pre>
+
+<p>Now send it from an online machine:</p>
+<pre><code>node.send(tx);
+</code></pre>
+
+<p>Create a DEX order:</p>
+<pre><code>Node matcher = new Node(&quot;https://nodes.testnet-0bsnetwork.com&quot;, Account.MAINNNET);
+String matcherKey = matcher.getMatcherKey();
+String zbtcId = &quot;Fmg13HEHJHuZYbtJq8Da8wifJENq8uBxDuWoP9pVe2Qe&quot;;
+Order order = matcher.createOrder(alice, matcherKey,
+                new AssetPair(Asset.ZBS, zbtcId),
+                // buy 10 ZBS at 0.00090000 ZBTC each
+                Order.Type.BUY, 90_000, 10 * Asset.TOKEN,
+                // make order valid for 1 hour
+                System.currentTimeMillis() + 3_600_000, MATCHER_FEE);
+System.out.printf(&quot;Filed order &quot; + order.id);
+</code></pre>
+
+<p>There are some examples under <code>src/examples/java</code>.</p>
+<h2 id="building-the-library">Building the library</h2>
+<p>To build from scratch, run</p>
+<pre><code>mvn clean package
+</code></pre>
+
+<p>The outputs are placed under the <code>target</code> directory.</p>
               
             </div>
           </div>

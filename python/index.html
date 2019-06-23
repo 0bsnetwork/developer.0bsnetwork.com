@@ -99,6 +99,84 @@
     <a class="current" href="./">Python Library</a>
     <ul class="subnav">
             
+    <li class="toctree-l2"><a href="#python-library-zbspy">Python Library - zbsPy</a></li>
+    
+
+    <li class="toctree-l2"><a href="#getting-started">Getting Started</a></li>
+    
+
+    <li class="toctree-l2"><a href="#documentation">Documentation</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#code-example">Code Example</a></li>
+        
+            <li><a class="toctree-l3" href="#address-class">Address Class</a></li>
+        
+            <li><a class="toctree-l3" href="#asset-class">Asset Class</a></li>
+        
+            <li><a class="toctree-l3" href="#assetpair-class">AssetPair Class</a></li>
+        
+            <li><a class="toctree-l3" href="#order-class">Order Class</a></li>
+        
+        </ul>
+    
+
+    <li class="toctree-l2"><a href="#other-functions">Other functions</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#default-fees">Default Fees</a></li>
+        
+        </ul>
+    
+
+    <li class="toctree-l2"><a href="#more-examples">More Examples</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#playing-with-addresses">Playing with addresses:</a></li>
+        
+            <li><a class="toctree-l3" href="#balances">Balances:</a></li>
+        
+            <li><a class="toctree-l3" href="#zbs-and-asset-transfers">Zbs and asset transfers:</a></li>
+        
+            <li><a class="toctree-l3" href="#issuing-an-asset">Issuing an asset:</a></li>
+        
+            <li><a class="toctree-l3" href="#create-an-alias">Create an alias:</a></li>
+        
+            <li><a class="toctree-l3" href="#mass-payment">Mass payment:</a></li>
+        
+            <li><a class="toctree-l3" href="#mass-transfer-of-zbs-feature-11">Mass transfer of Zbs (feature 11)</a></li>
+        
+            <li><a class="toctree-l3" href="#mass-transfer-of-assets-feature-11">Mass transfer of Assets (feature 11)</a></li>
+        
+            <li><a class="toctree-l3" href="#data-transaction">Data Transaction:</a></li>
+        
+            <li><a class="toctree-l3" href="#token-airdrop">Token airdrop:</a></li>
+        
+            <li><a class="toctree-l3" href="#add-a-script-to-an-account">Add a script to an account:</a></li>
+        
+            <li><a class="toctree-l3" href="#issue-a-smart-asset">Issue a Smart Asset</a></li>
+        
+            <li><a class="toctree-l3" href="#set-a-new-script-for-a-smart-asset">Set a new script for a Smart Asset</a></li>
+        
+            <li><a class="toctree-l3" href="#playing-with-zbs-matcher-node-dex">Playing with Zbs Matcher node (DEX):</a></li>
+        
+            <li><a class="toctree-l3" href="#getting-market-data-from-zbs-data-feed-wdf">Getting Market Data from Zbs Data Feed (WDF):</a></li>
+        
+            <li><a class="toctree-l3" href="#lpos">LPOS</a></li>
+        
+            <li><a class="toctree-l3" href="#using-zbspy-in-a-python-shell">Using ZbsPy in a Python shell</a></li>
+        
+            <li><a class="toctree-l3" href="#offline-signing-and-custom-timestamps">Offline signing and custom timestamps</a></li>
+        
+        </ul>
+    
+
+    <li class="toctree-l2"><a href="#connecting-to-a-different-node-or-chain">Connecting to a different node or chain</a></li>
+    
+
     </ul>
 	    </li>
           
@@ -159,7 +237,528 @@
           <div role="main">
             <div class="section">
               
-                
+                <h2 id="python-library-zbspy">Python Library - zbsPy</h2>
+<p>ZbsPy is an object-oriented Python interface to the 0bsNetwork blockchain platform.</p>
+<h2 id="getting-started">Getting Started</h2>
+<p>You can install ZbsPy using:</p>
+<pre><code>pip install zbspy
+</code></pre>
+<h2 id="documentation">Documentation</h2>
+<p>The library utilizes classes to represent various Zbs data structures:</p>
+<ul>
+<li>zbspy.Address</li>
+<li>zbspy.Asset</li>
+<li>zbspy.AssetPair</li>
+<li>zbspy.Order</li>
+</ul>
+<h4 id="code-example">Code Example</h4>
+<pre><code class="python">import zbspy as pw
+
+myAddress = pw.Address(privateKey='CtMQWJZqfc7PRzSWiMKaGmWFm4q2VN5fMcYyKDBPDx6S')
+otherAddress = pw.Address('3PNTcNiUzppQXDL9RZrK3BcftbujiFqrAfM')
+myAddress.sendZbs(otherAddress, 10000000)
+myToken = myAddress.issueAsset('Token1', 'My Token', 1000, 0)
+while not myToken.status():
+    pass
+myAddress.sendAsset(otherAddress, myToken, 50)
+
+</code></pre>
+
+<h3 id="address-class">Address Class</h3>
+<p><strong>zbspy.Address(address, publicKey, privateKey, seed)</strong> <em>Creates a new Address object</em></p>
+<h4 id="attributes">attributes:</h4>
+<ul>
+<li><em>address</em></li>
+<li><em>publicKey</em></li>
+<li><em>privateKey</em></li>
+<li><em>seed</em></li>
+</ul>
+<h4 id="methods">methods:</h4>
+<p><code>balance(assetId='', confirmations=0)</code> returns balance of Zbs or other assets</p>
+<p><code>assets()</code> returns a list of assets owned by the address</p>
+<p><code>issueAsset(name, description, quantity, decimals=0, reissuable=False, txFee=DEFAULT_ASSET_FEE, timestamp=0)</code> issue a new asset</p>
+<p><code>reissueAsset(Asset, quantity, reissuable=False, txFee=DEFAULT_ASSET_FEE, timestamp=0)</code> reissue an asset</p>
+<p><code>burnAsset(Asset, quantity, txFee=DEFAULT_ASSET_FEE, timestamp=0)</code> burn the specified quantity of an asset</p>
+<p><code>sendZbs(recipient, amount, attachment='', txFee=DEFAULT_TX_FEE, timestamp=0)</code> send specified amount of Zbs to recipient</p>
+<p><code>massTransferZbs(transfers, attachment='', timestamp=0)</code> sending Zbs tokens via a mass transfer</p>
+<p><code>sendAsset(recipient, asset, amount, attachment='', txFee=DEFAULT_TX_FEE, timestamp=0)</code> send specified amount of an asset to recipient</p>
+<p><code>massTransferZbs(self, transfers, attachment='', timestamp=0)</code> sending an asset via mass transfer</p>
+<p><code>cancelOrder(assetPair, order)</code> cancel an order</p>
+<p><code>buy(assetPair, amount price, maxLifetime=30*86400, matcherFee=DEFAULT_MATCHER_FEE, timestamp=0)</code> post a buy order</p>
+<p><code>tradableBalance(assetPair)</code> get tradable balance for the specified asset pair</p>
+<p><code>sell(assetPair, amount, price, maxLifetime=30*86400, matcherFee=DEFAULT_MATCHER_FEE, timestamp=0)</code> post a sell order</p>
+<p><code>lease(recipient, amount, txFee=DEFAULT_LEASE_FEE, timestamp=0)</code> post a lease transaction</p>
+<p><code>leaseCancel(leaseId, txFee=DEFAULT_LEASE_FEE, timestamp=0)</code> cancel a lease</p>
+<p><code>getOrderHistory(assetPair)</code> get order history for the specified asset pair</p>
+<p><code>cancelOpenOrders(assetPair)</code> cancel all open orders for the specified asset pair</p>
+<p><code>deleteOrderHistory(assetPair)</code> delete order history for the specified asset pair</p>
+<p><code>createAlias(alias, txFee=DEFAULT_ALIAS_FEE, timestamp=0)</code> create alias</p>
+<p><code>sponsorAsset(assetId, minimalFeeInAssets, txFee=zbspy.DEFAULT_SPONSOR_FEE, timestamp=0)</code> sponsoring assets</p>
+<p><code>setScript(script, txFee=zbspy.DEFAULT_SCRIPT_FEE, timestamp=0)</code> sets a script for this address</p>
+<p><code>dataTransaction(data, timestamp=0)</code> sets data for the account. data should be a json array with entries including type (bool, binary, int, string), key and value</p>
+<p><code>setScript(scriptSource, txFee=zbspy.DEFAULT_SCRIPT_FEE, timestamp=0)</code> issue a smart asset</p>
+<p><code>setAssetScript(asset, scriptSource, txFee=zbspy.DEFAULT_ASSET_SCRIPT_FEE, timestamp=0)</code> set a new script for a smart asset</p>
+<h3 id="asset-class">Asset Class</h3>
+<p><strong>zbspy.Asset(assetId)</strong> <em>Creates a new Asset object</em></p>
+<h4 id="attributes_1">attributes:</h4>
+<ul>
+<li><em>status</em></li>
+<li><em>assetId</em></li>
+<li><em>issuer</em></li>
+<li><em>name</em></li>
+<li><em>description</em></li>
+<li><em>quantity</em></li>
+<li><em>decimals</em> = 0</li>
+<li><em>reissuable = False</em></li>
+</ul>
+<h4 id="methods_1">methods:</h4>
+<p><code>status()</code> returns 'Issued' if the asset exists</p>
+<h3 id="assetpair-class">AssetPair Class</h3>
+<p><strong>zbspy.AssetPair(asset1, asset2)</strong> <em>Creates a new AssetPair object with 2 Asset objects</em></p>
+<h4 id="attributes_2">attributes:</h4>
+<ul>
+<li><em>asset1</em></li>
+<li><em>asset2</em></li>
+</ul>
+<h4 id="methods_2">methods:</h4>
+<p><code>orderbook()</code> get order book</p>
+<p><code>ticker()</code> get ticker with 24h ohlcv data</p>
+<p><code>last()</code> get traded price</p>
+<p><code>open()</code> get 24h open price</p>
+<p><code>high()</code> get 24h high price</p>
+<p><code>low()</code> get 24h low price</p>
+<p><code>close()</code> get 24h close price (same as last())</p>
+<p><code>vwap()</code> get 24h vwap price</p>
+<p><code>volume()</code> get 24h volume</p>
+<p><code>priceVolume()</code> get 24h price volume</p>
+<p><code>trades(n)</code> get the last n trades</p>
+<p><code>trades(from, to)</code> get the trades in from/to interval</p>
+<p><code>candles(timeframe, n)</code> get the last n candles in the specified timeframe</p>
+<p><code>candles(timeframe, from, to)</code> get the candles in from/to interval in the specified timeframe</p>
+<h3 id="order-class">Order Class</h3>
+<p><strong>zbspy.Order(orderId, assetPair, address='')</strong> Creates a new Order object</p>
+<h4 id="attributes_3">attributes:</h4>
+<ul>
+<li><em>status</em></li>
+<li><em>orderId</em></li>
+<li><em>assetPair</em></li>
+<li><em>address</em></li>
+<li><em>matcher</em></li>
+<li><em>matcherPublicKey</em></li>
+</ul>
+<h4 id="methods_3">methods:</h4>
+<p><code>status()</code> returns current order status
+<code>cancel()</code> cancel the order</p>
+<h2 id="other-functions">Other functions</h2>
+<p><code>zbspy.setNode(node, chain, chain_id)</code>  set node URL ('http://ip-address:port') and chain (either 'mainnet' or 'testnet', or any other chain, if you also define the chain id)</p>
+<p><code>zbspy.setChain(chain, chain_id)</code>  set chain (either 'mainnet' or 'testnet', or any other chain if you also supply the chain id)</p>
+<p><code>zbspy.setOffline()</code>  switch to offline mode; sign tx locally without broadcasting to network</p>
+<p><code>zbspy.setOnline()</code>  switch to online mode; sign tx locally a broadcast to network</p>
+<p><code>zbspy.validateAddress(address)</code>  checks if the provided address is a valid Zbs address</p>
+<p><code>zbspy.setMatcher(node)</code>  set matcher URL ('http://ip-address:port')</p>
+<p><code>zbspy.setDatafeed(node)</code>  set datafeed URL ('http://ip-address:port')</p>
+<p><code>zbspy.height()</code> get blockchain height</p>
+<p><code>zbspy.lastblock()</code> get last block</p>
+<p><code>zbspy.block(n)</code> get block at specified height</p>
+<p><code>zbspy.tx(id)</code> get transaction details</p>
+<p><code>zbspy.symbols()</code> get list of symbol-asset mapping</p>
+<p><code>zbspy.markets()</code> get all traded markets with tickers</p>
+<p><code>zbspy.{SYMBOL_NAME}</code> get predefined asset for the specified symbol (zbspy.ZBS, zbspy.BTC, zbspy.USD,...)</p>
+<h3 id="default-fees">Default Fees</h3>
+<p>The fees for zbs/asset transfers, asset issue/reissue/burn and matcher transactions are set by default as follows:
+* DEFAULT_TX_FEE = 100000
+* DEFAULT_ASSET_FEE = 100000000
+* DEFAULT_MATCHER_FEE = 1000000
+* DEFAULT_LEASE_FEE = 100000
+* DEFAULT_ALIAS_FEE = 100000
+* DEFAULT_SPONSOR_FEE = 100000000
+* DEFAULT_SCRIPT_FEE = 100000</p>
+<h2 id="more-examples">More Examples</h2>
+<h4 id="playing-with-addresses">Playing with addresses:</h4>
+<pre><code class="python">import zbspy as pw
+
+# generate a new address
+myAddress = pw.Address()
+
+# set an address with an address
+myAddress = pw.Address('3P6WfA4qYtkgwVAsWiiB6yaea2X8zyXncJh')
+
+# get an existing address from seed
+myAddress = pw.Address(seed='seven wrist bargain hope pattern banner plastic maple student chaos grit next space visa answer')
+
+# get an existing address from privateKey
+myAddress = pw.Address(privateKey='CtMQWJZqfc7PRzSWiMKaGmWFm4q2VN5fMcYyKDBPDx6S')
+
+# get an existing address from a publicKey
+address = pw.Address(publicKey=“EYNuSmW4Adtcc6AMCZyxkiHMPmF2BZ2XxvjpBip3UFZL”)
+
+# get an address from a seed with a different nonce (This is especially useful for accessing addresses generated by nodes)
+myAddress = pw.Address(seed='seven wrist bargain hope pattern banner plastic maple student chaos grit next space visa answer', nonce=1)
+</code></pre>
+
+<h4 id="balances">Balances:</h4>
+<pre><code class="python">import zbspy as pw
+
+myAddress = pw.Address('3P6WfA4qYtkgwVAsWiiB6yaea2X8zyXncJh')
+
+# get Zbs balance
+print(&quot;Your balance is %18d&quot; % myAddress.balance())
+
+# get Zbs balance after 20 confirmations
+print(&quot;Your balance is %18d&quot; % myAddress.balance(confirmations = 20))
+
+# get an asset balance
+print(&quot;Your asset balance is %18d&quot; % myAddress.balance('DHgwrRvVyqJsepd32YbBqUeDH4GJ1N984X8QoekjgH8J'))
+</code></pre>
+
+<h4 id="zbs-and-asset-transfers">Zbs and asset transfers:</h4>
+<pre><code class="python">import zbspy as pw
+
+myAddress = pw.Address(privateKey='CtMQWJZqfc7PRzSWiMKaGmWFm4q2VN5fMcYyKDBPDx6S')
+
+# send Zbs to another address
+myAddress.sendZbs(recipient = pw.Address('3PNTcNiUzppQXDL9RZrK3BcftbujiFqrAfM'),
+                    amount = 100000000)
+
+# send asset to another address
+myToken = pw.Asset('4ZzED8WJXsvuo2MEm2BmZ87Azw8Sx7TVC6ufSUA5LyTV')
+myAddress.sendAsset(recipient = pw.Address('3PNTcNiUzppQXDL9RZrK3BcftbujiFqrAfM'),
+                    asset = myToken,
+                    amount = 1000)
+</code></pre>
+
+<h4 id="issuing-an-asset">Issuing an asset:</h4>
+<pre><code class="python">import zbspy as pw
+
+myToken = myAddress.issueAsset( name = &quot;MyToken&quot;,
+                                description = &quot;This is my first token&quot;,
+                                quantity = 1000000,
+                                decimals = 2 )
+</code></pre>
+
+<h4 id="create-an-alias">Create an alias:</h4>
+<pre><code class="python">import zbspy as pw
+
+pw.setNode(node = 'http://127.0.0.1:7431', chain = 'testnet')
+
+myAddress = pw.Address(privateKey='CtMQWJZqfc7PRzSWiMKaGmWFm4q2VN5fMcYyKDBPDx6S')
+myAddress.createAlias(&quot;MYALIAS1&quot;)
+</code></pre>
+
+<h4 id="mass-payment">Mass payment:</h4>
+<pre><code class="python">import zbspy as pw
+
+recipients =   ['3PBbp6bg2YEnHfdJtYM7jzzXYQeb7sx5oFg',
+                '3P4A27aCd3skNja46pcgrLYEnK36TkSzgUp',
+                '3P81U3ujotNUwZMWALdcJQLzBVbrAuUQMfs',
+                '3PGcKEMwQcEbmeL8Jhe9nZQRBNCNdcHCoZP',
+                '3PKjtzZ4FhKrJUikbQ1hRk5xbwVKDyTyvkn']
+
+myAddress = pw.Address(privateKey = &quot;CtMQWJZqfc7PRzSWiMKaGmWFm4q2VN5fMcYyKDBPDx6S&quot;)
+
+for address in recipients:
+    myAddress.sendZbs(pw.Address(address), 1000000)
+</code></pre>
+
+<h4 id="mass-transfer-of-zbs-feature-11">Mass transfer of Zbs (feature 11)</h4>
+<pre><code class="python">import zbspy as pw
+
+transfers = [
+    { 'recipient': '3N1xca2DY8AEwqRDAJpzUgY99eq8J9h4rB3', 'amount': 1 },
+    { 'recipient': '3N3YWbQ27NnK7tek6ASFh38Bj93guLxxSi1', 'amount': 2 },
+    { 'recipient': '3MwiB5UkWxt4X1qJ8DQpP2LpM3m48V1z5rC', 'amount': 3 }
+]
+
+address = pw.Address(privateKey = &quot;CtMQWJZqfc7PRzSWiMKaGmWFm4q2VN5fMcYyKDBPDx6S&quot;)
+address.massTransferZbs(transfers)
+</code></pre>
+
+<h4 id="mass-transfer-of-assets-feature-11">Mass transfer of Assets (feature 11)</h4>
+<pre><code class="python">import zbspy as pw
+
+transfers = [
+    { 'recipient': '3N1xca2DY8AEwqRDAJpzUgY99eq8J9h4rB3', 'amount': 1 },
+    { 'recipient': '3N3YWbQ27NnK7tek6ASFh38Bj93guLxxSi1', 'amount': 2 },
+    { 'recipient': '3MwiB5UkWxt4X1qJ8DQpP2LpM3m48V1z5rC', 'amount': 3 }
+]
+
+address = pw.Address(privateKey = &quot;CtMQWJZqfc7PRzSWiMKaGmWFm4q2VN5fMcYyKDBPDx6S&quot;)
+address.massTransferAssets(transfers, pw.Asset('9DtBNdyBCyViLZHptyF1HbQk73F6s7nQ5dXhNHubtBhd'))
+</code></pre>
+
+<h4 id="data-transaction">Data Transaction:</h4>
+<pre><code class="python">import zbspy as py
+
+myAddress = py.Address(privateKey='CtMQWJZqfc7PRzSWiMKaGmWFm4q2VN5fMcYyKDBPDx6S')
+
+data = [{
+        'type':'string',
+        'key': 'test',
+        'value':'testval'
+        }]
+
+myAddress.dataTransaction(data)
+
+</code></pre>
+
+<h4 id="token-airdrop">Token airdrop:</h4>
+<pre><code class="python">import zbspy as pw
+
+myAddress = pw.Address(privateKey = '`')
+myToken = pw.Asset('4ZzED8WJXsvuo2MEm2BmZ87Azw8Sx7TVC6ufSUA5LyTV')
+amount = 1000
+
+with open('recipients.txt') as f:
+    lines = f.readlines()
+for address in lines:
+    myAddress.sendAsset(pw.Address(address.strip()), myToken, amount)
+</code></pre>
+
+<h4 id="add-a-script-to-an-account">Add a script to an account:</h4>
+<pre><code class="python">import zbspy as pw
+import base64
+
+pw.setNode(node='&lt;node&gt;', chain='testnet')
+
+script = 'match tx { \n' + \
+'  case _ =&gt; true\n' + \
+'}'
+address = pw.Address(privateKey = &quot;&lt;private key&gt;&quot;)
+tx = address.setScript(script, txFee=1000000)
+</code></pre>
+
+<h4 id="issue-a-smart-asset">Issue a Smart Asset</h4>
+<pre><code class="python">imort zbspy as pw
+import base64
+
+pw.setNode(node='&lt;node&gt;', chain='testnet')
+
+script = 'match tx { \n' + \
+'  case _ =&gt; true\n' + \
+'}'
+address = pw.Address(privateKey = '&lt;private key&gt;')
+tx = address.issueSmartAsset('smartTestAsset', 'an asset for testingsmart assets', 1000, script, 2)
+</code></pre>
+
+<h4 id="set-a-new-script-for-a-smart-asset">Set a new script for a Smart Asset</h4>
+<pre><code class="python">import zbspy as pw
+import base64
+
+pw.setNode(node='&lt;node&gt;', chain='testnet')
+
+script = 'match tx { \n' + \
+'  case _ =&gt; true\n' + \
+'}'
+address = pw.Address(privateKey = '&lt;private key&gt;')
+tx = address.setAssetScript(pw.Asset('&lt;asset id&gt;'), script)
+</code></pre>
+
+<h4 id="playing-with-zbs-matcher-node-dex">Playing with Zbs Matcher node (DEX):</h4>
+<pre><code class="python">import zbspy as pw
+
+# set Matcher node to use
+pw.setMatcher(node = 'http://127.0.0.1:7442')
+
+# post a buy order
+BTC = pw.Asset('4ZzED8WJXsvuo2MEm2BmZ87Azw8Sx7TVC6ufSUA5LyTV')
+USD = pw.Asset('6wuo2hTaDyPQVceETj1fc5p4WoMVCGMYNASN8ym4BGiL')
+BTC_USD = pw.AssetPair(BTC, USD)
+myOrder = myAddress.buy(assetPair = BTC_USD, amount = 15e8, price = 95075)
+
+# post a sell order
+WCT = pw.Asset('6wuo2hTaDyPQVceETj1fc5p4WoMVCGMYNASN8ym4BGiL')
+Incent = pw.Asset('FLbGXzrpqkvucZqsHDcNxePTkh2ChmEi4GdBfDRRJVof')
+WCT_Incent = pw.AssetPair(WCT, Incent)
+myOrder = myAddress.sell(assetPair = WCT_Incent, amount = 100e8, price = 25e8)
+
+# post a buy order using Zbs as price asset
+BTC = pw.Asset('4ZzED8WJXsvuo2MEm2BmZ87Azw8Sx7TVC6ufSUA5LyTV')
+BTC_ZBS = pw.AssetPair(BTC, pw.ZBS)
+myOrder = myAddress.buy(assetPair = BTC_ZBS, amount = 1e8, price = 50e8)
+
+# cancel an order
+myOrder.cancel()
+# or
+myAddress.cancelOrder(assetPair, myOrder)
+
+</code></pre>
+
+<h4 id="getting-market-data-from-zbs-data-feed-wdf">Getting Market Data from Zbs Data Feed (WDF):</h4>
+<pre><code class="python">import zbspy as pw
+
+# set the asset pair
+ZBS_BTC = pw.AssetPair(pw.ZBS, pw.BTC)
+
+# get last price and volume
+print(&quot;%s %s&quot; % (ZBS_BTC.last(), ZBS_BTC.volume()))
+
+# get ticker
+ticker = ZBS_BTC.ticker()
+print(ticker['24h_open'])
+print(ticker['24h_vwap'])
+
+# get last 10 trades
+trades = ZBS_BTC.trades(10)
+for t in trades:
+    print(&quot;%s %s %s %s&quot; % (t['buyer'], t['seller'], t['price'], t['amount']))
+
+# get last 10 daily OHLCV candles
+ohlcv = ZBS_BTC.candles(1440, 10)
+for t in ohlcv:
+    print(&quot;%s %s %s %s %s&quot; % (t['open'], t['high'], t['low'], t['close'], t['volume']))
+</code></pre>
+
+<h4 id="lpos">LPOS</h4>
+<pre><code class="python">import zbspy as pw
+
+# connect to a local testnet node
+pw.setNode(node = 'http://127.0.0.1:7431', chain = 'testnet')
+
+myAddress = pw.Address(privateKey = 'CsBpQpNE3Z1THNMS9vJPaXqYwN9Hgmhd9AsAPrM3tiuJ')
+minerAddress = pw.Address('3NBThmVJmcexzJ9itP9KiiC2K6qnGQwpqMq')
+
+# lease 1000 Zbs to minerAddress
+leaseId = myAddress.lease(minerAddress, 100000000000)
+
+# revoke the lease
+myAddress.leaseCancel(leaseId)
+
+</code></pre>
+
+<h3 id="using-zbspy-in-a-python-shell">Using ZbsPy in a Python shell</h3>
+<h4 id="check-an-address-balance">Check an address balance:</h4>
+<pre><code>&gt;&gt;&gt; import zbspy as pw
+&gt;&gt;&gt; pw.Address('3P31zvGdh6ai6JK6zZ18TjYzJsa1B83YPoj')
+address = 3P31zvGdh6ai6JK6zZ18TjYzJsa1B83YPoj
+publicKey =
+privateKey =
+seed =
+balances:
+  Zbs = 1186077288304570
+  BDMRyZsmDZpgKhdM7fUTknKcUbVVkDpMcqEj31PUzjMy (Tokes) = 43570656915
+  RRBqh2XxcwAdLYEdSickM589Vb4RCemBCPH5mJaWhU9 (Ripto Bux) = 4938300000000
+  4rmhfoscYcjz1imNDvtz45doouvrQqDpbX7xdfLB4guF (incentCoffee) = 7
+  Ftim86CXM6hANxArJXZs2Fq7XLs3nJvgBzzEwQWwQn6N (Zbs) = 2117290600000000
+  E4ip4jzTc4PCvebYn1818T4LNoYBVL3Y4Y4dMPatGwa9 (BitCoin) = 500000000000
+  FLbGXzrpqkvucZqsHDcNxePTkh2ChmEi4GdBfDRRJVof (Incent) = 12302659925430
+  GQr2fpkfmWjMaZCbqMxefbiwgvpcNgYdev7xpuX6xqcE (KISS) = 1000
+  DxG3PLganyNzajHGzvWLjc4P3T2CpkBGxY4J9eJAAUPw (UltraCoin) = 200000000000000
+  4eWBPyY4XNPsFLoQK3iuVUfamqKLDu5o6zQCYyp9d8Ae (LIKE) = 1000
+&gt;&gt;&gt;
+</code></pre>
+
+<h4 id="generate-a-new-address">Generate a new address:</h4>
+<pre><code>&gt;&gt;&gt; import zbspy as pw
+&gt;&gt;&gt; pw.Address()
+address = 3P6WfA4qYtkgwVAsWiiB6yaea2X8zyXncJh
+publicKey = EYNuSmW4Adtcc6AMCZyxkiHMPmF2BZ2XxvjpBip3UFZL
+privateKey = CtMQWJZqfc7PRzSWiMKaGmWFm4q2VN5fMcYyKDBPDx6S
+seed = seven wrist bargain hope pattern banner plastic maple student chaos grit next space visa answer
+balances:
+  Zbs = 0
+&gt;&gt;&gt;
+</code></pre>
+
+<h4 id="check-an-asset">Check an asset:</h4>
+<pre><code>&gt;&gt;&gt; import zbspy as pw
+&gt;&gt;&gt; pw.Asset('DHgwrRvVyqJsepd32YbBqUeDH4GJ1N984X8QoekjgH8J')
+status = Issued
+assetId = DHgwrRvVyqJsepd32YbBqUeDH4GJ1N984X8QoekjgH8J
+issuer = 3PPKF2pH4KMYgsDixjrhnWrPycVHr1Ye37V
+name = ZbsCommunity
+description = Zbs community token.
+quantity = 1000000000
+decimals = 2
+reissuable = False
+</code></pre>
+
+<h4 id="post-an-order-and-check-its-status">Post an order and check its status:</h4>
+<pre><code>&gt;&gt;&gt; myOrder = myAddress.buy(pw.AssetPair(token1, token2), 1, 25)
+&gt;&gt;&gt; myOrder
+status = Accepted
+id = ARZdYgfXz3ksRMvhnGeLLJnn3CQnz7RCa7U6dVw3zert
+asset1 = AFzL992FQbhcgSZGKDKAiRWcjtthM55yVCE99hwbHf88
+asset2 = 49Aha2RR2eunR3KZFwedfdi7K9v5MLQbLYcmVdp2QkZT
+sender.address = 3P6WfA4qYtkgwVAsWiiB6yaea2X8zyXncJh
+sender.publicKey = EYNuSmW4Adtcc6AMCZyxkiHMPmF2BZ2XxvjpBip3UFZL
+matcher = http://127.0.0.1:7442
+</code></pre>
+
+<h4 id="cancel-the-order">Cancel the order</h4>
+<pre><code>&gt;&gt;&gt; myOrder.cancel()
+&gt;&gt;&gt; myOrder
+status = Cancelled
+id = ARZdYgfXz3ksRMvhnGeLLJnn3CQnz7RCa7U6dVw3zert
+asset1 = AFzL992FQbhcgSZGKDKAiRWcjtthM55yVCE99hwbHf88
+asset2 = 49Aha2RR2eunR3KZFwedfdi7K9v5MLQbLYcmVdp2QkZT
+sender.address = 3P6WfA4qYtkgwVAsWiiB6yaea2X8zyXncJh
+sender.publicKey = EYNuSmW4Adtcc6AMCZyxkiHMPmF2BZ2XxvjpBip3UFZL
+matcher = http://127.0.0.1:7442
+</code></pre>
+
+<h3 id="offline-signing-and-custom-timestamps">Offline signing and custom timestamps</h3>
+<h4 id="offline-signing-a-future-transaction">Offline signing a future transaction:</h4>
+<pre><code>&gt;&gt;&gt; import zbspy as pw
+&gt;&gt;&gt; pw.setOffline()
+&gt;&gt;&gt; myAddress=pw.Address(privateKey=&quot;F2jVbjrKzjUsZ1AQRdnd8MmxFc85NQz5jwvZX4BXswXv&quot;)
+&gt;&gt;&gt; recipient=pw.Address(&quot;3P8Ya6Ary5gzwnzbBXDp3xjeNG97JEiPcdA&quot;)
+# sign a future tx to transfer 100 ZBS to recipient
+# the tx is valid on Jan 1st, 2020 12:00pm
+&gt;&gt;&gt; myAddress.sendZbs(recipient, amount=100e8, timestamp=1577880000000)
+{'api-endpoint': '/assets/broadcast/transfer',
+ 'api-type': 'POST',
+ 'api-data': '{&quot;fee&quot;: 100000,
+               &quot;timestamp&quot;: 1577880000000,
+               &quot;senderPublicKey&quot;: &quot;27zdzBa1q46RCMamZ8gw2xrTGypZnbzXs5J1Y2HbUmEv&quot;,
+               &quot;amount&quot;: 10000000000,
+               &quot;attachment&quot;: &quot;&quot;,
+               &quot;recipient&quot;: &quot;3P8Ya6Ary5gzwnzbBXDp3xjeNG97JEiPcdA&quot;
+               &quot;signature&quot;: &quot;YetPopTJWC4WBPXbneWv9g6YEp6J9g9rquZWjewjdQnFbmaxtXjrRsUu69NZzHebVzUGLrhQiFFoguXJwdUn8BH&quot;}'}
+</code></pre>
+
+<h4 id="offline-signing-time-lockunlock-transactions">Offline signing time lock/unlock transactions:</h4>
+<pre><code>&gt;&gt;&gt; import zbspy as pw
+&gt;&gt;&gt; pw.setOffline()
+&gt;&gt;&gt; myAddress=pw.Address(privateKey=&quot;F2jVbjrKzjUsZ1AQRdnd8MmxFc85NQz5jwvZX4BXswXv&quot;)
+# generate a lockbox address
+&gt;&gt;&gt; lockAddress=pw.Address()
+# sign the 'lock' tx to send 100e8 to the lockbox (valid on Nov 1st, 2017)
+&gt;&gt;&gt; myAddress.sendZbs(lockAddress, 100e8, timestamp=1509537600000)
+{'api-endpoint': '/assets/broadcast/transfer',
+ 'api-type': 'POST',
+ 'api-data': '{&quot;fee&quot;: 100000,
+               &quot;timestamp&quot;: 1509537600000,
+               &quot;senderPublicKey&quot;: &quot;27zdzBa1q46RCMamZ8gw2xrTGypZnbzXs5J1Y2HbUmEv&quot;,
+               &quot;amount&quot;: 10000000000,
+               &quot;attachment&quot;: &quot;&quot;,
+               &quot;recipient&quot;: &quot;3P3UbyQM9W7WzTgjYkLuBrPZZeWsiUtCcpv&quot;,
+               &quot;signature&quot;: &quot;5VgT6qWxJwxEyrxFNfsi67QqbyUiGq9Ka7HVzgovRTTDT8nLRyuQv2wBAJQhRiXDkTTV6zsQmHnBkh8keCaFPoNT&quot;}'}
+# sign the 'unlock' tx to send funds back to myAddress (valid on Jan 1st, 2020)
+&gt;&gt;&gt; lockAddress.sendZbs(myAddress, 100e8-200000, txFee=200000, timestamp=1577880000000)
+{'api-endpoint': '/assets/broadcast/transfer',
+ 'api-type': 'POST',
+ 'api-data': '{&quot;fee&quot;: 200000,
+               &quot;timestamp&quot;: 1577880000000,
+               &quot;senderPublicKey&quot;: &quot;52XnBGnAVZmw1CHo9aJPiMsVMiTWeNGSNN9aYJ7cDtx4&quot;,
+               &quot;amount&quot;: 9999800000,
+               &quot;attachment&quot;: &quot;&quot;,
+               &quot;recipient&quot;: &quot;3P7tfdCaTyYCfg5ojxNahEJDSS4MZ7ybXBY&quot;,
+               &quot;signature&quot;: &quot;3beyz1sqKefP96LaXWT3CxdPRW86DAxcj6wgWPyyKq3SgdotVqnKyWXDyeHnBzCq1nC7JA9CChTmo1c1iVAv6C4T&quot;}'}
+# delete lockbox address and private key
+&gt;&gt;&gt; del lockAddress
+</code></pre>
+
+<h2 id="connecting-to-a-different-node-or-chain">Connecting to a different node or chain</h2>
+<p>ZbsPy supports both mainnet and testnet chains. By default, ZbsPy connects to the mainnet RPC server at https://nodes.0bsnetwork.com. It's possible to specify a different server and chain with the setNode() function</p>
+<pre><code class="python">import zbspy as pw
+
+# connects to a local testnet node
+pw.setNode(node = 'http://127.0.0.1:7431', chain = 'testnet')
+
+# connects to a local mainnet node
+pw.setNode(node = 'http://127.0.0.1:7441', chain = 'mainnet')
+
+</code></pre>
               
             </div>
           </div>
