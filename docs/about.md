@@ -6,12 +6,9 @@ Running a full node on the network requires that the node has a 'generating bala
 
 You can create a token on our platform right from the wallet (Or using a library or API if you wish) and set its supply, details etc. These are also refferred to 'assets' within the code and transactions.
 
-Main / Test
+We have 2 networks, one for developing on called testnet, and one 'live' network called mainnet. All the documentation refers to testnet and your app can be changed to mainnet later.
 
-Confrimations
-
-
-< More details about chain from a dev POV>
+Our block time is 1 minute, and as soon as a transaction is broadcast to the network its added to a block by the current mining node. Once the block has been finalised and propogated to the network, this is considered as a confirmation. However, acceptance into a block means that the transaction is valid and WILL be included in the block.
 
 
 Without further ado, lets move onto getting started where we explain all the parts of the system, and what you need to get up and running
