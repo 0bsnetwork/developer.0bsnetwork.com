@@ -20,6 +20,7 @@ Each transaction type is given an integer to represent it as follows. The transa
 | 14               | CustomFee     | Setup a Custom Fee for your Asset            | 50.00       |
 | 15               | SetAsset      | Set a script on an asset                     | 10.00       |
 | 16               | ContractInvoke| Run a contract                               | 0.10        |
+| 17               | Index         |                                              |             |
 
 Extra Fee: 0.01 (In addition to fee when operating with smart assets or accounts)
 
@@ -31,8 +32,40 @@ The below sections demonstrate the JSON transaction format that is required to m
 
 ### Issue / ReIssue Transaction
 
+Issue Example code:
+```
+const { issue, broadcast } = require('@0bsnetwork/zbs-transactions')
+const signedTx = issue(
+    {
+        name: 'MyTestToken',
+        description: 'My New Token',
+        quantity: 50000,
+        chainId: 'T'
+    }, "Write your SEED here")
+
+broadcast(signedTx, "https://node1.testnet-0bsnetwork.com")
+    .then(resp => console.log(resp))
+    .catch(e => console.error(`.catch(${e})`));
+```
+
+Reissue Example code:
+```
+const { reissue, broadcast } = require('@0bsnetwork/zbs-transactions')
+const signedTx = reissue({
+    quantity: 5000000,
+    assetId: '5cfyua2DBmLcWYjh6D3k8ra3xNc6Ap47BSGr9rujciy6',
+    reissuable: false,
+    chainId: 'T'
+}, "Write your SEED here")
+
+broadcast(signedTx, "https://node1.testnet-0bsnetwork.com")
+    .then(resp => console.log(resp))
+    .catch(e => console.error(`.catch(${e})`));
+```
+
 Issue and ReIssue take the same format apart from the type
 
+Output:
 ```
 {
     "senderPublicKey":"2M25DqL2W4rGFLCFadgATboS8EPqyWAN3DjH12AH5Kdr",
@@ -53,7 +86,21 @@ Issue and ReIssue take the same format apart from the type
 ```
 
 ### Transfer Transaction
+Example code:
+```
+const { transfer, broadcast } = require('@0bsnetwork/zbs-transactions')
+const signedTx = transfer({
+  amount: 1,
+  recipient: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+  fee: 5000000
+}, "Write your SEED here")
 
+broadcast(signedTx, "https://node1.testnet-0bsnetwork.com")
+    .then(resp => console.log(resp))
+    .catch(e => console.error(`.catch(${e})`));
+```
+
+Output:
 ```
 {
     "senderPublicKey":"4c5K4kGeRdrnSYZ9wngQKSozikVgfxmDEuViirsyUHwd",
@@ -75,23 +122,42 @@ Issue and ReIssue take the same format apart from the type
 ### Burn Transaction
 
 Burning tokens can be useful for systems where a token is used to activate or fund a service and once the service has been used the token can be burnt.
-
+Example code:
 ```
-{
-    "senderPublicKey":"HQWkhM5q6rtv8Z4MgKicfWdDyUABtr8md7ddgMDmZhuA",
-    "amount":1000000,
-    "fee":500000000,
-    "type":6,
-    "version":2,
-    "sender":"3MpS4Bx7WtJtnFqxTTHWrMdiJBmpdWFbd35",
-    "feeAssetId":null,
-    "chainId": 84, // 84 (T) for testnet 90 (Z) for mainnet
-    "proofs":["5VXSiBmexMLYRpYrFeTbz5Psf4MRxhpiwXjasDGMJHTnmQcjtRx8HkubEu4zYBT2NUQYpPUmwmSbowgts6YhxdHS"],"assetId":"CS9Nc8aiK1FmvBHsj7JN4zE7u2dQnDJ2557dWcZxFHGy" // The AssetId we wish to burn
-}
+const constants = require('./constants')
+const { burn, broadcast } = require('@0bsnetwork/zbs-transactions')
+
+const signedTx = burn({
+    quantity: 1,
+    assetId: 'BiuhdjnH9qxgfax52zXgJw3b5ArxCdA4q8kYECqWoEYT',
+    chainId: 'T'
+}, "Write your SEED here")
+
+broadcast(signedTx, "https://node1.testnet-0bsnetwork.com")
+    .then(resp => console.log(resp))
+    .catch(e => console.error(`.catch(${e})`));
+```
+Output:
+```
+{ type: 6,
+  id: 'ComWcac6FMKBT4sNNyNwDDFG8T63s3xorV4M7x8y6TVm',
+  sender: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+  senderPublicKey: '4vR9m3vFuAWqQ6zJWDeqnPCMgLsxKkz2sQcAcEjHduU',
+  fee: 500000000,
+  timestamp: 1561326417304,
+  proofs: 
+   [ '3c2ao2uF2T6sxLJqHZSdAY2brjHHeUVQqNMDDJPxfh33JAyTeocnAWGt7nw6dwTB2mBEG8CimuC4BP19DCfB98YZ' ],
+  version: 2,
+  assetId: 'BiuhdjnH9qxgfax52zXgJw3b5ArxCdA4q8kYECqWoEYT',
+  amount: 1,
+  chainId: 84 
+ }
+
 ```
 
 ### Exchange Transaction
 
+Output:
 ```
 {
     "senderPublicKey":"8QUAqtTckM5B8gvcuP7mMswat9SjKUuafJMusEoSn1Gy",
@@ -143,7 +209,20 @@ Burning tokens can be useful for systems where a token is used to activate or fu
 ```
 
 ### Lease Transaction
+Example code:
+```
+const { lease, broadcast } = require('@0bsnetwork/zbs-transactions')
+const signedTx = lease(
+    {
+        amount: 100000,
+        recipient: '3NBTZJ6BpuQeRCciQzYRVrFwyhrUcsf6f6M',
+    }, "Write your SEED here")
 
+broadcast(signedTx, "https://node1.testnet-0bsnetwork.com")
+    .then(resp => console.log(resp))
+    .catch(e => console.error(`.catch(${e})`));
+```
+Output:
 ```
 {
     "senderPublicKey":"FB5ErjREo817duEBBQUqUdkgoPctQJEYuG3mU7w3AYjc",
@@ -158,7 +237,20 @@ Burning tokens can be useful for systems where a token is used to activate or fu
 ```
 
 ### Lease Cancel
+Example code:
+```
+const { cancelLease, broadcast } = require('@0bsnetwork/zbs-transactions')
+const signedTx = cancelLease(
+    {
+        leaseId: 'HxJrij7Ba7ojaovjrZcvAaXAwMBMr9BkAyXLsdiiWtkF',
+        chainId: 'T'
+    }, "Write your SEED here")
 
+broadcast(signedTx, "https://node1.testnet-0bsnetwork.com")
+    .then(resp => console.log(resp))
+    .catch(e => console.error(`.catch(${e})`));
+```
+Output:
 ```
 {
     "senderPublicKey":"FB5ErjREo817duEBBQUqUdkgoPctQJEYuG3mU7w3AYjc",
@@ -174,7 +266,21 @@ Burning tokens can be useful for systems where a token is used to activate or fu
 ```
 
 ### Create Alias
+Example code:
+```
+const { alias, broadcast } = require('@0bsnetwork/zbs-transactions')
+const signedTx = alias(
+    {
+        alias: 'New Alias',
+        chainId: 'T',
+        fee: 100000
+    }, "Write your SEED here")
 
+broadcast(signedTx, "https://node1.testnet-0bsnetwork.com")
+    .then(resp => console.log(resp))
+    .catch(e => console.error(`.catch(${e})`));
+```
+Output:
 ```
 {
     "senderPublicKey":"BVv1ZuE3gKFa6krwWJQwEmrLYUESuUabNCXgYTmCoBt6",
@@ -190,9 +296,82 @@ Burning tokens can be useful for systems where a token is used to activate or fu
 ```
 
 ### Mass Transfer
+Example code:
+```
+const { massTransfer, broadcast } = require('@0bsnetwork/zbs-transactions')
+
+const signedTx = massTransfer({transfers: [
+  {
+    amount: 1,
+    recipient: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+    fee: 1000000
+  },
+  {
+    amount: 1,
+    recipient: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+    fee: 1000000
+  },
+]}, "Write your SEED here")
+
+broadcast(signedTx, "https://node1.testnet-0bsnetwork.com")
+    .then(resp => console.log(resp))
+    .catch(e => console.error(`.catch(${e})`));
+```
+Output:
+```
+{ type: 11,
+  id: '48Dn8uK95jL8iZqv81gqv7PxJtbrZihjmg1Zdcs1428P',
+  sender: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+  senderPublicKey: '4vR9m3vFuAWqQ6zJWDeqnPCMgLsxKkz2sQcAcEjHduU',
+  fee: 10000000,
+  timestamp: 1561326259593,
+  proofs: 
+   [ 'YxmbijFFmNM9goWMoxxcPtHM36TKFVrMfC5i9yZEPtZiqoDZ13M3kQJBw557bi728vmR9ydFYZ847gdoisbCVnM' ],
+  version: 1,
+  assetId: null,
+  attachment: '',
+  transferCount: 2,
+  totalAmount: 2,
+  transfers: 
+   [ { recipient: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo', amount: 1 },
+     { recipient: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo', amount: 1 } ] }
+```
 
 ### Data
+```
+const { data, broadcast } = require('@0bsnetwork/zbs-transactions')
 
+const signedTx = data(
+    { data: [
+            { key: 'integerVal', value: 1 },
+            { key: 'booleanVal', value: true },
+            { key: 'stringVal', value: 'hello' },
+            { key: 'binaryVal', value: [1, 2, 3, 4] }
+        ]
+    }, "Write your SEED here")
+
+broadcast(signedTx, "https://node1.testnet-0bsnetwork.com")
+    .then(resp => console.log(resp))
+    .catch(e => console.error(`.catch(${e})`));
+```
+Output:
+
+```
+{ type: 12,
+  id: '3d8fQKQ8Va43vvVzbKJChMrPzQDNgLBH9GaQw23YhdZC',
+  sender: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+  senderPublicKey: '4vR9m3vFuAWqQ6zJWDeqnPCMgLsxKkz2sQcAcEjHduU',
+  fee: 3000000,
+  timestamp: 1561326312175,
+  proofs: 
+   [ 'mWVbzSuomwiaowrNLBhEFcZE6dfHhK1tYWrqQZ124mum8MJuoksuqVZUjaRUW7rwLw4cEc33unKTzYP4X9ftRu9' ],
+  version: 1,
+  data: 
+   [ { key: 'integerVal', type: 'integer', value: 1 },
+     { key: 'booleanVal', type: 'boolean', value: true },
+     { key: 'stringVal', type: 'string', value: 'hello' },
+     { key: 'binaryVal', type: 'binary', value: 'base64:AQIDBA==' } ] }
+```
 ### SetScript
 
 ### CustomFee Enable
@@ -203,7 +382,40 @@ Burning tokens can be useful for systems where a token is used to activate or fu
 
 
 
+### Index
+Example code:
+```
+const { transfer, broadcast } = require('@0bsnetwork/zbs-transactions')
+const signedTx = transfer({
+  amount: 1,
+  recipient: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+  fee: 5000000,
+  chainId: 'T'
+}, "Write your SEED here")
 
+broadcast(signedTx, "https://node1.testnet-0bsnetwork.com")
+    .then(resp => console.log(resp))
+    .catch(e => console.error(`.catch(${e})`));
+```
+Output:
+```
+{ type: 4,
+  id: '8LjTjtAqQscTk5o3VuzViyp5Dk3dPZ9W26ezHUEyi2LW',
+  sender: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+  senderPublicKey: '4vR9m3vFuAWqQ6zJWDeqnPCMgLsxKkz2sQcAcEjHduU',
+  fee: 5000000,
+  timestamp: 1561326556314,
+  proofs: 
+   [ '5H4KDmjYh5tfe7iurVxyZZnKGwcVrproBJs83kLCgvxUi9bn6S1yiLmnrCsD5Zaijm7eJgvTaTZnS6fdx7aW8xKp' ],
+  version: 2,
+  recipient: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+  assetId: null,
+  feeAssetId: null,
+  feeAsset: null,
+  amount: 1,
+  attachment: '' }
+
+```
 
 ## Signing Transactions
 
