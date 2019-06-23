@@ -65,6 +65,8 @@ The matcher is our trading 'engine' taking orders for sells and buys and matchin
 
 We have a library for many differnet languages and platforms and more are being added every day. The libraries are firstly an interface to the Node and Matcher API, with the addition of the ability to sign transactions and broadcast them to the node (Signing transactions manually is a little tricky)
 
+> Most of our libraries are community supported, so if you find an issue or error, log an issue in the repository.. Or feel free to raise a pull request!
+
 ### 0bsLink
 
 0bsLink is a browser add-on / extension that is essentially a wallet, however it comes with an API so you can build a wabpage to interact with this extension, to build 0bsNetwork powered web applicaitons witout having to deal with any of the complexity.
