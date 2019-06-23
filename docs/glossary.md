@@ -1,6 +1,7 @@
 ## Glossary
 
 | Term | Description |
+| ------------|----------- |
 | Node  | A network full node, that processes blocks and transactions |
 | POS | Proof of Stake |
 | IDE |Integrated Development Environment  |
