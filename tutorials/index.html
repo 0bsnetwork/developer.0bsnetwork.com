@@ -231,8 +231,7 @@ SAtDTKwqmdqJpWtBWYLEy6cfaTTKCQFNH2Lnj2DYgaFRWETGQVQpMMVYFKkk
 <ol>
 <li>Now let's prepare a JSON request to sign a SetScriptTransaction for the shared account with a given script:</li>
 </ol>
-<p><code>json
-   {
+<p><code>{
     "type": 13,
     "version": 1,
     "sender": "3N7H4jTBMKtZfNCY86K2ND1rWcvFsGjDT3X",
@@ -242,14 +241,12 @@ SAtDTKwqmdqJpWtBWYLEy6cfaTTKCQFNH2Lnj2DYgaFRWETGQVQpMMVYFKkk
 <ol>
 <li>Send it to [/transactions/sign]:</li>
 </ol>
-<p><code>bash
-   $ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' \
+<p><code>$ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' \
    --header 'X-API-Key: &lt;it is a secret&gt;' \
    -d '{ "type": 13, "version": 1, "sender": "3N7H4jTBMKtZfNCY86K2ND1rWcvFsGjDT3X", "fee": 100000, \
    "script": "&lt;script&gt;" }' 'https://nodeaddress/transactions/sign'</code></p>
 <p>and receive a JSON ready to broadcast:</p>
-<p><code>json
-   {
+<p><code>{
     "type": 13,
     "id": "8w7yauNiENsJP8oDUpVEfiAzyEzMKoXbJEqS26Ht99mg",
     "sender": "3N7H4jTBMKtZfNCY86K2ND1rWcvFsGjDT3X",
@@ -265,8 +262,7 @@ SAtDTKwqmdqJpWtBWYLEy6cfaTTKCQFNH2Lnj2DYgaFRWETGQVQpMMVYFKkk
 <ol>
 <li>Then we [broadcast] a prepared request:</li>
 </ol>
-<p><code>bash
-   $ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' \
+<p><code>$ curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' \
    --header 'X-API-Key: &lt;it is a secret&gt;' \
    -d '{ "type": 13, "id": "8w7yauNiENsJP8oDUpVEfiAzyEzMKoXbJEqS26Ht99mg", "sender": "3N7H4jTBMKtZfNCY86K2ND1rWcvFsGjDT3X", \
     "senderPublicKey": "66xdGznqt2AVLMZRHme9vFPC6cvN4yV95wRWPfTus3Qe", "fee": 100000, "timestamp": 1525797758819, \
@@ -276,8 +272,7 @@ SAtDTKwqmdqJpWtBWYLEy6cfaTTKCQFNH2Lnj2DYgaFRWETGQVQpMMVYFKkk
 <ol>
 <li>And check it was applied:</li>
 </ol>
-<p><code>bash
-   $ curl http://example.org/addresses/scriptInfo/3N7H4jTBMKtZfNCY86K2ND1rWcvFsGjDT3X
+<p><code>$ curl http://example.org/addresses/scriptInfo/3N7H4jTBMKtZfNCY86K2ND1rWcvFsGjDT3X
    {
     "address" : "3N7H4jTBMKtZfNCY86K2ND1rWcvFsGjDT3X",
     "script" : "&lt;script&gt;",
