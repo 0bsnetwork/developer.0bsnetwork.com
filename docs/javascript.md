@@ -1,35 +1,93 @@
-# Transactions
+## Javascript Library
 
-## Transaction Types
+Using this library you can easily create and sign transactions for 0bsnetwork blockchain.
+It also allows you to multi-sign existing transactions or create them without signature at all.
 
-Each transaction type is given an integer to represent it as follows. The transaction fee is included below too, though libraries should have these set by default.
 
-| Transaction Type | Name          | Description                                  | Fee (ZBS)   |
-| ---------------- | ------------- | ---------------------------------------------| ------------|
-| 3                | Issue         | Create a new token / asset                   | 500.00      |
-| 4                | Transfer      | Send ZBS or Token to another address         | 0.05        |
-| 5                | ReIssue       | Issue more of your token                     | 200.00      |
-| 6                | Burn          | Destroy X tokens                             | 5.00        |
-| 7                | Exchange      | A Trade. Buy / Sell                          | 0.20        |
-| 8                | Lease         | Start leasing to another address             | 5.00        |
-| 9                | LeaseCancel   | Cancel a Lease                               | 1.00        |
-| 10               | CreateAlias   | Create an alias for your address             | 10          |
-| 11               | MassTransfer  | Send up to 100 Transfers in 1 transaction    | 0.05        |
-| 12               | Data          | Save data to the blockchain                  | 0.03        |
-| 13               | SetScript     | Add a script to an Address                   | 10.00       |
-| 14               | CustomFee     | Setup a Custom Fee for your Asset            | 50.00       |
-| 15               | SetAsset      | Set a script on an asset                     | 10.00       |
-| 16               | ContractInvoke| Run a contract                               | 0.10        |
-| 17               | Index         |                                              |             |
-| 18               | Sponsorship   |                                              |             |
+### Transactions
 
-Extra Fee: 0.01 (In addition to fee when operating with smart assets or accounts)
+The idea is really simple - you create transaction and sign it from a minimal set of required params.
+If you want to create a Transfer transaction the minimum you need to provide is **amount** and **recipient** as defined in [Transfer params](transactions.md):
+```js
 
-## Transaction Formats
+const { transfer } = require('@0bsnetwork/zbs-transactions')
+const seed = 'some example seed phrase'
+const signedTranserTx = transfer({
+  amount: 1,
+  recipient: '3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2',
+  //Timestamp is optional but it was overridden, in case timestamp is not provided it will fallback to Date.now(). You can set any oftional params yourself. go check full docs
+  timestamp: 1536917842558
+}, seed)
+```
 
-The below sections demonstrate code transaction format that is required to make a transaction. When signing a transaction on a Node, you can exclude the signature/proofs field as the server will give you this back.
+Output will be a signed transfer transaction:
+```js
+{
+  id: '8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq',
+  type: 4,
+  version: 2,
+  recipient: '3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2',
+  attachment: undefined,
+  feeAssetId: undefined,
+  assetId: undefined,
+  amount: 1,
+  fee: 100000,
+  senderPublicKey: '6nR7CXVV7Zmt9ew11BsNzSvVmuyM5PF6VPbWHW9BHgPq',
+  timestamp: 1536917842558,
+  proofs: [
+    '25kyX6HGjS3rkPTJRj5NVH6LLuZe6SzCzFtoJ8GDkojY9U5oPfVrnwBgrCHXZicfsmLthPUjTrfT9TQL2ciYrPGE'
+  ]
+}
+```
 
-> Within the transaction JSON, Fee's are expressed without decimal values, so ZBS has 8 decimal places, and 100000000 represents 1 ZCL within the transaction JSON.
+You can also create transaction, but not sign it:
+```javascript
+const unsignedTransferTx = transfer({
+  amount: 1,
+  recipient: '3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2',
+  //senderPublicKey is required if you omit seed
+  senderPublicKey: '6nR7CXVV7Zmt9ew11BsNzSvVmuyM5PF6VPbWHW9BHgPq'
+})
+```
+
+Now you are able to POST it to 0bsNetwork or store for future purpose or you can add another signature from other party:
+```js
+const otherPartySeed = 'other party seed phrase'
+const transferSignedWithTwoParties = transfer(signedTranserTx, seed)
+```
+
+So now there are two proofs:
+```js
+{
+  id: '8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq',
+  type: 4,
+  version: 2,
+  recipient: '3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2',
+  attachment: undefined,
+  feeAssetId: undefined,
+  assetId: undefined,
+  amount: 1,
+  fee: 100000,
+  senderPublicKey: '6nR7CXVV7Zmt9ew11BsNzSvVmuyM5PF6VPbWHW9BHgPq',
+  timestamp: 1536917842558,
+  proofs: [
+    '25kyX6HGjS3rkPTJRj5NVH6LLuZe6SzCzFtoJ8GDkojY9U5oPfVrnwBgrCHXZicfsmLthPUjTrfT9TQL2ciYrPGE',
+    'CM9emPzpe6Ram7ZxcYax6s7Hkw6698wXCMPSckveFAS2Yh9vqJpy1X9nL7p4RKgU3UEa8c9RGXfUK6mFFq4dL9z'
+  ]
+}
+```
+
+### Broadcast
+To send transaction you can use either node api or broadcast helper function:
+```javascript
+const {broadcast} =  require('@0bsnetwork/zbs-transaction');
+const nodeUrl = 'https://node1.testnet-0bsnetwork.com';
+
+broadcast(signedTx, nodeUrl).then(resp => console.log(resp))
+```
+
+## Transaction Examples
+
 
 ### Issue
 ```

@@ -21,7 +21,7 @@ Each transaction type is given an integer to represent it as follows. The transa
 | 15               | SetAsset      | Set a script on an asset                     | 10.00       |
 | 16               | ContractInvoke| Run a contract                               | 0.10        |
 | 17               | Index         |                                              |             |
-| 18               | Sponsorship   |                                              |             |
+| 18               | CustomFee     |                                              |             |
 
 Extra Fee: 0.01 (In addition to fee when operating with smart assets or accounts)
 
@@ -85,12 +85,12 @@ Burning tokens can be useful for systems where a token is used to activate or fu
   senderPublicKey: '4vR9m3vFuAWqQ6zJWDeqnPCMgLsxKkz2sQcAcEjHduU',
   fee: 500000000,
   timestamp: 1561326417304,
-  proofs: 
+  proofs:
    [ '3c2ao2uF2T6sxLJqHZSdAY2brjHHeUVQqNMDDJPxfh33JAyTeocnAWGt7nw6dwTB2mBEG8CimuC4BP19DCfB98YZ' ],
   version: 2,
   assetId: 'BiuhdjnH9qxgfax52zXgJw3b5ArxCdA4q8kYECqWoEYT',
   amount: 1,
-  chainId: 84 
+  chainId: 84
  }
 
 ```
@@ -203,14 +203,14 @@ Burning tokens can be useful for systems where a token is used to activate or fu
   senderPublicKey: '4vR9m3vFuAWqQ6zJWDeqnPCMgLsxKkz2sQcAcEjHduU',
   fee: 10000000,
   timestamp: 1561326259593,
-  proofs: 
+  proofs:
    [ 'YxmbijFFmNM9goWMoxxcPtHM36TKFVrMfC5i9yZEPtZiqoDZ13M3kQJBw557bi728vmR9ydFYZ847gdoisbCVnM' ],
   version: 1,
   assetId: null,
   attachment: '',
   transferCount: 2,
   totalAmount: 2,
-  transfers: 
+  transfers:
    [ { recipient: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo', amount: 1 },
      { recipient: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo', amount: 1 } ] }
 ```
@@ -224,10 +224,10 @@ Burning tokens can be useful for systems where a token is used to activate or fu
   senderPublicKey: '4vR9m3vFuAWqQ6zJWDeqnPCMgLsxKkz2sQcAcEjHduU',
   fee: 3000000,
   timestamp: 1561326312175,
-  proofs: 
+  proofs:
    [ 'mWVbzSuomwiaowrNLBhEFcZE6dfHhK1tYWrqQZ124mum8MJuoksuqVZUjaRUW7rwLw4cEc33unKTzYP4X9ftRu9' ],
   version: 1,
-  data: 
+  data:
    [ { key: 'integerVal', type: 'integer', value: 1 },
      { key: 'booleanVal', type: 'boolean', value: true },
      { key: 'stringVal', type: 'string', value: 'hello' },
@@ -235,13 +235,9 @@ Burning tokens can be useful for systems where a token is used to activate or fu
 ```
 ### SetScript
 
-### CustomFee Enable
-
 ### Set Asset
 
 ### Invoke Script
-
-
 
 ### Index
 
@@ -252,7 +248,7 @@ Burning tokens can be useful for systems where a token is used to activate or fu
   senderPublicKey: '4vR9m3vFuAWqQ6zJWDeqnPCMgLsxKkz2sQcAcEjHduU',
   fee: 5000000,
   timestamp: 1561326556314,
-  proofs: 
+  proofs:
    [ '5H4KDmjYh5tfe7iurVxyZZnKGwcVrproBJs83kLCgvxUi9bn6S1yiLmnrCsD5Zaijm7eJgvTaTZnS6fdx7aW8xKp' ],
   version: 2,
   recipient: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
@@ -263,6 +259,23 @@ Burning tokens can be useful for systems where a token is used to activate or fu
   attachment: '' }
 
 ```
+
+### Custom Fees
+```
+{ type: 14,
+  id: 'HfEnBX9PBkTpNLs5BgxvqmrPQkowb9dogMcSFSSZg9Vq',
+  sender: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+  senderPublicKey: '4vR9m3vFuAWqQ6zJWDeqnPCMgLsxKkz2sQcAcEjHduU',
+  fee: 5000000000,
+  timestamp: 1561328515891,
+  proofs:
+   [ 'Qe81c41WbSDwV1wXRVKZK9ze7kPhE5B5wSRB96ZsZ21ZbZ6hSq89accLdHH1gsZXQvC2WphL1VLKNYG1DVkWZwF' ],
+  version: 1,
+  assetId: 'BiuhdjnH9qxgfax52zXgJw3b5ArxCdA4q8kYECqWoEYT',
+  minSponsoredAssetFee: 100 }
+```
+
+
 
 ## Signing Transactions
 
@@ -397,17 +410,3 @@ namespace ZbsSignAndBroadcastDataTransaction
 
 ```
 
-### Sponsorship
-```
-{ type: 14,
-  id: 'HfEnBX9PBkTpNLs5BgxvqmrPQkowb9dogMcSFSSZg9Vq',
-  sender: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
-  senderPublicKey: '4vR9m3vFuAWqQ6zJWDeqnPCMgLsxKkz2sQcAcEjHduU',
-  fee: 5000000000,
-  timestamp: 1561328515891,
-  proofs: 
-   [ 'Qe81c41WbSDwV1wXRVKZK9ze7kPhE5B5wSRB96ZsZ21ZbZ6hSq89accLdHH1gsZXQvC2WphL1VLKNYG1DVkWZwF' ],
-  version: 1,
-  assetId: 'BiuhdjnH9qxgfax52zXgJw3b5ArxCdA4q8kYECqWoEYT',
-  minSponsoredAssetFee: 100 }
-```
