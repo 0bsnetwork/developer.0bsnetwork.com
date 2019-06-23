@@ -21,6 +21,7 @@ Each transaction type is given an integer to represent it as follows. The transa
 | 15               | SetAsset      | Set a script on an asset                     | 10.00       |
 | 16               | ContractInvoke| Run a contract                               | 0.10        |
 | 17               | Index         |                                              |             |
+| 18               | Sponsorship   |                                              |             |
 
 Extra Fee: 0.01 (In addition to fee when operating with smart assets or accounts)
 
@@ -210,3 +211,17 @@ Signing transactions manually is quite complex, and usually its best to use a li
 
 Rather than include excessive details here on how to do that, the below code sample in C Sharp should be readable enough to understand how the process works, and you can also examine the code of our other libraries as they are all open source. If you need specific details or guidance, please do contact us using the details on the [Front Page](index.md)
 
+
+### Sponsorship
+```
+const { sponsorship, broadcast } = require('@0bsnetwork/zbs-transactions')
+const signedTx = sponsorship(
+    {
+        assetId: 'BiuhdjnH9qxgfax52zXgJw3b5ArxCdA4q8kYECqWoEYT',
+        minSponsoredAssetFee: 100,
+    }, constants.DATA.SEED)
+
+broadcast(signedTx, constants.DATA.NODE_URL)
+    .then(resp => console.log(resp))
+    .catch(e => console.error(`.catch(${e})`));
+```

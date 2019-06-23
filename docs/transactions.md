@@ -21,6 +21,7 @@ Each transaction type is given an integer to represent it as follows. The transa
 | 15               | SetAsset      | Set a script on an asset                     | 10.00       |
 | 16               | ContractInvoke| Run a contract                               | 0.10        |
 | 17               | Index         |                                              |             |
+| 18               | Sponsorship   |                                              |             |
 
 Extra Fee: 0.01 (In addition to fee when operating with smart assets or accounts)
 
@@ -394,4 +395,19 @@ namespace ZbsSignAndBroadcastDataTransaction
     }
 }
 
+```
+
+### Sponsorship
+```
+{ type: 14,
+  id: 'HfEnBX9PBkTpNLs5BgxvqmrPQkowb9dogMcSFSSZg9Vq',
+  sender: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+  senderPublicKey: '4vR9m3vFuAWqQ6zJWDeqnPCMgLsxKkz2sQcAcEjHduU',
+  fee: 5000000000,
+  timestamp: 1561328515891,
+  proofs: 
+   [ 'Qe81c41WbSDwV1wXRVKZK9ze7kPhE5B5wSRB96ZsZ21ZbZ6hSq89accLdHH1gsZXQvC2WphL1VLKNYG1DVkWZwF' ],
+  version: 1,
+  assetId: 'BiuhdjnH9qxgfax52zXgJw3b5ArxCdA4q8kYECqWoEYT',
+  minSponsoredAssetFee: 100 }
 ```
