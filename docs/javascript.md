@@ -3,6 +3,8 @@
 Using this library you can easily create and sign transactions for 0bsnetwork blockchain.
 It also allows you to multi-sign existing transactions or create them without signature at all.
 
+You can download a sample project [here](resources/js-lib-examples.zip) that contains code for all transactions as per below. (Remember to npm install first)
+
 
 ### Transactions
 
