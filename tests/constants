@@ -1,0 +1,5 @@
+module.exports.DATA = {
+    SEED: 'palace lizard dream pluck emotion pulse powder veteran glory can unfair fame stamp fly index',
+    NODE_URL: 'https://node1.testnet-0bsnetwork.com',
+    ADDRESS: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo'
+};
