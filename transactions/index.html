@@ -269,6 +269,18 @@
 <td>Run a contract</td>
 <td>0.10</td>
 </tr>
+<tr>
+<td>17</td>
+<td>Index</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>18</td>
+<td>CustomFee</td>
+<td></td>
+<td></td>
+</tr>
 </tbody>
 </table>
 <p>Extra Fee: 0.01 (In addition to fee when operating with smart assets or accounts)</p>
@@ -317,17 +329,20 @@
 
 <h3 id="burn-transaction">Burn Transaction</h3>
 <p>Burning tokens can be useful for systems where a token is used to activate or fund a service and once the service has been used the token can be burnt.</p>
-<pre><code>{
-    &quot;senderPublicKey&quot;:&quot;HQWkhM5q6rtv8Z4MgKicfWdDyUABtr8md7ddgMDmZhuA&quot;,
-    &quot;amount&quot;:1000000,
-    &quot;fee&quot;:500000000,
-    &quot;type&quot;:6,
-    &quot;version&quot;:2,
-    &quot;sender&quot;:&quot;3MpS4Bx7WtJtnFqxTTHWrMdiJBmpdWFbd35&quot;,
-    &quot;feeAssetId&quot;:null,
-    &quot;chainId&quot;: 84, // 84 (T) for testnet 90 (Z) for mainnet
-    &quot;proofs&quot;:[&quot;5VXSiBmexMLYRpYrFeTbz5Psf4MRxhpiwXjasDGMJHTnmQcjtRx8HkubEu4zYBT2NUQYpPUmwmSbowgts6YhxdHS&quot;],&quot;assetId&quot;:&quot;CS9Nc8aiK1FmvBHsj7JN4zE7u2dQnDJ2557dWcZxFHGy&quot; // The AssetId we wish to burn
-}
+<pre><code>{ type: 6,
+  id: 'ComWcac6FMKBT4sNNyNwDDFG8T63s3xorV4M7x8y6TVm',
+  sender: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+  senderPublicKey: '4vR9m3vFuAWqQ6zJWDeqnPCMgLsxKkz2sQcAcEjHduU',
+  fee: 500000000,
+  timestamp: 1561326417304,
+  proofs:
+   [ '3c2ao2uF2T6sxLJqHZSdAY2brjHHeUVQqNMDDJPxfh33JAyTeocnAWGt7nw6dwTB2mBEG8CimuC4BP19DCfB98YZ' ],
+  version: 2,
+  assetId: 'BiuhdjnH9qxgfax52zXgJw3b5ArxCdA4q8kYECqWoEYT',
+  amount: 1,
+  chainId: 84
+ }
+
 </code></pre>
 
 <h3 id="exchange-transaction">Exchange Transaction</h3>
@@ -422,11 +437,77 @@
 </code></pre>
 
 <h3 id="mass-transfer">Mass Transfer</h3>
+<pre><code>{ type: 11,
+  id: '48Dn8uK95jL8iZqv81gqv7PxJtbrZihjmg1Zdcs1428P',
+  sender: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+  senderPublicKey: '4vR9m3vFuAWqQ6zJWDeqnPCMgLsxKkz2sQcAcEjHduU',
+  fee: 10000000,
+  timestamp: 1561326259593,
+  proofs:
+   [ 'YxmbijFFmNM9goWMoxxcPtHM36TKFVrMfC5i9yZEPtZiqoDZ13M3kQJBw557bi728vmR9ydFYZ847gdoisbCVnM' ],
+  version: 1,
+  assetId: null,
+  attachment: '',
+  transferCount: 2,
+  totalAmount: 2,
+  transfers:
+   [ { recipient: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo', amount: 1 },
+     { recipient: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo', amount: 1 } ] }
+</code></pre>
+
 <h3 id="data">Data</h3>
+<pre><code>{ type: 12,
+  id: '3d8fQKQ8Va43vvVzbKJChMrPzQDNgLBH9GaQw23YhdZC',
+  sender: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+  senderPublicKey: '4vR9m3vFuAWqQ6zJWDeqnPCMgLsxKkz2sQcAcEjHduU',
+  fee: 3000000,
+  timestamp: 1561326312175,
+  proofs:
+   [ 'mWVbzSuomwiaowrNLBhEFcZE6dfHhK1tYWrqQZ124mum8MJuoksuqVZUjaRUW7rwLw4cEc33unKTzYP4X9ftRu9' ],
+  version: 1,
+  data:
+   [ { key: 'integerVal', type: 'integer', value: 1 },
+     { key: 'booleanVal', type: 'boolean', value: true },
+     { key: 'stringVal', type: 'string', value: 'hello' },
+     { key: 'binaryVal', type: 'binary', value: 'base64:AQIDBA==' } ] }
+</code></pre>
+
 <h3 id="setscript">SetScript</h3>
-<h3 id="customfee-enable">CustomFee Enable</h3>
 <h3 id="set-asset">Set Asset</h3>
 <h3 id="invoke-script">Invoke Script</h3>
+<h3 id="index">Index</h3>
+<pre><code>{ type: 4,
+  id: '8LjTjtAqQscTk5o3VuzViyp5Dk3dPZ9W26ezHUEyi2LW',
+  sender: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+  senderPublicKey: '4vR9m3vFuAWqQ6zJWDeqnPCMgLsxKkz2sQcAcEjHduU',
+  fee: 5000000,
+  timestamp: 1561326556314,
+  proofs:
+   [ '5H4KDmjYh5tfe7iurVxyZZnKGwcVrproBJs83kLCgvxUi9bn6S1yiLmnrCsD5Zaijm7eJgvTaTZnS6fdx7aW8xKp' ],
+  version: 2,
+  recipient: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+  assetId: null,
+  feeAssetId: null,
+  feeAsset: null,
+  amount: 1,
+  attachment: '' }
+
+</code></pre>
+
+<h3 id="custom-fees">Custom Fees</h3>
+<pre><code>{ type: 14,
+  id: 'HfEnBX9PBkTpNLs5BgxvqmrPQkowb9dogMcSFSSZg9Vq',
+  sender: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+  senderPublicKey: '4vR9m3vFuAWqQ6zJWDeqnPCMgLsxKkz2sQcAcEjHduU',
+  fee: 5000000000,
+  timestamp: 1561328515891,
+  proofs:
+   [ 'Qe81c41WbSDwV1wXRVKZK9ze7kPhE5B5wSRB96ZsZ21ZbZ6hSq89accLdHH1gsZXQvC2WphL1VLKNYG1DVkWZwF' ],
+  version: 1,
+  assetId: 'BiuhdjnH9qxgfax52zXgJw3b5ArxCdA4q8kYECqWoEYT',
+  minSponsoredAssetFee: 100 }
+</code></pre>
+
 <h2 id="signing-transactions">Signing Transactions</h2>
 <p>Signing transactions manually is quite complex, and usually its best to use a library to do so, however if you find you dont have a library available for your platform of choice, you may need to do it manually. The process involves concatenting the byte values of fields from the transaction to create a long byte array, and signing this using Curve25519 and your private key, and inserting this into the transaction payload.</p>
 <p>Rather than include excessive details here on how to do that, the below code sample in C Sharp should be readable enough to understand how the process works, and you can also examine the code of our other libraries as they are all open source. If you need specific details or guidance, please do contact us using the details on the <a href="..">Front Page</a></p>
