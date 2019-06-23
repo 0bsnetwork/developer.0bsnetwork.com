@@ -20,6 +20,8 @@ Each transaction type is given an integer to represent it as follows. The transa
 | 14               | CustomFee     | Setup a Custom Fee for your Asset            | 50.00       |
 | 15               | SetAsset      | Set a script on an asset                     | 10.00       |
 | 16               | ContractInvoke| Run a contract                               | 0.10        |
+| 17               | Index         |                                              |             |
+| 18               | Sponsorship   |                                              |             |
 
 Extra Fee: 0.01 (In addition to fee when operating with smart assets or accounts)
 
@@ -77,17 +79,20 @@ Issue and ReIssue take the same format apart from the type
 Burning tokens can be useful for systems where a token is used to activate or fund a service and once the service has been used the token can be burnt.
 
 ```
-{
-    "senderPublicKey":"HQWkhM5q6rtv8Z4MgKicfWdDyUABtr8md7ddgMDmZhuA",
-    "amount":1000000,
-    "fee":500000000,
-    "type":6,
-    "version":2,
-    "sender":"3MpS4Bx7WtJtnFqxTTHWrMdiJBmpdWFbd35",
-    "feeAssetId":null,
-    "chainId": 84, // 84 (T) for testnet 90 (Z) for mainnet
-    "proofs":["5VXSiBmexMLYRpYrFeTbz5Psf4MRxhpiwXjasDGMJHTnmQcjtRx8HkubEu4zYBT2NUQYpPUmwmSbowgts6YhxdHS"],"assetId":"CS9Nc8aiK1FmvBHsj7JN4zE7u2dQnDJ2557dWcZxFHGy" // The AssetId we wish to burn
-}
+{ type: 6,
+  id: 'ComWcac6FMKBT4sNNyNwDDFG8T63s3xorV4M7x8y6TVm',
+  sender: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+  senderPublicKey: '4vR9m3vFuAWqQ6zJWDeqnPCMgLsxKkz2sQcAcEjHduU',
+  fee: 500000000,
+  timestamp: 1561326417304,
+  proofs: 
+   [ '3c2ao2uF2T6sxLJqHZSdAY2brjHHeUVQqNMDDJPxfh33JAyTeocnAWGt7nw6dwTB2mBEG8CimuC4BP19DCfB98YZ' ],
+  version: 2,
+  assetId: 'BiuhdjnH9qxgfax52zXgJw3b5ArxCdA4q8kYECqWoEYT',
+  amount: 1,
+  chainId: 84 
+ }
+
 ```
 
 ### Exchange Transaction
@@ -191,8 +196,43 @@ Burning tokens can be useful for systems where a token is used to activate or fu
 
 ### Mass Transfer
 
+```
+{ type: 11,
+  id: '48Dn8uK95jL8iZqv81gqv7PxJtbrZihjmg1Zdcs1428P',
+  sender: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+  senderPublicKey: '4vR9m3vFuAWqQ6zJWDeqnPCMgLsxKkz2sQcAcEjHduU',
+  fee: 10000000,
+  timestamp: 1561326259593,
+  proofs: 
+   [ 'YxmbijFFmNM9goWMoxxcPtHM36TKFVrMfC5i9yZEPtZiqoDZ13M3kQJBw557bi728vmR9ydFYZ847gdoisbCVnM' ],
+  version: 1,
+  assetId: null,
+  attachment: '',
+  transferCount: 2,
+  totalAmount: 2,
+  transfers: 
+   [ { recipient: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo', amount: 1 },
+     { recipient: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo', amount: 1 } ] }
+```
+
 ### Data
 
+```
+{ type: 12,
+  id: '3d8fQKQ8Va43vvVzbKJChMrPzQDNgLBH9GaQw23YhdZC',
+  sender: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+  senderPublicKey: '4vR9m3vFuAWqQ6zJWDeqnPCMgLsxKkz2sQcAcEjHduU',
+  fee: 3000000,
+  timestamp: 1561326312175,
+  proofs: 
+   [ 'mWVbzSuomwiaowrNLBhEFcZE6dfHhK1tYWrqQZ124mum8MJuoksuqVZUjaRUW7rwLw4cEc33unKTzYP4X9ftRu9' ],
+  version: 1,
+  data: 
+   [ { key: 'integerVal', type: 'integer', value: 1 },
+     { key: 'booleanVal', type: 'boolean', value: true },
+     { key: 'stringVal', type: 'string', value: 'hello' },
+     { key: 'binaryVal', type: 'binary', value: 'base64:AQIDBA==' } ] }
+```
 ### SetScript
 
 ### CustomFee Enable
@@ -203,7 +243,26 @@ Burning tokens can be useful for systems where a token is used to activate or fu
 
 
 
+### Index
 
+```
+{ type: 4,
+  id: '8LjTjtAqQscTk5o3VuzViyp5Dk3dPZ9W26ezHUEyi2LW',
+  sender: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+  senderPublicKey: '4vR9m3vFuAWqQ6zJWDeqnPCMgLsxKkz2sQcAcEjHduU',
+  fee: 5000000,
+  timestamp: 1561326556314,
+  proofs: 
+   [ '5H4KDmjYh5tfe7iurVxyZZnKGwcVrproBJs83kLCgvxUi9bn6S1yiLmnrCsD5Zaijm7eJgvTaTZnS6fdx7aW8xKp' ],
+  version: 2,
+  recipient: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+  assetId: null,
+  feeAssetId: null,
+  feeAsset: null,
+  amount: 1,
+  attachment: '' }
+
+```
 
 ## Signing Transactions
 
@@ -336,4 +395,19 @@ namespace ZbsSignAndBroadcastDataTransaction
     }
 }
 
+```
+
+### Sponsorship
+```
+{ type: 14,
+  id: 'HfEnBX9PBkTpNLs5BgxvqmrPQkowb9dogMcSFSSZg9Vq',
+  sender: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
+  senderPublicKey: '4vR9m3vFuAWqQ6zJWDeqnPCMgLsxKkz2sQcAcEjHduU',
+  fee: 5000000000,
+  timestamp: 1561328515891,
+  proofs: 
+   [ 'Qe81c41WbSDwV1wXRVKZK9ze7kPhE5B5wSRB96ZsZ21ZbZ6hSq89accLdHH1gsZXQvC2WphL1VLKNYG1DVkWZwF' ],
+  version: 1,
+  assetId: 'BiuhdjnH9qxgfax52zXgJw3b5ArxCdA4q8kYECqWoEYT',
+  minSponsoredAssetFee: 100 }
 ```
