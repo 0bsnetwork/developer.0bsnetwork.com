@@ -74,6 +74,23 @@
     <a class="current" href="./">Smart Contracts</a>
     <ul class="subnav">
             
+    <li class="toctree-l2"><a href="#smart-contracts">Smart Contracts</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#smart-accounts">Smart Accounts</a></li>
+        
+            <li><a class="toctree-l3" href="#smart-assets">Smart Assets</a></li>
+        
+            <li><a class="toctree-l3" href="#getting-started">Getting Started</a></li>
+        
+            <li><a class="toctree-l3" href="#smart-account-examples">Smart Account Examples</a></li>
+        
+            <li><a class="toctree-l3" href="#smart-asset-examples">Smart Asset Examples</a></li>
+        
+        </ul>
+    
+
     </ul>
 	    </li>
           
@@ -159,7 +176,144 @@
           <div role="main">
             <div class="section">
               
-                
+                <h2 id="smart-contracts">Smart Contracts</h2>
+<p>Smart Contracts pn our platform allow to change the default behaviour of accounts and assets.</p>
+<p>Smart contracts are:</p>
+<ul>
+<li>Scripts written using RIDE programming language.</li>
+<li>Predicates over account or asset transactions, which always should return true or false.</li>
+<li>Always passive and not callable.</li>
+</ul>
+<p>Smart Contract Script has access to:</p>
+<ul>
+<li>Blockchain height. There is height() function in the global scope of a script which returns the blockchain height at the execution time.</li>
+<li>Current transaction fields. There is tx variable in the global scope of a script which contains all fields of current outgoing transaction, including proofs array.</li>
+</ul>
+<blockquote>
+<p>Proofs array is not available in an asset script.</p>
+</blockquote>
+<ul>
+<li>
+<p>Proofs. Any transaction can contain an array of proofs up to 8 elements. By default proofs array used for signatures, but you can put any data in the array (each element is up to 64 bytes).</p>
+</li>
+<li>
+<p>Key-value storage of any account. Data saved by a data transaction.</p>
+</li>
+</ul>
+<h3 id="smart-accounts">Smart Accounts</h3>
+<p>0bsNetwork uses an account-based model, there are no inputs and outputs of transactions like in some other blockchain networks. All assets and data associates with an account and bound to its' public key.</p>
+<blockquote>
+<p>By default, public key “owns” assets and stores key-value data attached by data transactions. To spend funds or update key-value storage the sender provides a valid signature matching transaction body and public key.</p>
+</blockquote>
+<p>The main idea that before the transaction is submitted to be included in the next block, the account checks if the transaction meets certain requirements, defined in a script. The script is attached to the account so the account can validate every transaction before confirming it.</p>
+<p>Smart contract (account script) allows us to change the default behaviour of an account by sending a setScriptTransaction. It's important that the smart account does not store any data on the blockchain. A smart account will only have access to blockchain state values that can be retrieved and executed relatively fast, in a “constant” time.</p>
+<p>Any normal account/address can become a smart account.</p>
+<h4 id="how-to-work-with-state">How to work with state</h4>
+<p>If you're familiar with Ethereum smart contracts model you have to consider the main difference between them and our Smart Contracts:</p>
+<p>0bsnetwork smart contracts do not have their own state.</p>
+<p>There is a smart account state managed by data transactions. If you need to work with state you have to use data transactions and manage them with smart account scripts.</p>
+<h4 id="gas-and-fees">Gas and fees</h4>
+<p>The simplicity of account scripts makes the system very scalable in terms of throughput and smart accounts work
+without “gas”, which means that costs are always known upfront. Transactions from smart account or with smart asset require additional an additional fee documented in <a href="../transactions/">transactions</a></p>
+<h4 id="restrictions">Restrictions</h4>
+<p>Smart accounts cannot send transactions themselves or transfer funds according to given conditions, but can read data from the blockchain (for example, the height of a blockchain or signatures from the transaction) and return the result of a predicate obtained on the basis of this data.</p>
+<h3 id="smart-assets">Smart Assets</h3>
+<p>If we plan to apply constraints on all operations for a specific asset, we cannot use a smart account. In our paradigm we have smart assets for this purpose: the script will be attached to the asset and will work in a similar way. Transactions for such assets are valid only if the script returns True. For example, a script can verify proofs from a transaction, check if a notary/escrow approves the transaction, and that operations with the asset are not locked for a specified time. The script for the token is invoked upon the following operations with an asset:</p>
+<ul>
+<li>Transfer Transaction</li>
+<li>MassTransfer Transaction</li>
+<li>Reissue Transaction</li>
+<li>Burn Transaction</li>
+<li>ExchangeTransaction</li>
+<li>SetAssetScriptTransaction</li>
+</ul>
+<h3 id="getting-started">Getting Started</h3>
+<p>The best way to get started with RIDE and smart contracts is to dive right in and check out some examples, the lanuage is easy and readable, and our <a href="https://ide.0bsnetwork.com">IDE</a> already has samples pre-installed that you can load up.</p>
+<h3 id="smart-account-examples">Smart Account Examples</h3>
+<h5 id="an-account-can-trade-only-with-btc">An account can trade only with BTC</h5>
+<pre><code>let cooperPubKey = base58'BVqYXrapgJP9atQccdBPAgJPwHDKkh6A8'
+let BTCId = base58'BTC Asset ID'
+match tx {
+   case o: Order =&gt;
+      sigVerify(tx.bodyBytes, tx.proofs[0], cooperPubKey ) &amp;&amp; (o.assetPair.priceAsset == BTCId || o.assetPair.amountAsset == BTCId)
+   case _ =&gt; sigVerify(tx.bodyBytes, tx.proofs[0], cooperPubKey )
+}
+
+</code></pre>
+
+<h5 id="buy-back-custom-asset-on-specified-price-in-zbs">Buy back custom asset on specified price in ZBS</h5>
+<pre><code>let myAssetId = base58'BVqYXrapgJP9atQccdBPAgJPwHDKkh6B9'
+let cooperPubKey = base58'BVqYXrapgJP9atQccdBPAgJPwHDKkh6A8'
+
+match tx {
+   case o: Order =&gt;
+      o.assetPair.priceAsset == base58'' &amp;&amp; o.assetPair.amountAsset == myAssetId &amp;&amp; o.price == 500000 &amp;&amp; o.amount == 1000 &amp;&amp; o.orderType == Buy
+   case _ =&gt; sigVerify(tx.bodyBytes, tx.proofs[0], cooperPubKey )
+
+}
+
+</code></pre>
+
+<h3 id="smart-asset-examples">Smart Asset Examples</h3>
+<h5 id="issue-an-unburnable-asset">Issue an unburnable asset</h5>
+<p>To issue an unburnable asset you can use pattern matching with a false value to BurnTransaction:</p>
+<pre><code>match tx {
+  case t : BurnTransaction =&gt; false
+  case _ =&gt; true
+}
+</code></pre>
+
+<h5 id="asset">Asset</h5>
+<p>You can freeze your assets till the certain height by defining a target height variable:</p>
+<pre><code>let targetHeight = 1500000
+height &gt;= targetHeight
+</code></pre>
+
+<h5 id="getting-a-share-after-each-asset-transfer">Getting a share after each asset transfer</h5>
+<p>For requiring a fee in a certain asset to get a share after each transfer you can use TransferTransaction depending on the asset id:</p>
+<pre><code>match tx {
+  case t : TransferTransaction =&gt;
+    t.feeAssetId == base58'oWgJN6YGZFtZrV8BWQ1PGktZikgg7jzGmtm16Ktyvjd'
+  case _ =&gt; true
+}
+</code></pre>
+
+<h5 id="transferring-by-issuer-permission">Transferring by issuer permission</h5>
+<p>You can restrict the token transfer option to be done only by the token issuer's permission (commitment/debt label):</p>
+<pre><code>match tx {
+  case tx : TransferTransaction =&gt;
+    let issuer = Address(base58'3P6ms9EotRX8JwSrebeTXYVnzpsGCrKWLv4')
+    isDefined(getInteger(issuer, toBase58String(tx.id)))
+  case _ =&gt; false
+}
+</code></pre>
+
+<h5 id="issue-an-untransferable-asset">Issue an untransferable asset</h5>
+<p>To make the asset untransferable, you can assign a false value to TransferTransaction, MassTransferTransaction and ExchangeTransaction:</p>
+<pre><code>match tx {
+  case t : TransferTransaction | MassTransferTransaction | ExchangeTransaction =&gt; false
+  case _ =&gt; true
+}
+</code></pre>
+
+<h5 id="asset-tradable-only-with-btc">Asset tradable only with BTC</h5>
+<p>To allow asset trading only with bitcoins you can do as here:</p>
+<pre><code>let BTCId = base58'8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS'
+match tx {
+  case t : ExchangeTransaction =&gt;
+    t.sellOrder.assetPair.priceAsset == BTCId || t.sellOrder.assetPair.amountAsset == BTCId
+  case _ =&gt; true
+}
+</code></pre>
+
+<h5 id="require-using-a-certain-matcher">Require using a certain matcher</h5>
+<p>To define a certain matcher, you can assign the matcher address as a sender value:</p>
+<pre><code>match tx {
+  case t : ExchangeTransaction =&gt;
+    t.sender == addressFromString(&quot;3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3&quot;)
+  case _ =&gt; true
+}
+</code></pre>
               
             </div>
           </div>

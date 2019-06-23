@@ -271,7 +271,7 @@
 </tr>
 </tbody>
 </table>
-<p>Extra Fee: 0.01</p>
+<p>Extra Fee: 0.01 (In addition to fee when operating with smart assets or accounts)</p>
 <h2 id="transaction-formats">Transaction Formats</h2>
 <p>The below sections demonstrate the JSON transaction format that is required to make a transaction. When signing a transaction on a Node, you can exclude the signature/proofs field as the server will give you this back.</p>
 <blockquote>
@@ -393,6 +393,40 @@
 }
 </code></pre>
 
+<h3 id="lease-cancel">Lease Cancel</h3>
+<pre><code>{
+    &quot;senderPublicKey&quot;:&quot;FB5ErjREo817duEBBQUqUdkgoPctQJEYuG3mU7w3AYjc&quot;,
+    &quot;amount&quot;:1
+    &quot;fee&quot;:100000000,
+    &quot;type&quot;:8,
+    &quot;version&quot;:2,
+    &quot;sender&quot;:&quot;3Mps7CZqB9nUbEirYyCMMoA7VbqrxLvJFSB&quot;,
+    &quot;feeAssetId&quot;:null,
+    &quot;proofs&quot;:[&quot;fkWj6RkV722jhv72BY6Eo5BZ6N4T8nTPcmQVmoBs14Cv53W2VfRE7C9rT1TN4CZfAW2Y2YhVFm24NGZh75eBHq4&quot;],&quot;recipient&quot;:&quot;3NCKpqzSnHmXhZEmqYy4U6RUKUAJDTxWgWP&quot;
+
+}
+</code></pre>
+
+<h3 id="create-alias">Create Alias</h3>
+<pre><code>{
+    &quot;senderPublicKey&quot;:&quot;BVv1ZuE3gKFa6krwWJQwEmrLYUESuUabNCXgYTmCoBt6&quot;,
+    &quot;sender&quot;:&quot;3N8S4UtauvDAzpLiaRyDdHn9muexWHhBP4D&quot;,
+    &quot;feeAssetId&quot;:null,
+    &quot;proofs&quot;:[&quot;22QJfRKX7kUQt4qjdnUqZAnhqukqhnofE27uvP8Q5xnBf8M6PCNtWVGq2ngm6m7Voe7duys59D1yU9jhKrmdXDCe&quot;],
+    &quot;fee&quot;:1000000000,
+    &quot;alias&quot;:&quot;91f452553298770f&quot;,
+    &quot;id&quot;:&quot;AD7KmXwoVNc2fXsmaxsHsrnT1tfPF3HsWYtfjFijVsvM&quot;,
+    &quot;type&quot;:10,
+    &quot;version&quot;:2
+}
+</code></pre>
+
+<h3 id="mass-transfer">Mass Transfer</h3>
+<h3 id="data">Data</h3>
+<h3 id="setscript">SetScript</h3>
+<h3 id="customfee-enable">CustomFee Enable</h3>
+<h3 id="set-asset">Set Asset</h3>
+<h3 id="invoke-script">Invoke Script</h3>
 <h2 id="signing-transactions">Signing Transactions</h2>
 <p>Signing transactions manually is quite complex, and usually its best to use a library to do so, however if you find you dont have a library available for your platform of choice, you may need to do it manually. The process involves concatenting the byte values of fields from the transaction to create a long byte array, and signing this using Curve25519 and your private key, and inserting this into the transaction payload.</p>
 <p>Rather than include excessive details here on how to do that, the below code sample in C Sharp should be readable enough to understand how the process works, and you can also examine the code of our other libraries as they are all open source. If you need specific details or guidance, please do contact us using the details on the <a href="..">Front Page</a></p>
