@@ -32,40 +32,8 @@ The below sections demonstrate the JSON transaction format that is required to m
 
 ### Issue / ReIssue Transaction
 
-Issue Example code:
-```
-const { issue, broadcast } = require('@0bsnetwork/zbs-transactions')
-const signedTx = issue(
-    {
-        name: 'MyTestToken',
-        description: 'My New Token',
-        quantity: 50000,
-        chainId: 'T'
-    }, "Write your SEED here")
-
-broadcast(signedTx, "https://node1.testnet-0bsnetwork.com")
-    .then(resp => console.log(resp))
-    .catch(e => console.error(`.catch(${e})`));
-```
-
-Reissue Example code:
-```
-const { reissue, broadcast } = require('@0bsnetwork/zbs-transactions')
-const signedTx = reissue({
-    quantity: 5000000,
-    assetId: '5cfyua2DBmLcWYjh6D3k8ra3xNc6Ap47BSGr9rujciy6',
-    reissuable: false,
-    chainId: 'T'
-}, "Write your SEED here")
-
-broadcast(signedTx, "https://node1.testnet-0bsnetwork.com")
-    .then(resp => console.log(resp))
-    .catch(e => console.error(`.catch(${e})`));
-```
-
 Issue and ReIssue take the same format apart from the type
 
-Output:
 ```
 {
     "senderPublicKey":"2M25DqL2W4rGFLCFadgATboS8EPqyWAN3DjH12AH5Kdr",
@@ -86,21 +54,7 @@ Output:
 ```
 
 ### Transfer Transaction
-Example code:
-```
-const { transfer, broadcast } = require('@0bsnetwork/zbs-transactions')
-const signedTx = transfer({
-  amount: 1,
-  recipient: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
-  fee: 5000000
-}, "Write your SEED here")
 
-broadcast(signedTx, "https://node1.testnet-0bsnetwork.com")
-    .then(resp => console.log(resp))
-    .catch(e => console.error(`.catch(${e})`));
-```
-
-Output:
 ```
 {
     "senderPublicKey":"4c5K4kGeRdrnSYZ9wngQKSozikVgfxmDEuViirsyUHwd",
@@ -123,21 +77,7 @@ Output:
 
 Burning tokens can be useful for systems where a token is used to activate or fund a service and once the service has been used the token can be burnt.
 Example code:
-```
-const constants = require('./constants')
-const { burn, broadcast } = require('@0bsnetwork/zbs-transactions')
 
-const signedTx = burn({
-    quantity: 1,
-    assetId: 'BiuhdjnH9qxgfax52zXgJw3b5ArxCdA4q8kYECqWoEYT',
-    chainId: 'T'
-}, "Write your SEED here")
-
-broadcast(signedTx, "https://node1.testnet-0bsnetwork.com")
-    .then(resp => console.log(resp))
-    .catch(e => console.error(`.catch(${e})`));
-```
-Output:
 ```
 { type: 6,
   id: 'ComWcac6FMKBT4sNNyNwDDFG8T63s3xorV4M7x8y6TVm',
@@ -157,7 +97,6 @@ Output:
 
 ### Exchange Transaction
 
-Output:
 ```
 {
     "senderPublicKey":"8QUAqtTckM5B8gvcuP7mMswat9SjKUuafJMusEoSn1Gy",
@@ -209,20 +148,7 @@ Output:
 ```
 
 ### Lease Transaction
-Example code:
-```
-const { lease, broadcast } = require('@0bsnetwork/zbs-transactions')
-const signedTx = lease(
-    {
-        amount: 100000,
-        recipient: '3NBTZJ6BpuQeRCciQzYRVrFwyhrUcsf6f6M',
-    }, "Write your SEED here")
 
-broadcast(signedTx, "https://node1.testnet-0bsnetwork.com")
-    .then(resp => console.log(resp))
-    .catch(e => console.error(`.catch(${e})`));
-```
-Output:
 ```
 {
     "senderPublicKey":"FB5ErjREo817duEBBQUqUdkgoPctQJEYuG3mU7w3AYjc",
@@ -237,20 +163,7 @@ Output:
 ```
 
 ### Lease Cancel
-Example code:
-```
-const { cancelLease, broadcast } = require('@0bsnetwork/zbs-transactions')
-const signedTx = cancelLease(
-    {
-        leaseId: 'HxJrij7Ba7ojaovjrZcvAaXAwMBMr9BkAyXLsdiiWtkF',
-        chainId: 'T'
-    }, "Write your SEED here")
 
-broadcast(signedTx, "https://node1.testnet-0bsnetwork.com")
-    .then(resp => console.log(resp))
-    .catch(e => console.error(`.catch(${e})`));
-```
-Output:
 ```
 {
     "senderPublicKey":"FB5ErjREo817duEBBQUqUdkgoPctQJEYuG3mU7w3AYjc",
@@ -266,21 +179,7 @@ Output:
 ```
 
 ### Create Alias
-Example code:
-```
-const { alias, broadcast } = require('@0bsnetwork/zbs-transactions')
-const signedTx = alias(
-    {
-        alias: 'New Alias',
-        chainId: 'T',
-        fee: 100000
-    }, "Write your SEED here")
 
-broadcast(signedTx, "https://node1.testnet-0bsnetwork.com")
-    .then(resp => console.log(resp))
-    .catch(e => console.error(`.catch(${e})`));
-```
-Output:
 ```
 {
     "senderPublicKey":"BVv1ZuE3gKFa6krwWJQwEmrLYUESuUabNCXgYTmCoBt6",
@@ -296,28 +195,7 @@ Output:
 ```
 
 ### Mass Transfer
-Example code:
-```
-const { massTransfer, broadcast } = require('@0bsnetwork/zbs-transactions')
 
-const signedTx = massTransfer({transfers: [
-  {
-    amount: 1,
-    recipient: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
-    fee: 1000000
-  },
-  {
-    amount: 1,
-    recipient: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
-    fee: 1000000
-  },
-]}, "Write your SEED here")
-
-broadcast(signedTx, "https://node1.testnet-0bsnetwork.com")
-    .then(resp => console.log(resp))
-    .catch(e => console.error(`.catch(${e})`));
-```
-Output:
 ```
 { type: 11,
   id: '48Dn8uK95jL8iZqv81gqv7PxJtbrZihjmg1Zdcs1428P',
@@ -338,23 +216,6 @@ Output:
 ```
 
 ### Data
-```
-const { data, broadcast } = require('@0bsnetwork/zbs-transactions')
-
-const signedTx = data(
-    { data: [
-            { key: 'integerVal', value: 1 },
-            { key: 'booleanVal', value: true },
-            { key: 'stringVal', value: 'hello' },
-            { key: 'binaryVal', value: [1, 2, 3, 4] }
-        ]
-    }, "Write your SEED here")
-
-broadcast(signedTx, "https://node1.testnet-0bsnetwork.com")
-    .then(resp => console.log(resp))
-    .catch(e => console.error(`.catch(${e})`));
-```
-Output:
 
 ```
 { type: 12,
@@ -383,21 +244,7 @@ Output:
 
 
 ### Index
-Example code:
-```
-const { transfer, broadcast } = require('@0bsnetwork/zbs-transactions')
-const signedTx = transfer({
-  amount: 1,
-  recipient: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo',
-  fee: 5000000,
-  chainId: 'T'
-}, "Write your SEED here")
 
-broadcast(signedTx, "https://node1.testnet-0bsnetwork.com")
-    .then(resp => console.log(resp))
-    .catch(e => console.error(`.catch(${e})`));
-```
-Output:
 ```
 { type: 4,
   id: '8LjTjtAqQscTk5o3VuzViyp5Dk3dPZ9W26ezHUEyi2LW',
