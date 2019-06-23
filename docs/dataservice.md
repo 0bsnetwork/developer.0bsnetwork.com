@@ -1,5 +1,17 @@
 ## Data Service API
 
+Our data service API stores information about the blockchain, data, and trading. We host a public version of the API, and if you need more limits (Public API limits number of results in 1 page) you can also run your own dockerised version of this API.
+
+You can use this API to, for example, get a list of all data submitted on an account within 24 hours. It's much quicker and easier than using the Node API where you would have to pull a list of all blocks and transactions and locate the right data.
+
+The documentation for the API is located at;
+
+[https://api.testnet-0bsnetwork.com/docs](https://api.testnet-0bsnetwork.com/docs)
+
+Below is a demonstration of using the API
+
+### Demo
+
 Here's a quick demo of our data API. This is a small docker container that runs alongside a node (NodeJS + PostGreSQL) and either you could run your own if your data querying requirements are large, or use our public one for smaller queries (There's smaller limits in place on the public one)
 
 So, Lets say we want to get all data transactions for a particular ID, in this case, I've been saving data from my orange tree, which has a 'plantId' of '23456-f344f3'

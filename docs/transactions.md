@@ -2,7 +2,7 @@
 
 ## Transaction Types
 
-Each transaction type is given an integer to represent it as follows
+Each transaction type is given an integer to represent it as follows. The transaction fee is included below too, though libraries should have these set by default.
 
 | Transaction Type | Name          | Description                                  | Fee (ZBS)   |
 | ---------------- | ------------- | ---------------------------------------------| ------------|
@@ -21,11 +21,13 @@ Each transaction type is given an integer to represent it as follows
 | 15               | SetAsset      | Set a script on an asset                     | 10.00       |
 | 16               | ContractInvoke| Run a contract                               | 0.10        |
 
-Extra Fee: 0.01
+Extra Fee: 0.01 (In addition to fee when operating with smart assets or accounts)
 
 ## Transaction Formats
 
 The below sections demonstrate the JSON transaction format that is required to make a transaction. When signing a transaction on a Node, you can exclude the signature/proofs field as the server will give you this back.
+
+> Within the transaction JSON, Fee's are expressed without decimal values, so ZBS has 8 decimal places, and 100000000 represents 1 ZCL within the transaction JSON.
 
 ### Issue / ReIssue Transaction
 
@@ -154,6 +156,53 @@ Burning tokens can be useful for systems where a token is used to activate or fu
     "proofs":["fkWj6RkV722jhv72BY6Eo5BZ6N4T8nTPcmQVmoBs14Cv53W2VfRE7C9rT1TN4CZfAW2Y2YhVFm24NGZh75eBHq4"],"recipient":"3NCKpqzSnHmXhZEmqYy4U6RUKUAJDTxWgWP"
 }
 ```
+
+### Lease Cancel
+
+```
+{
+    "senderPublicKey":"FB5ErjREo817duEBBQUqUdkgoPctQJEYuG3mU7w3AYjc",
+    "amount":1
+    "fee":100000000,
+    "type":8,
+    "version":2,
+    "sender":"3Mps7CZqB9nUbEirYyCMMoA7VbqrxLvJFSB",
+    "feeAssetId":null,
+    "proofs":["fkWj6RkV722jhv72BY6Eo5BZ6N4T8nTPcmQVmoBs14Cv53W2VfRE7C9rT1TN4CZfAW2Y2YhVFm24NGZh75eBHq4"],"recipient":"3NCKpqzSnHmXhZEmqYy4U6RUKUAJDTxWgWP"
+
+}
+```
+
+### Create Alias
+
+```
+{
+    "senderPublicKey":"BVv1ZuE3gKFa6krwWJQwEmrLYUESuUabNCXgYTmCoBt6",
+    "sender":"3N8S4UtauvDAzpLiaRyDdHn9muexWHhBP4D",
+    "feeAssetId":null,
+    "proofs":["22QJfRKX7kUQt4qjdnUqZAnhqukqhnofE27uvP8Q5xnBf8M6PCNtWVGq2ngm6m7Voe7duys59D1yU9jhKrmdXDCe"],
+    "fee":1000000000,
+    "alias":"91f452553298770f",
+    "id":"AD7KmXwoVNc2fXsmaxsHsrnT1tfPF3HsWYtfjFijVsvM",
+    "type":10,
+    "version":2
+}
+```
+
+### Mass Transfer
+
+### Data
+
+### SetScript
+
+### CustomFee Enable
+
+### Set Asset
+
+### Invoke Script
+
+
+
 
 
 ## Signing Transactions
