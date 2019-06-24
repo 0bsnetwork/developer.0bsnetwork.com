@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+</head>
+<pre>Select Function:</pre>
+<select id="mySelect">
+    <option value="publicState">publicState</option>
+    <option value="auth">auth</option>
+    <option value="signTransaction">signTransaction</option>
+    <option value="signAndPublishTransaction">signAndPublishTransaction</option>
+    <option value="signTransactionPackageTokenTransfer">signTransactionPackageTokenTransfer</option>
+    <option value="signTransactionPackageIssue">signTransactionPackageIssue</option>
+    <option value="signTransactionPackageTransfer">signTransactionPackageTransfer</option>
+    <option value="signTransactionPackageReissue">signTransactionPackageReissue</option>
+    <option value="signTransactionPackageBurn">signTransactionPackageBurn</option>
+    <option value="signTransactionPackageLease">signTransactionPackageLease</option>
+    <option value="signTransactionPackageCreateAlias">signTransactionPackageCreateAlias</option>
+    <option value="signTransactionPackageMassTransfer">signTransactionPackageMassTransfer</option>
+    <option value="signTransactionPackageDataTransaction">signTransactionPackageDataTransaction</option>
+    <option value="signTransactionPackageSetScript">signTransactionPackageSetScript</option>
+    <option value="signTransactionPackageSetScript2">signTransactionPackageSetScript2</option>
+    <option value="signTransactionPackageSponsorship">signTransactionPackageSponsorship</option>
+    <option value="signTransactionPackageAssetScript">signTransactionPackageAssetScript</option>
+    <option value="signOrder">signOrder</option>
+    <option value="signCancelOrder">signCancelOrder</option>
+    <option value="signAndPublishCancelOrder">signAndPublishCancelOrder</option>
+    <option value="signRequest">signRequest</option>
+    <option value="signRequestCoinomat">signRequestCoinomat</option>
+</select>
+<button onclick="execute()">Run function</button>
+<div id="function"></div>
+<pre id="response"></pre>
+<div id="error"></div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+function publicState() {
+    $('#function').html('Function: publicState');
+    zbsLink.publicState()
+        .then(state => {
+            console.log(state); //displaying the result in the console
+            $('#response').html(JSON.stringify(state, undefined, 2));
+
+        }).catch(error => {
+        console.error(error); // displaying the result in the console
+        $('#error').html(JSON.stringify(error, undefined, 2));
+    })
+}
+
+function auth() {
+    $('#function').html('Function: auth');
+
+    const authData = {
+        data: "Generated string from server",
+        name: "My test App",
+        icon: "/img/icons/zbs_logo.svg",
+        referrer: "https://client.testnet-0bsnetwork.com/",
+        successPath: "login"
+    };
+
+
+    zbsLink.auth(authData)
+    .then(state => {
+            console.log(state); //displaying the result in the console
+            $('#response').html(JSON.stringify(state, undefined, 2));
+
+        }).catch(error => {
+            console.error(error); // displaying the result in the console
+            $('#error').html(JSON.stringify(error, undefined, 2));
+        })
+
+}
+
+function signTransaction() {
+    $('#function').html('Function: signTransaction');
+
+    const txData = {
+        type: 4,
+        data: {
+            amount: {
+                assetId: "ZBS",
+                tokens: "1.567"
+            },
+            fee: {
+                assetId: "ZBS",
+                tokens: "0.001"
+            },
+            recipient: "test"
+        }
+    };
+    zbsLink.signTransaction(txData)
+        .then(state => {
+            console.log(state); //displaying the result in the console
+            $('#response').html(JSON.stringify(state, undefined, 2));
+
+        }).catch(error => {
+        console.error(error); // displaying the result in the console
+        $('#error').html(JSON.stringify(error, undefined, 2));
+    })
+}
+
+function signAndPublishTransaction() {
+    $('#function').html('Function: signAndPublishTransaction');
+
+    const txData = {
+        type: 4,
+        data: {
+            amount: {
+                assetId: "ZBS",
+                tokens: "1.567"
+            },
+            fee: {
+                assetId: "ZBS",
+                tokens: "0.001"
+            },
+            recipient: "test"
+        }
+    };
+    zbsLink.signAndPublishTransaction(txData)
+    .then(state => {
+            console.log(state); //displaying the result in the console
+            $('#response').html(JSON.stringify(state, undefined, 2));
+
+        }).catch(error => {
+            console.error(error); // displaying the result in the console
+            $('#error').html(JSON.stringify(error, undefined, 2));
+        })
+}
+
+function signTransactionPackageTokenTransfer() {
+    $('#function').html('Function: signTransactionPackage token transfer');
+
+    const name = "For Test";
+    const tx = [{
+        type: 4,
+        data: {
+            amount: {
+                assetId: "ZBS",
+                tokens: "1.567"
+            },
+            fee: {
+                assetId: "ZBS",
+                tokens: "0.001"
+            },
+            recipient: "test"
+        }},{
+        type: 4,
+        data: {
+            amount: {
+                assetId: "ZBS",
+                tokens: "0.51"
+            },
+            fee: {
+                assetId: "ZBS",
+                tokens: "0.001"
+            },
+            recipient: "jkdc"
+        }
+    }];
+
+
+    zbsLink.signTransactionPackage(tx, name)
+        .then(state => {
+        console.log(state); //displaying the result in the console
+        $('#response').html(JSON.stringify(state, undefined, 2));
+
+    }).catch(error => {
+        console.error(error); // displaying the result in the console
+        $('#error').html(JSON.stringify(error, undefined, 2));
+    })
+}
+
+function signTransactionPackageIssue() {
+    $('#function').html('Function: signAndPublishTransaction Issue');
+
+    zbsLink.signAndPublishTransaction({
+        type: 3,
+        data: {
+            "name": "Best Token",
+            "description": "Greate token",
+            "quantity": 1000000,
+            "precision": 2,
+            "reissuable": true,
+            fee: {
+                "tokens": "1",
+                "assetId": "ZBS"
+            }
+        }
+    }).then(state => {
+        console.log("Hurray! I've created my asset!!!");
+        console.log(state); //displaying the result in the console
+        $('#response').html(JSON.stringify(state, undefined, 2));
+
+    }).catch(error => {
+        console.error("Something went wrong", error);
+        console.error(error); // displaying the result in the console
+        $('#error').html(JSON.stringify(error, undefined, 2));
+    })
+}
+
+function signTransactionPackageTransfer() {
+    $('#function').html('Function: signAndPublishTransaction Transfer');
+
+    zbsLink.signAndPublishTransaction({
+        type: 4,
+        data: {
+            amount: { tokens: "3.3333333", assetId: "ZBS" },
+            fee: { tokens: "0.001", assetId: "ZBS"},
+            recipient: "merry"
+        }
+    }).then(state => {
+        console.log("Hurray! I've been able to send ZBS!!!");
+        console.log(state); //displaying the result in the console
+        $('#response').html(JSON.stringify(state, undefined, 2));
+
+    }).catch(error => {
+        console.error("Something went wrong", error);
+        console.error(error); // displaying the result in the console
+        $('#error').html(JSON.stringify(error, undefined, 2));
+    })
+}
+
+function signTransactionPackageReissue() {
+    $('#function').html('Function: signAndPublishTransaction Reissue');
+
+    zbsLink.signAndPublishTransaction({
+        type: 5,
+        data: {
+            "quantity": 1000,
+            "assetId": "BiuhdjnH9qxgfax52zXgJw3b5ArxCdA4q8kYECqWoEYT",
+            "reissuable": true,
+            fee: {
+                "tokens": "1",
+                "assetId": "ZBS"
+            }
+        }
+    }).then(state => {
+        console.log("Hurray! I've reissued my asset!!!");
+        console.log(state); //displaying the result in the console
+        $('#response').html(JSON.stringify(state, undefined, 2));
+
+    }).catch(error => {
+        console.error("Something went wrong", error);
+        console.error(error); // displaying the result in the console
+        $('#error').html(JSON.stringify(error, undefined, 2));
+    })
+}
+
+function signTransactionPackageBurn() {
+    $('#function').html('Function: signAndPublishTransaction Burn');
+
+    zbsLink.signAndPublishTransaction({
+        type: 6,
+        data: {
+            amount: 1000,
+            assetId: "BiuhdjnH9qxgfax52zXgJw3b5ArxCdA4q8kYECqWoEYT",
+            fee: {
+                "tokens": "0.001",
+                "assetId": "ZBS"
+            }
+        }
+    }).then(state => {
+        console.log("Hurray! I've burned unneeded tokens!!!");
+        console.log(state); //displaying the result in the console
+        $('#response').html(JSON.stringify(state, undefined, 2));
+    }).catch(error => {
+        console.error("Something went wrong", error);
+        console.error(error); // displaying the result in the console
+        $('#error').html(JSON.stringify(error, undefined, 2));
+    })
+}
+
+function signTransactionPackageLease() {
+    $('#function').html('Function: signAndPublishTransaction Lease');
+
+    zbsLink.signAndPublishTransaction({
+        type: 8,
+        data: {
+            "amount": 1000,
+            "recipient": "jkdc",
+            fee: {
+                "tokens": "0.001",
+                "assetId": "ZBS"
+            }
+        }
+    }).then(state => {
+        console.log("Hurray! I've been able to lease tokens!!!");
+        console.log(state); //displaying the result in the console
+        $('#response').html(JSON.stringify(state, undefined, 2));
+    }).catch(error => {
+        console.error("Something went wrong", error);
+        console.error(error); // displaying the result in the console
+        $('#error').html(JSON.stringify(error, undefined, 2));
+    })
+}
+
+function signTransactionPackageLeaseCancel() {
+    $('#function').html('Function: signAndPublishTransaction Lease Cancel');
+
+    zbsLink.signAndPublishTransaction({
+        type: 9,
+        data: {
+            leaseId: "6frvwF8uicAfyEfTfyC2sXqBJH7V5C8he5K4YH3BkNiS",
+            fee: {
+                "tokens": "0.001",
+                "assetId": "ZBS"
+            }
+        }
+    }).then(state => {
+        console.log("Hurray! I've cancelled leasing!!!");
+        console.log(state); //displaying the result in the console
+        $('#response').html(JSON.stringify(state, undefined, 2));
+    }).catch(error => {
+        console.error("Something went wrong", error);
+        console.error(error); // displaying the result in the console
+        $('#error').html(JSON.stringify(error, undefined, 2));
+    })
+}
+
+function signTransactionPackageCreateAlias() {
+    $('#function').html('Function: signAndPublishTransaction Create Alias');
+
+    zbsLink.signAndPublishTransaction({
+        type: 10,
+        data: {
+            alias: "testAlias",
+            fee: {
+                "tokens": "0.001",
+                "assetId": "ZBS"
+            }
+        }
+    }).then(state => {
+        console.log("Hurray! Now I have an alias!!!");
+        console.log(state); //displaying the result in the console
+        $('#response').html(JSON.stringify(state, undefined, 2));
+    }).catch(error => {
+        console.error("Something went wrong", error);
+        console.error(error); // displaying the result in the console
+        $('#error').html(JSON.stringify(error, undefined, 2));
+    })
+}
+
+function signTransactionPackageMassTransfer() {
+    $('#function').html('Function: signAndPublishTransaction Mass Transfer');
+
+    zbsLink.signAndPublishTransaction({
+        type: 11,
+        data: {
+            totalAmount: { assetId: "ZBS", coins: 0},
+            transfers: [
+                { recipient: "alias1", amount: "200000" },
+                { recipient: "alias2", amount: "200000" },
+            ],
+            fee: {
+                "tokens": "0.002",
+                "assetId": "ZBS"
+            }
+        }
+    }).then(state => {
+        console.log("Hurray! I've sent hi to my friends!!!");
+        console.log(state); //displaying the result in the console
+        $('#response').html(JSON.stringify(state, undefined, 2));
+    }).catch(error => {
+        console.error("Something went wrong", error);
+        console.error(error); // displaying the result in the console
+        $('#error').html(JSON.stringify(error, undefined, 2));
+    })
+}
+
+function signTransactionPackageDataTransaction() {
+    $('#function').html('Function: signAndPublishTransaction Data Transaction');
+
+    zbsLink.signAndPublishTransaction({
+        type: 12,
+        data: {
+            data: [
+                { key: "string", value: "testVal", type: "string" },
+                { key: "binary", value: "base64:AbCd", type: "binary" },
+                { key: "integer", value: 20, type: "integer" },
+                { key: "boolean", value: false, type: "boolean" },
+            ],
+            fee: {
+                "tokens": "0.01",
+                "assetId": "ZBS"
+            }
+        }
+    }).then(state => {
+        console.log("Hurray! I've saved data!!!");
+        console.log(state); //displaying the result in the console
+        $('#response').html(JSON.stringify(state, undefined, 2));
+    }).catch(error => {
+        console.error("Something went wrong", error);
+        console.error(error); // displaying the result in the console
+        $('#error').html(JSON.stringify(error, undefined, 2));
+    })
+}
+
+function signTransactionPackageSetScript() {
+    $('#function').html('Function: signAndPublishTransaction Set Script');
+
+    zbsLink.signAndPublishTransaction({
+        type: 13,
+        data: {
+            script: "",
+            fee: {
+                "tokens": "0.04",
+                "assetId": "ZBS"
+            }
+        }
+    }).then(state => {
+        console.log("Hurray! I've cancelled a script!!!");
+        console.log(state); //displaying the result in the console
+        $('#response').html(JSON.stringify(state, undefined, 2));
+    }).catch(error => {
+        console.error("Something went wrong", error);
+        console.error(error); // displaying the result in the console
+        $('#error').html(JSON.stringify(error, undefined, 2));
+    })
+}
+
+function signTransactionPackageSetScript2() {
+    $('#function').html('Function: signAndPublishTransaction Set Script 2');
+
+    zbsLink.signAndPublishTransaction({
+        type: 13,
+        data: {
+            script: "base64:AQa3b8tH",
+            fee: {
+                "tokens": "0.01",
+                "assetId": "ZBS"
+            }
+        }
+    }).then(state => {
+        console.log("Hurray! I've added a script!!!");
+        console.log(state); //displaying the result in the console
+        $('#response').html(JSON.stringify(state, undefined, 2));
+    }).catch(error => {
+        console.error("Something went wrong", error);
+        console.error(error); // displaying the result in the console
+        $('#error').html(JSON.stringify(error, undefined, 2));
+    })
+}
+
+function signTransactionPackageSponsorship() {
+    $('#function').html('Function: signAndPublishTransaction Sponsorship');
+
+    zbsLink.signAndPublishTransaction({
+        type: 14,
+        data: {
+            minSponsoredAssetFee: {
+                assetId: "6frvwF8uicAfyEfTfyC2sXqBJH7V5C8he5K4YH3BkNiS",
+                tokens: 0.1
+            },
+            fee: {
+                "tokens": "1",
+                "assetId": "ZBS"
+            }
+        }
+    }).then(state => {
+        console.log("Hurray! I've become a sponsor!!!");
+        console.log(state); //displaying the result in the console
+        $('#response').html(JSON.stringify(state, undefined, 2));
+    }).catch(error => {
+        console.error("Something went wrong", error);
+        console.error(error); // displaying the result in the console
+        $('#error').html(JSON.stringify(error, undefined, 2));
+    })
+}
+
+function signTransactionPackageAssetScript() {
+    $('#function').html('Function: signAndPublishTransaction Asset Script');
+
+    zbsLink.signAndPublishTransaction({
+        type: 15,
+        data: {
+            assetId: "",
+            script: "base64:AQa3b8tH",
+            fee: {
+                "tokens": "0.01",
+                "assetId": "ZBS"
+            }
+        }
+    }).then(state => {
+        console.log("Hurray! I have reset a script to the asset!!!");
+        console.log(state); //displaying the result in the console
+        $('#response').html(JSON.stringify(state, undefined, 2));
+    }).catch(error => {
+        console.error("Something went wrong", error);
+        console.error(error); // displaying the result in the console
+        $('#error').html(JSON.stringify(error, undefined, 2));
+    })
+}
+
+function signOrder() {
+    $('#function').html('Function: signOrder');
+
+    zbsLink.signOrder({
+        type: 1002,
+        data: {
+            matcherPublicKey: "7kPFrHDiGw1rCm7LPszuECwWYL3dMf6iMifLRDJQZMzy",
+            orderType: "sell",
+            expiration: Date.now() + 100000,
+            amount: {
+                tokens: "100",
+                assetId: "ZBS"
+            },
+            price: {
+                tokens: "0.01",
+                assetId: "8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS"
+            },
+            matcherFee: {
+                tokens: "0.03",
+                assetId: "ZBS"
+            }
+        }
+    }).then(state => {
+        console.log("Hurray! I've signed an order!!!");
+        console.log(state); //displaying the result in the console
+        $('#response').html(JSON.stringify(state, undefined, 2));
+    }).catch(error => {
+        console.error("Something went wrong", error);
+        console.error(error); // displaying the result in the console
+        $('#error').html(JSON.stringify(error, undefined, 2));
+    })
+}
+
+function signCancelOrder() {
+    $('#function').html('Function: signCancelOrder');
+
+    zbsLink.signCancelOrder({
+        type: 1003,
+        data: {
+            id: '31EeVpTAronk95TjCHdyaveDukde4nDr9BfFpvhZ3Sap'
+        }
+    }).then(state => {
+        console.log("Hurray! I've cancel signed order!!!");
+        console.log(state); //displaying the result in the console
+        $('#response').html(JSON.stringify(state, undefined, 2));
+    }).catch(error => {
+        console.error("Something went wrong", error);
+        console.error(error); // displaying the result in the console
+        $('#error').html(JSON.stringify(error, undefined, 2));
+    })
+}
+
+function signAndPublishCancelOrder() {
+    $('#function').html('Function: signAndPublishCancelOrder');
+
+    zbsLink.signAndPublishCancelOrder({
+        type: 1003,
+        data: {
+            id: '31EeVpTAronk95TjCHdyaveDukde4nDr9BfFpvhZ3Sap'
+        }
+    }).then((state) => {
+        console.log('Hurray! I\'ve cancelled an order');
+        console.log(state); //displaying the result in the console
+        $('#response').html(JSON.stringify(state, undefined, 2));
+    }).catch(error => {
+        console.error("Something went wrong", error);
+        console.error(error); // displaying the result in the console
+        $('#error').html(JSON.stringify(error, undefined, 2));
+    })
+}
+
+function signRequest() {
+    $('#function').html('Function: signRequest');
+
+    zbsLink.signRequest({
+        type: 1001,
+        data: {
+            timestamp: 234234242423423
+        }
+    }).then((state) => {
+        console.log('Hurray! I\'ve sign Request');
+        console.log(state); //displaying the result in the console
+        $('#response').html(JSON.stringify(state, undefined, 2));
+    }).catch(error => {
+        console.error("Something went wrong", error);
+        console.error(error); // displaying the result in the console
+        $('#error').html(JSON.stringify(error, undefined, 2));
+    })
+}
+
+function signRequestCoinomat() {
+    $('#function').html('Function: signRequest Coinomat');
+
+    zbsLink.signRequest({
+        type: 1004,
+        data: {
+            timestamp: 234234242423423
+        }
+    }).then((state) => {
+        console.log('Hurray! I\'ve sign Request Coinomat');
+        console.log(state); //displaying the result in the console
+        $('#response').html(JSON.stringify(state, undefined, 2));
+    }).catch(error => {
+        console.error("Something went wrong", error);
+        console.error(error); // displaying the result in the console
+        $('#error').html(JSON.stringify(error, undefined, 2));
+    })
+}
+
+function execute() {
+   let functionSelected =  $( "#mySelect" ).val();
+
+    var fn = window[functionSelected];
+    if(typeof fn !== 'function')
+        return;
+
+    fn.apply(window, arguments);
+}
+</script>
+
+<body>
+
+</body>
+</html>
