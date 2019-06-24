@@ -1,5 +1,0 @@
-module.exports.DATA = {
-    SEED: '', // PUT YOUR SEED HERE
-    NODE_URL: 'https://node1.testnet-0bsnetwork.com',
-    ADDRESS: '' // PUT YOUR ADDRESS HERE
-};
