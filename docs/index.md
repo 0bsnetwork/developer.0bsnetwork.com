@@ -26,8 +26,6 @@ For non-developers / non-technial, or if you want more info about the network, g
 
 Telegram Group: https://t.me/zbsDev - Ask your development questions here
 
-Discord: https://discord.gg/F8ZpEuU
-
 Dev Support: dev@0bsnetwork.com
 
 Please let us know if you find any errors or confusing parts of the documentation, and we will get it updated or clarified right away!
