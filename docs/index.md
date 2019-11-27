@@ -15,6 +15,7 @@ For non-developers / non-technial, or if you want more info about the network, g
 * [Components and Services - Key Players](componentsandservices.md)
 * [Data Service Docs](dataservice.md)
 * [JavaScript Development](javascript.md)
+* [React Library](react.md)
 
 ## Get Started Quick Start
 
