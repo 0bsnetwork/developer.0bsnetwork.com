@@ -8,6 +8,7 @@ nav:
     - Full Node Operation: fullnode.md
     - Full Node REST API: nodeapi.md
     - Javascript Libraries: javascript.md
+    - React Library: react.md
     - Java Library: java.md
     - Python Library: python.md
     - C# Library: cs.md
