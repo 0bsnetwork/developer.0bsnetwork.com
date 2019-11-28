@@ -321,6 +321,7 @@ match tx {
 </code></pre>
 
 <h5 id="only-allow-data-transactions-and-where-longitude-and-latitude-are-within-some-limits">Only allow data transactions and where longitude and latitude are within some limits</h5>
+<p>Treat the long and lat as integers. Send a data transaction that should be within this box</p>
 <pre><code>match (tx) {
   case dtx:DataTransaction =&gt; (
     let payloadSize = size(dtx.data)
@@ -329,7 +330,7 @@ match tx {
     let longitudeAsInteger = extract(getInteger(dtx.data, longitude))
     let latitudeAsInteger = extract(getInteger(dtx.data, latitude))
 
-    if (longitudeAsInteger &gt; 50 &amp;&amp; longitudeAsInteger &lt; 55 &amp;&amp; latitudeAsInteger &lt; 3 &amp;&amp; latitudeAsInteger &gt; 1 ) then (
+    if (longitudeAsInteger &gt; 1620000 &amp;&amp; longitudeAsInteger &lt; 1640000 &amp;&amp; latitudeAsInteger &lt; 4820000 &amp;&amp; latitudeAsInteger &gt; 4810000 ) then (
         true
     )
     else
