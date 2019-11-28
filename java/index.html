@@ -185,30 +185,33 @@
 <p>A Java library for interacting with the zbsnetwork blockchain.</p>
 <p>Supports node interaction, offline transaction signing, Matcher orders, and creating addresses and keys.</p>
 <h2 id="using-zbsjava-in-your-project">Using zbsjava in your project</h2>
-<p>Use the codes below to add zbsjava as a dependency for your project.</p>
-<h5 id="maven">Maven:</h5>
-<pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;com.zbsnetwork&lt;/groupId&gt;
-    &lt;artifactId&gt;zbsjava&lt;/artifactId&gt;
-    &lt;version&gt;0.10&lt;/version&gt;
-&lt;/dependency&gt;
-</code></pre>
-
-<h5 id="gradle">Gradle:</h5>
-<pre><code>compile group: 'com.zbsnetwork', name: 'zbsjava', version: '0.10'
-</code></pre>
-
-<h5 id="sbt">SBT:</h5>
-<pre><code>libraryDependencies += &quot;com.zbsnetwork&quot; % &quot;zbsjava&quot; % &quot;0.10&quot;
-</code></pre>
-
-<p><a href="https://mvnrepository.com/artifact/com.zbsnetwork/zbsjava">This library's page at Maven Central</a></p>
+<p>Use the library from GitHub: https://github.com/0bsnetwork/zbsjava</p>
+<p>Either build the JAR with SBT or Import the files into your project structure (Expecially with android, as you will need to manage some dependancy differences)</p>
 <h2 id="basic-usage">Basic Usage</h2>
 <p>Create an account from a private key:</p>
 <pre><code>String seed = &quot;health lazy lens fix dwarf salad breeze myself silly december endless rent faculty report beyond&quot;;
 PrivateKeyAccount account = PrivateKeyAccount.fromSeed(seed, 0, Account.MAINNET);
 byte[] publicKey = account.getPublicKey();
 String address = account.getAddress();
+</code></pre>
+
+<p>Data Transaction:</p>
+<pre><code>String seed = &quot;health lazy lens fix dwarf salad breeze myself silly december endless rent faculty report beyond&quot;;
+        PrivateKeyAccount account = PrivateKeyAccount.fromSeed(seed, 0, Account.MAINNET);
+
+        List&lt;DataEntry&lt;?&gt;&gt; data = new LinkedList&lt;DataEntry&lt;?&gt;&gt;();
+        data.add(new DataEntry.StringEntry(&quot;Tree ID&quot;, &quot;Tree Data&quot;));
+
+        Node node = null;
+        try {
+            node = new Node(&quot;https://nodes.testnet-0bsnetwork.com/&quot;, &quot;T&quot;.charAt(0));
+            String txId = node.data(account, data,300_000 );
+
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 </code></pre>
 
 <p>Create a Node and learn a few things about blockchain:</p>
