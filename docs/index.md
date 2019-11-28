@@ -3,8 +3,8 @@
 # TIMBER HACKATHON NOTES:
 
 - Java Demo for Android - [Android](resources/SendDataToBlockchain.zip) also docs updated
-- React Sample - In Progress
-- Smart Contract Sample - See the smart contract page
+- React Sample - [Demo App](resources/signer-demo.zip)(Using signer service in EXPO App)
+- Smart Contract Sample - See the [smart contract page](smartcontracts.md)
 - [Signer API](signer.md) (Used for POC saving to blockchain, remote signing)
 
 Contact @JustJamesDev on Telegram or @zbsDev Group
