@@ -6,28 +6,10 @@ A Java library for interacting with the zbsnetwork blockchain.
 Supports node interaction, offline transaction signing, Matcher orders, and creating addresses and keys.
 
 ## Using zbsjava in your project
-Use the codes below to add zbsjava as a dependency for your project.
 
-##### Maven:
-```
-<dependency>
-    <groupId>com.zbsnetwork</groupId>
-    <artifactId>zbsjava</artifactId>
-    <version>0.10</version>
-</dependency>
-```
+Use the library from GitHub: https://github.com/0bsnetwork/zbsjava
 
-##### Gradle:
-```
-compile group: 'com.zbsnetwork', name: 'zbsjava', version: '0.10'
-```
-
-##### SBT:
-```
-libraryDependencies += "com.zbsnetwork" % "zbsjava" % "0.10"
-```
-
-[This library's page at Maven Central](https://mvnrepository.com/artifact/com.zbsnetwork/zbsjava)
+Either build the JAR with SBT or Import the files into your project structure (Expecially with android, as you will need to manage some dependancy differences)
 
 ## Basic Usage
 Create an account from a private key:
@@ -36,6 +18,27 @@ String seed = "health lazy lens fix dwarf salad breeze myself silly december end
 PrivateKeyAccount account = PrivateKeyAccount.fromSeed(seed, 0, Account.MAINNET);
 byte[] publicKey = account.getPublicKey();
 String address = account.getAddress();
+```
+
+Data Transaction:
+
+```
+String seed = "health lazy lens fix dwarf salad breeze myself silly december endless rent faculty report beyond";
+        PrivateKeyAccount account = PrivateKeyAccount.fromSeed(seed, 0, Account.MAINNET);
+
+        List<DataEntry<?>> data = new LinkedList<DataEntry<?>>();
+        data.add(new DataEntry.StringEntry("Tree ID", "Tree Data"));
+
+        Node node = null;
+        try {
+            node = new Node("https://nodes.testnet-0bsnetwork.com/", "T".charAt(0));
+            String txId = node.data(account, data,300_000 );
+
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 ```
 
 Create a Node and learn a few things about blockchain:

@@ -1,5 +1,15 @@
 # Welcome to the 0bsNetwork Developer Hub
 
+# TIMBER HACKATHON NOTES:
+
+- Java Demo for Android - [Android](resources/SendDataToBlockchain.zip)
+- Smart Contract - In Progress
+- React Sample - In Progress
+
+Contact @JustJamesDev on Telegram or @zbsDev Group
+
+***
+
 You'll find comprehensive guides and documentation to help you start working with the 0bsnetwork as quickly as possible, as well as support if you get stuck. Let's jump right in!
 
 This developer site is written with the "Dev Without Blockchain Experience" in mind who just wants to get started without learning blockchain inside out, lots of information is ommitted where it wont benefit the initial development flow, and instructions or examples are straight to the point.

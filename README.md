@@ -1,0 +1,7 @@
+## Publishing
+
+```
+pip install mkdocs
+```
+
+
