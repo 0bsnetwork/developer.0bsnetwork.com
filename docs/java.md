@@ -7,7 +7,7 @@ Supports node interaction, offline transaction signing, Matcher orders, and crea
 
 ## Using zbsjava in your project
 
-Use the library from GitHub: https://github.com/0bsnetwork/zbsjava
+Use the library from GitHub: [https://github.com/0bsnetwork/zbsjava](https://github.com/0bsnetwork/zbsjava)
 
 Or Use the [JAR file here](resources/zbsjava.zip)
 

@@ -180,3 +180,31 @@ match tx {
   case _ => true
 }
 ```
+
+##### Only allow data transactions and where longitude and latitude are within some limits
+
+Treat the long and lat as integers. Send a data transaction that should be within this box.
+This is only a demo to show how a contract can limit data. Ideally one should check against some data that can be changed, such as another address where data is uploaded via a data contract. However, this should be sufficient to demo the concept.
+
+```
+match (tx) {
+  case dtx:DataTransaction => (
+    let payloadSize = size(dtx.data)
+    let longitude = dtx.data[0].key
+    let latitude = dtx.data[1].key
+    let longitudeAsInteger = extract(getInteger(dtx.data, longitude))
+    let latitudeAsInteger = extract(getInteger(dtx.data, latitude))
+
+    if (longitudeAsInteger > 1620000 && longitudeAsInteger < 1640000 && latitudeAsInteger < 4820000 && latitudeAsInteger > 4810000 ) then (
+        true
+    )
+    else
+    (
+        false
+    )
+  )
+
+  case _ =>
+        false
+  }
+```

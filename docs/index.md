@@ -2,9 +2,9 @@
 
 # TIMBER HACKATHON NOTES:
 
-- Java Demo for Android - [Android](resources/SendDataToBlockchain.zip)
-- Smart Contract - In Progress
+- Java Demo for Android - [Android](resources/SendDataToBlockchain.zip) also docs updated
 - React Sample - In Progress
+- Smart Contract Sample - See the smart contract page
 
 Contact @JustJamesDev on Telegram or @zbsDev Group
 
