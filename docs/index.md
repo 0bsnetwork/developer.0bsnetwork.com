@@ -5,6 +5,7 @@
 - Java Demo for Android - [Android](resources/SendDataToBlockchain.zip) also docs updated
 - React Sample - In Progress
 - Smart Contract Sample - See the smart contract page
+- [Signer API](signer.md) (Used for POC saving to blockchain, remote signing)
 
 Contact @JustJamesDev on Telegram or @zbsDev Group
 

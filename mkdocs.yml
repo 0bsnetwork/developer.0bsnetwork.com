@@ -12,6 +12,7 @@ nav:
     - Java Library: java.md
     - Python Library: python.md
     - C# Library: cs.md
+    - Transaction Signer (POC): signer.md
     - Data Service API: dataservice.md
     - 0bsLink: link.md
     - Tutorials: tutorials.md
