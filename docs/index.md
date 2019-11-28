@@ -2,9 +2,12 @@
 
 # TIMBER HACKATHON NOTES:
 
-- Java Demo for Android - [Android](resources/SendDataToBlockchain.zip) also docs updated
+- Java Demo for Android - [Android](resources/SendDataToBlockchain.zip) also docs updated. This shows creating a transaction, signing it and getting the JSON. Then you need to POST it to a node using whatever your favourite HTTP Client is!
+
 - React Sample - [Demo App](resources/signer-demo.zip)(Using signer service in EXPO App)
+
 - Smart Contract Sample - See the [smart contract page](smartcontracts.md)
+
 - [Signer API](signer.md) (Used for POC saving to blockchain, remote signing)
 
 Contact @JustJamesDev on Telegram or @zbsDev Group
