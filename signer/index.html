@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Data Service API - 0bsNetwork Developer Site</title>
+  <title>Transaction Signer (POC) - 0bsNetwork Developer Site</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Data Service API";
-    var mkdocs_page_input_path = "dataservice.md";
+    var mkdocs_page_name = "Transaction Signer (POC)";
+    var mkdocs_page_input_path = "signer.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -109,26 +109,26 @@
     <a class="" href="../cs/">C# Library</a>
 	    </li>
           
-            <li class="toctree-l1">
-		
-    <a class="" href="../signer/">Transaction Signer (POC)</a>
-	    </li>
-          
             <li class="toctree-l1 current">
 		
-    <a class="current" href="./">Data Service API</a>
+    <a class="current" href="./">Transaction Signer (POC)</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#data-service-api">Data Service API</a></li>
+    <li class="toctree-l2"><a href="#signer-api">Signer API</a></li>
     
         <ul>
         
-            <li><a class="toctree-l3" href="#demo">Demo</a></li>
+            <li><a class="toctree-l3" href="#usage">Usage</a></li>
         
         </ul>
     
 
     </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../dataservice/">Data Service API</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -168,7 +168,7 @@
     
       
     
-    <li>Data Service API</li>
+    <li>Transaction Signer (POC)</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -178,33 +178,66 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="data-service-api">Data Service API</h2>
-<p>Our data service API stores information about the blockchain, data, and trading. We host a public version of the API, and if you need more limits (Public API limits number of results in 1 page) you can also run your own dockerised version of this API.</p>
-<p>You can use this API to, for example, get a list of all data submitted on an account within 24 hours. It's much quicker and easier than using the Node API where you would have to pull a list of all blocks and transactions and locate the right data.</p>
-<p>The documentation for the API is located at;</p>
-<p><a href="https://api.testnet-0bsnetwork.com/docs">https://api.testnet-0bsnetwork.com/docs</a></p>
-<p>Below is a demonstration of using the API</p>
-<h3 id="demo">Demo</h3>
-<p>Here's a quick demo of our data API. This is a small docker container that runs alongside a node (NodeJS + PostGreSQL) and either you could run your own if your data querying requirements are large, or use our public one for smaller queries (There's smaller limits in place on the public one)</p>
-<p>So, Lets say we want to get all data transactions for a particular ID, in this case, I've been saving data from my orange tree, which has a 'plantId' of '23456-f344f3'</p>
-<p>So the filters we have available on the data transaction endpoint are as follows</p>
-<ul>
-<li><code>sender</code> - public address of the data transaction sender</li>
-<li><code>timeStart</code> - Start Time (e.g. 2019-05-29T03:51:05.303Z) or just date</li>
-<li><code>timeEnd</code> - End Time (As Above)</li>
-<li><code>key</code> - Filter by Key</li>
-<li><code>type</code> - Filter by data type</li>
-<li><code>value</code> - Filer by value</li>
-<li><code>after</code> - Insert the previous pages cursor (lastCursor) to get the next set of records (depending on limit)</li>
-<li><code>limit</code> - How many to return (Default 100 Max 1000)</li>
-</ul>
-<p>So, if we want to get all data transactions on the 27th May for my plant, we can query like this (Lets say we want them in pages of 5) .. Go ahead and click the URL to try it!</p>
-<p><a href="https://api.testnet-0bsnetwork.com/v0/transactions/data?key=plantid&amp;type=string&amp;value=23456-f344f3&amp;timeStart=2019-05-27&amp;limit=5">https://api.testnet-0bsnetwork.com/v0/transactions/data?key=plantid&amp;type=string&amp;value=23456-f344f3&amp;timeStart=2019-05-27&amp;limit=5</a></p>
-<p>We can see we get 5 results, and only data for that plant based on its plantId, we can see the Temp, Humidity and Soil Moisture. If we now want to get the next 5 records, we take the 'lastCursor' value of the response, and use it for the 'after' paramter in the next call</p>
-<p><a href="https://api.testnet-0bsnetwork.com/v0/transactions/data?key=plantid&amp;type=string&amp;value=23456-f344f3&amp;timeStart=2019-05-27&amp;limit=5&amp;after=MjAxOS0wNS0yOVQwNDo1MTowNS42NzJaOjoyZnA2OUJEVjJ3M0tjZ1h0eWozdGJrSER1b3g0NnNtdDFUOUNKcWh3NGtDajo6ZGVzYw==">https://api.testnet-0bsnetwork.com/v0/transactions/data?key=plantid&amp;type=string&amp;value=23456-f344f3&amp;timeStart=2019-05-27&amp;limit=5&amp;after=MjAxOS0wNS0yOVQwNDo1MTowNS42NzJaOjoyZnA2OUJEVjJ3M0tjZ1h0eWozdGJrSER1b3g0NnNtdDFUOUNKcWh3NGtDajo6ZGVzYw==</a></p>
-<p>This now gives us the next 5 records.. we could continue this until we react the end of the data (response.data.count &lt; 5)</p>
-<p>Note: For UI apps its best to only request what the user is viewing on the screen and make subsequent calls to update, most grids support this style of paging. For back end, you can request in chunks of 1000, or run your own data service to increase this limit.</p>
-<p>Finally, all data is always returned with its transactionID, so any transaction can be verififed on the blockchain using any or your own node!</p>
+                <h1 id="signer-api">Signer API</h1>
+<p>This enables you to sign and broadcast a transaction only having the key and transaction data.</p>
+<blockquote>
+<p>Note: This is just for POC's and shouldn't be used on a production environment</p>
+</blockquote>
+<h2 id="usage">Usage</h2>
+<h3 id="data-transaction">Data Transaction</h3>
+<pre><code>POST https://signer.testnet-0bsnetwork.com/data
+
+Accept: application/json
+Content-Type: application/json
+
+{
+    &quot;seed&quot;: &quot;seed phrase here&quot;,
+    &quot;data&quot;: [
+    { &quot;key&quot;: &quot;integerVal&quot;, &quot;value&quot;: 1 },
+    { &quot;key&quot;: &quot;booleanVal&quot;, &quot;value&quot;: true },
+    { &quot;key&quot;: &quot;stringVal&quot;, &quot;value&quot;: &quot;hello&quot; },
+    { &quot;key&quot;: &quot;binaryVal&quot;, &quot;value&quot;: [1, 2, 3, 4] }
+  ]
+}
+
+RESPONSE:
+
+{
+    &quot;type&quot;: 12,
+    &quot;version&quot;: 1,
+    &quot;senderPublicKey&quot;: &quot;3np4zRL2mjYSFcpTzbGtQzUePAEByxEADgQCPJB7Dguq&quot;,
+    &quot;fee&quot;: 3000000,
+    &quot;timestamp&quot;: 1574975434582,
+    &quot;proofs&quot;: [
+        &quot;3tXuGRUGbV7xVWTGN79cRtkyrq4XWoN6wGH9KFiFn14P4EJR51LDenfvrP34YUZnXvAg4i7iUa728h1LdVVsjSdd&quot;
+    ],
+    &quot;id&quot;: &quot;EDoej1N3zEWXs9XGNwBjJHPyQECA577dQfBe2LN5Pvh2&quot;,
+    &quot;data&quot;: [
+        {
+            &quot;type&quot;: &quot;integer&quot;,
+            &quot;key&quot;: &quot;integerVal&quot;,
+            &quot;value&quot;: 1
+        },
+        {
+            &quot;type&quot;: &quot;boolean&quot;,
+            &quot;key&quot;: &quot;booleanVal&quot;,
+            &quot;value&quot;: true
+        },
+        {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;key&quot;: &quot;stringVal&quot;,
+            &quot;value&quot;: &quot;hello&quot;
+        },
+        {
+            &quot;type&quot;: &quot;binary&quot;,
+            &quot;key&quot;: &quot;binaryVal&quot;,
+            &quot;value&quot;: &quot;base64:AQIDBA==&quot;
+        }
+    ]
+}
+
+
+</code></pre>
               
             </div>
           </div>
@@ -212,10 +245,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../link/" class="btn btn-neutral float-right" title="0bsLink">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../dataservice/" class="btn btn-neutral float-right" title="Data Service API">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../signer/" class="btn btn-neutral" title="Transaction Signer (POC)"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../cs/" class="btn btn-neutral" title="C# Library"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -241,10 +274,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../signer/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../cs/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../link/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../dataservice/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
