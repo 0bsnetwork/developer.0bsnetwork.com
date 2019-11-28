@@ -9,6 +9,8 @@ Supports node interaction, offline transaction signing, Matcher orders, and crea
 
 Use the library from GitHub: https://github.com/0bsnetwork/zbsjava
 
+Or Use the [JAR file here](resources/zbsjava.zip)
+
 Either build the JAR with SBT or Import the files into your project structure (Expecially with android, as you will need to manage some dependancy differences)
 
 ## Basic Usage
