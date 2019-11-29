@@ -187,6 +187,15 @@ Treat the long and lat as integers. Send a data transaction that should be withi
 This is only a demo to show how a contract can limit data. Ideally one should check against some data that can be changed, such as another address where data is uploaded via a data contract. However, this should be sufficient to demo the concept.
 
 ```
+let oracle = extract(addressFromString("3MqpUtDotRccXE164rSPygwXUSx2eG85EPs"))
+
+let minLong = extract(getInteger(oracle, "minLong"))
+let maxLong = extract(getInteger(oracle, "maxLong"))
+
+let minLat = extract(getInteger(oracle, "minLat"))
+let maxLat = extract(getInteger(oracle, "maxLat"))
+
+
 match (tx) {
   case dtx:DataTransaction => (
     let payloadSize = size(dtx.data)
@@ -195,7 +204,7 @@ match (tx) {
     let longitudeAsInteger = extract(getInteger(dtx.data, longitude))
     let latitudeAsInteger = extract(getInteger(dtx.data, latitude))
 
-    if (longitudeAsInteger > 1620000 && longitudeAsInteger < 1640000 && latitudeAsInteger < 4820000 && latitudeAsInteger > 4810000 ) then (
+    if (longitudeAsInteger > minLong && longitudeAsInteger < maxLong && latitudeAsInteger < maxLat && latitudeAsInteger > minLat ) then (
         true
     )
     else
@@ -205,6 +214,6 @@ match (tx) {
   )
 
   case _ =>
-        false
+        true
   }
 ```
