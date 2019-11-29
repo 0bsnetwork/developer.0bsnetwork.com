@@ -328,7 +328,16 @@ match tx {
 <h5 id="only-allow-data-transactions-and-where-longitude-and-latitude-are-within-some-limits">Only allow data transactions and where longitude and latitude are within some limits</h5>
 <p>Treat the long and lat as integers. Send a data transaction that should be within this box.
 This is only a demo to show how a contract can limit data. Ideally one should check against some data that can be changed, such as another address where data is uploaded via a data contract. However, this should be sufficient to demo the concept.</p>
-<pre><code>match (tx) {
+<pre><code>let oracle = extract(addressFromString(&quot;3MqpUtDotRccXE164rSPygwXUSx2eG85EPs&quot;))
+
+let minLong = extract(getInteger(oracle, &quot;minLong&quot;))
+let maxLong = extract(getInteger(oracle, &quot;maxLong&quot;))
+
+let minLat = extract(getInteger(oracle, &quot;minLat&quot;))
+let maxLat = extract(getInteger(oracle, &quot;maxLat&quot;))
+
+
+match (tx) {
   case dtx:DataTransaction =&gt; (
     let payloadSize = size(dtx.data)
     let longitude = dtx.data[0].key
@@ -336,7 +345,7 @@ This is only a demo to show how a contract can limit data. Ideally one should ch
     let longitudeAsInteger = extract(getInteger(dtx.data, longitude))
     let latitudeAsInteger = extract(getInteger(dtx.data, latitude))
 
-    if (longitudeAsInteger &gt; 1620000 &amp;&amp; longitudeAsInteger &lt; 1640000 &amp;&amp; latitudeAsInteger &lt; 4820000 &amp;&amp; latitudeAsInteger &gt; 4810000 ) then (
+    if (longitudeAsInteger &gt; minLong &amp;&amp; longitudeAsInteger &lt; maxLong &amp;&amp; latitudeAsInteger &lt; maxLat &amp;&amp; latitudeAsInteger &gt; minLat ) then (
         true
     )
     else
@@ -346,7 +355,7 @@ This is only a demo to show how a contract can limit data. Ideally one should ch
   )
 
   case _ =&gt;
-        false
+        true
   }
 </code></pre>
               
