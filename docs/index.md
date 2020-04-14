@@ -1,19 +1,5 @@
 # Welcome to the 0bsNetwork Developer Hub
 
-# TIMBER HACKATHON NOTES:
-
-- Java Demo for Android - [Android](resources/SendDataToBlockchain.zip) also docs updated. This shows creating a transaction, signing it and getting the JSON. Then you need to POST it to a node using whatever your favourite HTTP Client is!
-
-- React Sample - [Demo App](resources/signer-demo.zip)(Using signer service in EXPO App)
-
-- Smart Contract Sample - See the [smart contract page](smartcontracts.md)
-
-- [Signer API](signer.md) (Used for POC saving to blockchain, remote signing)
-
-Contact @JustJamesDev on Telegram or @zbsDev Group
-
-***
-
 You'll find comprehensive guides and documentation to help you start working with the 0bsnetwork as quickly as possible, as well as support if you get stuck. Let's jump right in!
 
 This developer site is written with the "Dev Without Blockchain Experience" in mind who just wants to get started without learning blockchain inside out, lots of information is ommitted where it wont benefit the initial development flow, and instructions or examples are straight to the point.
@@ -35,6 +21,17 @@ For non-developers / non-technial, or if you want more info about the network, g
 
 - Create your wallet at [https://client.testnet-0bsnetwork.com](https://client.testnet-0bsnetwork.com)
 - Get some developer coins from : [https://explorer.0bsnetwork.com/testnet/faucet](https://explorer.0bsnetwork.com/testnet/faucet)
+
+## Useful Info
+
+- Java Demo for Android - [Android](resources/SendDataToBlockchain.zip) also docs updated. This shows creating a transaction, signing it and getting the JSON. Then you need to POST it to a node using whatever your favourite HTTP Client is!
+
+- React Sample - [Demo App](resources/signer-demo.zip)(Using signer service in EXPO App)
+
+- Smart Contract Sample - See the [smart contract page](smartcontracts.md)
+
+- [Signer API](signer.md) (Used for POC saving to blockchain, remote signing)
+
 
 ## Contact Info
 

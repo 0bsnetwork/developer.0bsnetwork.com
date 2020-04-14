@@ -5,6 +5,43 @@ It also allows you to multi-sign existing transactions or create them without si
 
 You can download a sample project [here](resources/js-lib-examples.zip) that contains code for all transactions as per below. (Remember to npm install first)
 
+### Seed Utils
+
+You can generate, encrypt and manage seeds using the seedUtils class. For example
+
+Generate a new seed (TestNet, use Z for MainNet)
+
+```js
+let newSeed = seedUtils.Seed.create(15, 'T');
+
+console.log(newSeed.phrase); // 'hole law front bottom then mobile fabric under horse drink other member work twenty boss'
+console.log(newSeed.address); // '3Mr5af3Y7r7gQej3tRtugYbKaPr5qYps2ei'
+console.log(newSeed.keyPair); // { privateKey: 'HkFCbtBHX1ZUF42aNE4av52JvdDPWth2jbP88HPTDyp4', publicKey: 'AF9HLq2Rsv2fVfLPtsWxT7Y3S9ZTv6Mw4ZTp8K8LNdEp' }
+
+```
+
+Or use an existing one (TestNet, use Z for MainNet)
+
+```js
+
+let mySeed = seedUtils.Seed.fromExistingPhrase(yourSeed, 'T');
+
+```
+
+And then encrypt it
+
+```js
+
+const seedEncrypted = newSeed.encrypt(encryptionKey, 2048);
+
+```
+
+Decrypt it later
+
+```js
+let seedDecrypted = seedUtils.decryptSeed(seedEncrypted,encryptionKey,2048 );
+
+```
 
 ### Transactions
 
@@ -239,15 +276,6 @@ broadcast(signedTx, "https://node1.testnet-0bsnetwork.com")
     .then(resp => console.log(resp))
     .catch(e => console.error(`.catch(${e})`));
 ```
-### SetScript
-
-### CustomFee Enable
-
-### Set Asset
-
-### Invoke Script
-
-
 
 ### Index
 Example code:
@@ -271,17 +299,3 @@ Signing transactions manually is quite complex, and usually its best to use a li
 
 Rather than include excessive details here on how to do that, the below code sample in C Sharp should be readable enough to understand how the process works, and you can also examine the code of our other libraries as they are all open source. If you need specific details or guidance, please do contact us using the details on the [Front Page](index.md)
 
-
-### Sponsorship
-```
-const { sponsorship, broadcast } = require('@0bsnetwork/zbs-transactions')
-const signedTx = sponsorship(
-    {
-        assetId: 'BiuhdjnH9qxgfax52zXgJw3b5ArxCdA4q8kYECqWoEYT',
-        minSponsoredAssetFee: 100,
-    }, constants.DATA.SEED)
-
-broadcast(signedTx, constants.DATA.NODE_URL)
-    .then(resp => console.log(resp))
-    .catch(e => console.error(`.catch(${e})`));
-```
