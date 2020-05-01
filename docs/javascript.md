@@ -43,6 +43,19 @@ let seedDecrypted = seedUtils.decryptSeed(seedEncrypted,encryptionKey,2048 );
 
 ```
 
+### Balance Info
+
+You can get the balance of an account ZBS or Asset using the following methods;
+
+```
+let nodeAddress = "http://node1.0bsnetwork.com"
+const bal = await addressBalance(address, assetId, nodeAddress);
+
+const assetBal = await addressAssetBalance(user.get('walletaddress'), config.assetId, config.node_address);
+```
+Note: Remember to divide the balance to get the appropriate value with decimals (For example, 2 decimals, / 100)
+
+
 ### Transactions
 
 The idea is really simple - you create transaction and sign it from a minimal set of required params.
