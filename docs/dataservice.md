@@ -6,7 +6,7 @@ You can use this API to, for example, get a list of all data submitted on an acc
 
 The documentation for the API is located at;
 
-[https://api.testnet-0bsnetwork.com/docs](https://api.testnet-0bsnetwork.com/docs)
+[https://api.testnet-0bsnetwork.com/docs/](https://api.testnet-0bsnetwork.com/docs/)
 
 Below is a demonstration of using the API
 
