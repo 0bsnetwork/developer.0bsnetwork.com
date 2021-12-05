@@ -14,7 +14,7 @@
 
   <link rel="stylesheet" href="../css/theme.css" />
   <link rel="stylesheet" href="../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
   <link href="../stylesheets/extra.css" rel="stylesheet" />
   
   <script>
@@ -26,9 +26,8 @@
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
   <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
-  
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -42,7 +41,7 @@
         <a href=".." class="icon icon-home"> 0bsNetwork Developer Site</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -189,6 +188,7 @@
   
   <hr/>
 </div>
+
           <div role="main">
             <div class="section">
               
@@ -256,7 +256,6 @@ match tx {
 }
 
 </code></pre>
-
 <h5 id="buy-back-custom-asset-on-specified-price-in-zbs">Buy back custom asset on specified price in ZBS</h5>
 <pre><code>let myAssetId = base58'BVqYXrapgJP9atQccdBPAgJPwHDKkh6B9'
 let cooperPubKey = base58'BVqYXrapgJP9atQccdBPAgJPwHDKkh6A8'
@@ -269,7 +268,6 @@ match tx {
 }
 
 </code></pre>
-
 <h3 id="smart-asset-examples">Smart Asset Examples</h3>
 <h5 id="issue-an-unburnable-asset">Issue an unburnable asset</h5>
 <p>To issue an unburnable asset you can use pattern matching with a false value to BurnTransaction:</p>
@@ -278,13 +276,11 @@ match tx {
   case _ =&gt; true
 }
 </code></pre>
-
 <h5 id="asset">Asset</h5>
 <p>You can freeze your assets till the certain height by defining a target height variable:</p>
 <pre><code>let targetHeight = 1500000
 height &gt;= targetHeight
 </code></pre>
-
 <h5 id="getting-a-share-after-each-asset-transfer">Getting a share after each asset transfer</h5>
 <p>For requiring a fee in a certain asset to get a share after each transfer you can use TransferTransaction depending on the asset id:</p>
 <pre><code>match tx {
@@ -293,7 +289,6 @@ height &gt;= targetHeight
   case _ =&gt; true
 }
 </code></pre>
-
 <h5 id="transferring-by-issuer-permission">Transferring by issuer permission</h5>
 <p>You can restrict the token transfer option to be done only by the token issuer's permission (commitment/debt label):</p>
 <pre><code>match tx {
@@ -303,7 +298,6 @@ height &gt;= targetHeight
   case _ =&gt; false
 }
 </code></pre>
-
 <h5 id="issue-an-untransferable-asset">Issue an untransferable asset</h5>
 <p>To make the asset untransferable, you can assign a false value to TransferTransaction, MassTransferTransaction and ExchangeTransaction:</p>
 <pre><code>match tx {
@@ -311,7 +305,6 @@ height &gt;= targetHeight
   case _ =&gt; true
 }
 </code></pre>
-
 <h5 id="asset-tradable-only-with-btc">Asset tradable only with BTC</h5>
 <p>To allow asset trading only with bitcoins you can do as here:</p>
 <pre><code>let BTCId = base58'8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS'
@@ -321,7 +314,6 @@ match tx {
   case _ =&gt; true
 }
 </code></pre>
-
 <h5 id="require-using-a-certain-matcher">Require using a certain matcher</h5>
 <p>To define a certain matcher, you can assign the matcher address as a sender value:</p>
 <pre><code>match tx {
@@ -330,7 +322,6 @@ match tx {
   case _ =&gt; true
 }
 </code></pre>
-
 <h5 id="only-allow-data-transactions-and-where-longitude-and-latitude-are-within-some-limits">Only allow data transactions and where longitude and latitude are within some limits</h5>
 <p>Treat the long and lat as integers. Send a data transaction that should be within this box.
 This is only a demo to show how a contract can limit data. Ideally one should check against some data that can be changed, such as another address where data is uploaded via a data contract. However, this should be sufficient to demo the concept.</p>
@@ -397,17 +388,18 @@ match (tx) {
   </div>
 
   <div class="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-      
-        <span><a href="../transactions/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../fullnode/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../transactions/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../fullnode/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
 </div>
     <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
     <script src="../js/theme.js" defer></script>
       <script src="../search/main.js" defer></script>
     <script defer>

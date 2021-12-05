@@ -14,7 +14,7 @@
 
   <link rel="stylesheet" href="../css/theme.css" />
   <link rel="stylesheet" href="../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
   <link href="../stylesheets/extra.css" rel="stylesheet" />
   
   <script>
@@ -26,9 +26,8 @@
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
   <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
-  
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -42,7 +41,7 @@
         <a href=".." class="icon icon-home"> 0bsNetwork Developer Site</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -153,6 +152,7 @@
   
   <hr/>
 </div>
+
           <div role="main">
             <div class="section">
               
@@ -202,7 +202,6 @@
 
 
 </code></pre>
-
 <p>or</p>
 <pre><code>    const getPublicState = async () =&gt; {
         try {
@@ -218,7 +217,6 @@
 
       const result = await getPublicState();
 </code></pre>
-
 <p>REPLY</p>
 <pre><code>{
     &quot;initialized&quot;: true,
@@ -247,7 +245,6 @@
     }
 }
 </code></pre>
-
 <p>Description of query return fields</p>
 <ul>
 <li><code>initialized</code> - boolean keeper initialized</li>
@@ -274,7 +271,6 @@
         //state object as from zbsLink.publicState
    });
 </code></pre>
-
 <p>If a website is not trusted, events won't show.</p>
 <p><strong>auth</strong></p>
 <p>This is a method for obtaining a signature of authorization data while verifying 0bsnetwork user.</p>
@@ -291,7 +287,6 @@
 
 
 </code></pre>
-
 <p>or</p>
 <pre><code>    const getAuthData = async authData =&gt; {
         try {
@@ -308,7 +303,6 @@
     const authData = { data: &quot;Auth on my site&quot; };
     getAuthData(authData);
 </code></pre>
-
 <p><code>auth</code> facilitates input of the following data</p>
 <ul>
 <li><code>name</code> – name of the service (optional field)</li>
@@ -339,7 +333,6 @@
 
 
 </code></pre>
-
 <p>If the verification is successful, 0bsLink will return in the promise an object containing data for signature verification:</p>
 <ul>
 <li><code>host</code> – a host that requested a signature</li>
@@ -379,7 +372,6 @@
         //Processing errors
     });
 </code></pre>
-
 <p>API returns lines, not an object, as in javascript precision is lost in operation with 8-byte integers.</p>
 <p>A description of supported transaction types is below.</p>
 <p>In the example, we are signing a transaction for transferring ZBS to the alias <code>test</code>in 0bsnetwork.</p>
@@ -413,7 +405,6 @@
            //processing errors
        });
 </code></pre>
-
 <p>REPLY A reply from 0bsNetwork returns as a line containing the entire past transaction.</p>
 <p>ERRORS</p>
 <ul>
@@ -463,7 +454,6 @@
 
     zbsLink.signTransactionPackage(tx, name)
 </code></pre>
-
 <p>Sign two transaction:</p>
 <ul>
 <li>Transfer 1.567 ZBS to the alias test</li>
@@ -482,7 +472,6 @@ In 0bsLink API it is different from <a href="../nodeapi/">NODE REST API</a>.</p>
     }
 }
 </code></pre>
-
 <p>Legend keys</p>
 <ul>
 <li>
@@ -536,7 +525,6 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
         console.error(&quot;Something went wrong&quot;, error);
    });
 </code></pre>
-
 <p>In case of a success, we are issuing a new asset in the quantity of 1,000,000, and your balance will show 10,000.00 Best Token</p>
 <p><strong>Тype 4 TRANSFER – asset transfer</strong></p>
 <ul>
@@ -561,7 +549,6 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
          console.error(&quot;Something went wrong&quot;, error);
     });
 </code></pre>
-
 <p><strong>Тype 5 REISSUE – token reissue</strong></p>
 <ul>
 <li><code>assetId</code> string - "asset ID",</li>
@@ -589,7 +576,6 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
            console.error(&quot;Something went wrong&quot;, error);
       });
 </code></pre>
-
 <p>In case of a success, we are re-issuing a new asset in the quantity of 1,000,000, and your balance will show 10,000.00 Best Token</p>
 <p><strong>Тype 6 BURN – burning tokens</strong></p>
 <ul>
@@ -616,7 +602,6 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
         console.error(&quot;Something went wrong&quot;, error);
    });
 </code></pre>
-
 <p>In case of a success, 1,000 coins <code>are burned</code>.</p>
 <p><strong>Тype 8 LEASE - Leasing</strong></p>
 <ul>
@@ -643,7 +628,6 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
         console.error(&quot;Something went wrong&quot;, error);
    });
 </code></pre>
-
 <p>In case of a success, 0.00001000 ZBS is leased.</p>
 <p><strong>Тype 9 LEASE CANCEL – cancel leasing</strong></p>
 <ul>
@@ -668,7 +652,6 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
         console.error(&quot;Something went wrong &quot;, error);
    });
 </code></pre>
-
 <p>In case of a success, the leasing transaction is cancelled.</p>
 <p><strong>Тype 10 CREATE ALIAS – creating an alias for an address</strong></p>
 <ul>
@@ -693,7 +676,6 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
         console.error(&quot;Something went wrong&quot;, error);
    });
 </code></pre>
-
 <p>In case of a success, an alias (another name) is created.</p>
 <p><strong>Тype 11 MASS TRANSFER - a mass transfer of an asset</strong></p>
 <ul>
@@ -727,7 +709,6 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
         console.error(&quot;Something went wrong&quot;, error);
    });
 </code></pre>
-
 <p>In case of a success, 0.002 ZBS will be sent to alias1 and alias2.</p>
 <p><strong>Тype 12 DATA TRANSACTION - saving data</strong></p>
 <ul>
@@ -762,7 +743,6 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
         console.error(&quot;Something went wrong&quot;, error);
    });
 </code></pre>
-
 <p>In case of a success, new data will be stored in the state.</p>
 <p><strong>Тype 13 SET SCRIPT – scrypting an account</strong></p>
 <ul>
@@ -788,7 +768,6 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
         console.error(&quot;Something went wrong&quot;, error);
    });
 </code></pre>
-
 <p>In case of a success, the script will be removed from the account.</p>
 <p>Example 2:</p>
 <pre><code>   zbsLink.signAndPublishTransaction({
@@ -806,7 +785,6 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
         console.error(&quot;Something went wrong&quot;, error);
    });
 </code></pre>
-
 <p>In case of a success, a new script will be added to the account, allowing any transactions without a signature (be careful!).</p>
 <p><strong>Тype 14 Sponsored Fee Transaction - Sponsorship</strong></p>
 <ul>
@@ -834,7 +812,6 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
         console.error(&quot;Something went wrong&quot;, error);
    });
 </code></pre>
-
 <p>In case of a success, a transfer fee can be paid in the asset.</p>
 <p><strong>Тype 15 SET ASSET SCRIPT – setting a script to an asset</strong></p>
 <ul>
@@ -862,7 +839,6 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
         console.error(&quot;Something went wrong&quot;, error);
    });
 </code></pre>
-
 <p>In case of a success, the asset's script will be reset.</p>
 <hr />
 <p><strong>signOrder</strong></p>
@@ -875,7 +851,6 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
     }
 
 </code></pre>
-
 <ul>
 <li><code>amount</code> MoneyLike - amount</li>
 <li><code>price</code> MoneyLike - price</li>
@@ -912,7 +887,6 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
         console.error(&quot;Something went wrong&quot;, error);
    });
 </code></pre>
-
 <p>REPLY: A line with data for sending to the matcher.</p>
 <p>ERRORS:</p>
 <ul>
@@ -938,7 +912,6 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
     }
 
 </code></pre>
-
 <ul>
 <li><code>id</code> string – order ID</li>
 <li><code>*senderPublicKey</code> - string - sender's public key in base58</li>
@@ -951,7 +924,6 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
         }
     });
 </code></pre>
-
 <p>REPLY: A data line for sending to the matcher.</p>
 <p>ERRORS:</p>
 <ul>
@@ -973,7 +945,6 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
         console.error(&quot;Something went wrong&quot;, error);
     })
 </code></pre>
-
 <p>REPLY: Data that came from the matcher</p>
 <p>ERRORS:</p>
 <ul>
@@ -989,7 +960,6 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
         }
     }
 </code></pre>
-
 <p>Currently, the method supports the following types:</p>
 <p><strong>1001 – signing data for a request to the matcher for your orders</strong></p>
 <ul>
@@ -1004,7 +974,6 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
         }
     });
 </code></pre>
-
 <p>REPLY: a line with a signature in base58.</p>
 <p>ERRORS:</p>
 <ul>
@@ -1024,7 +993,6 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
         }
     });
 </code></pre>
-
 <p>REPLY: a line with a signature in base58.</p>
 <p>ERRORS:</p>
 <ul>
@@ -1065,17 +1033,18 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
   </div>
 
   <div class="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-      
-        <span><a href="../dataservice/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../tutorials/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../dataservice/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../tutorials/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
 </div>
     <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
     <script src="../js/theme.js" defer></script>
       <script src="../search/main.js" defer></script>
     <script defer>

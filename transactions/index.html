@@ -14,7 +14,7 @@
 
   <link rel="stylesheet" href="../css/theme.css" />
   <link rel="stylesheet" href="../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
   <link href="../stylesheets/extra.css" rel="stylesheet" />
   
   <script>
@@ -26,9 +26,8 @@
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
   <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
-  
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -42,7 +41,7 @@
         <a href=".." class="icon icon-home"> 0bsNetwork Developer Site</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -183,6 +182,7 @@
   
   <hr/>
 </div>
+
           <div role="main">
             <div class="section">
               
@@ -322,7 +322,6 @@
     &quot;name&quot;:&quot;MyTestToken&quot;
     }
 </code></pre>
-
 <h3 id="transfer-transaction">Transfer Transaction</h3>
 <pre><code>{
     &quot;senderPublicKey&quot;:&quot;4c5K4kGeRdrnSYZ9wngQKSozikVgfxmDEuViirsyUHwd&quot;,
@@ -340,7 +339,6 @@
 }
 
 </code></pre>
-
 <h3 id="burn-transaction">Burn Transaction</h3>
 <p>Burning tokens can be useful for systems where a token is used to activate or fund a service and once the service has been used the token can be burnt.</p>
 <pre><code>{ type: 6,
@@ -358,7 +356,6 @@
  }
 
 </code></pre>
-
 <h3 id="exchange-transaction">Exchange Transaction</h3>
 <pre><code>{
     &quot;senderPublicKey&quot;:&quot;8QUAqtTckM5B8gvcuP7mMswat9SjKUuafJMusEoSn1Gy&quot;,
@@ -408,7 +405,6 @@
             }
     }
 </code></pre>
-
 <h3 id="lease-transaction">Lease Transaction</h3>
 <pre><code>{
     &quot;senderPublicKey&quot;:&quot;FB5ErjREo817duEBBQUqUdkgoPctQJEYuG3mU7w3AYjc&quot;,
@@ -421,7 +417,6 @@
     &quot;proofs&quot;:[&quot;fkWj6RkV722jhv72BY6Eo5BZ6N4T8nTPcmQVmoBs14Cv53W2VfRE7C9rT1TN4CZfAW2Y2YhVFm24NGZh75eBHq4&quot;],&quot;recipient&quot;:&quot;3NCKpqzSnHmXhZEmqYy4U6RUKUAJDTxWgWP&quot;
 }
 </code></pre>
-
 <h3 id="lease-cancel">Lease Cancel</h3>
 <pre><code>{
     &quot;senderPublicKey&quot;:&quot;FB5ErjREo817duEBBQUqUdkgoPctQJEYuG3mU7w3AYjc&quot;,
@@ -435,7 +430,6 @@
 
 }
 </code></pre>
-
 <h3 id="create-alias">Create Alias</h3>
 <pre><code>{
     &quot;senderPublicKey&quot;:&quot;BVv1ZuE3gKFa6krwWJQwEmrLYUESuUabNCXgYTmCoBt6&quot;,
@@ -449,7 +443,6 @@
     &quot;version&quot;:2
 }
 </code></pre>
-
 <h3 id="mass-transfer">Mass Transfer</h3>
 <pre><code>{ type: 11,
   id: '48Dn8uK95jL8iZqv81gqv7PxJtbrZihjmg1Zdcs1428P',
@@ -468,7 +461,6 @@
    [ { recipient: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo', amount: 1 },
      { recipient: '3NCGfpFCVCmMSgCSct8BhExjRZ3E8i83Goo', amount: 1 } ] }
 </code></pre>
-
 <h3 id="data">Data</h3>
 <pre><code>{ type: 12,
   id: '3d8fQKQ8Va43vvVzbKJChMrPzQDNgLBH9GaQw23YhdZC',
@@ -485,7 +477,6 @@
      { key: 'stringVal', type: 'string', value: 'hello' },
      { key: 'binaryVal', type: 'binary', value: 'base64:AQIDBA==' } ] }
 </code></pre>
-
 <h3 id="setscript">SetScript</h3>
 <h3 id="set-asset">Set Asset</h3>
 <h3 id="invoke-script">Invoke Script</h3>
@@ -507,7 +498,6 @@
   attachment: '' }
 
 </code></pre>
-
 <h3 id="custom-fees">Custom Fees</h3>
 <pre><code>{ type: 14,
   id: 'HfEnBX9PBkTpNLs5BgxvqmrPQkowb9dogMcSFSSZg9Vq',
@@ -521,7 +511,6 @@
   assetId: 'BiuhdjnH9qxgfax52zXgJw3b5ArxCdA4q8kYECqWoEYT',
   minSponsoredAssetFee: 100 }
 </code></pre>
-
 <h2 id="signing-transactions">Signing Transactions</h2>
 <p>Signing transactions manually is quite complex, and usually its best to use a library to do so, however if you find you dont have a library available for your platform of choice, you may need to do it manually. The process involves concatenting the byte values of fields from the transaction to create a long byte array, and signing this using Curve25519 and your private key, and inserting this into the transaction payload.</p>
 <p>Rather than include excessive details here on how to do that, the below code sample in C Sharp should be readable enough to understand how the process works, and you can also examine the code of our other libraries as they are all open source. If you need specific details or guidance, please do contact us using the details on the <a href="..">Front Page</a></p>
@@ -683,17 +672,18 @@ namespace ZbsSignAndBroadcastDataTransaction
   </div>
 
   <div class="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-      
-        <span><a href="../componentsandservices/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../smartcontracts/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../componentsandservices/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../smartcontracts/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
 </div>
     <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
     <script src="../js/theme.js" defer></script>
       <script src="../search/main.js" defer></script>
     <script defer>

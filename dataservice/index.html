@@ -14,7 +14,7 @@
 
   <link rel="stylesheet" href="../css/theme.css" />
   <link rel="stylesheet" href="../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
   <link href="../stylesheets/extra.css" rel="stylesheet" />
   
   <script>
@@ -26,9 +26,8 @@
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
   <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
-  
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -42,7 +41,7 @@
         <a href=".." class="icon icon-home"> 0bsNetwork Developer Site</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -149,6 +148,7 @@
   
   <hr/>
 </div>
+
           <div role="main">
             <div class="section">
               
@@ -156,7 +156,7 @@
 <p>Our data service API stores information about the blockchain, data, and trading. We host a public version of the API, and if you need more limits (Public API limits number of results in 1 page) you can also run your own dockerised version of this API.</p>
 <p>You can use this API to, for example, get a list of all data submitted on an account within 24 hours. It's much quicker and easier than using the Node API where you would have to pull a list of all blocks and transactions and locate the right data.</p>
 <p>The documentation for the API is located at;</p>
-<p><a href="https://api.testnet-0bsnetwork.com/docs">https://api.testnet-0bsnetwork.com/docs</a></p>
+<p><a href="https://api.testnet-0bsnetwork.com/docs/">https://api.testnet-0bsnetwork.com/docs/</a></p>
 <p>Below is a demonstration of using the API</p>
 <h3 id="demo">Demo</h3>
 <p>Here's a quick demo of our data API. This is a small docker container that runs alongside a node (NodeJS + PostGreSQL) and either you could run your own if your data querying requirements are large, or use our public one for smaller queries (There's smaller limits in place on the public one)</p>
@@ -212,17 +212,18 @@
   </div>
 
   <div class="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-      
-        <span><a href="../signer/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../link/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../signer/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../link/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
 </div>
     <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
     <script src="../js/theme.js" defer></script>
       <script src="../search/main.js" defer></script>
     <script defer>

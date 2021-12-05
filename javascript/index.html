@@ -14,7 +14,7 @@
 
   <link rel="stylesheet" href="../css/theme.css" />
   <link rel="stylesheet" href="../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
   <link href="../stylesheets/extra.css" rel="stylesheet" />
   
   <script>
@@ -26,9 +26,8 @@
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
   <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
-  
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -42,7 +41,7 @@
         <a href=".." class="icon icon-home"> 0bsNetwork Developer Site</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -155,6 +154,7 @@
   
   <hr/>
 </div>
+
           <div role="main">
             <div class="section">
               
@@ -165,31 +165,27 @@ It also allows you to multi-sign existing transactions or create them without si
 <h3 id="seed-utils">Seed Utils</h3>
 <p>You can generate, encrypt and manage seeds using the seedUtils class. For example</p>
 <p>Generate a new seed (TestNet, use Z for MainNet)</p>
-<pre><code class="js">let newSeed = seedUtils.Seed.create(15, 'T');
+<pre><code class="language-js">let newSeed = seedUtils.Seed.create(15, 'T');
 
 console.log(newSeed.phrase); // 'hole law front bottom then mobile fabric under horse drink other member work twenty boss'
 console.log(newSeed.address); // '3Mr5af3Y7r7gQej3tRtugYbKaPr5qYps2ei'
 console.log(newSeed.keyPair); // { privateKey: 'HkFCbtBHX1ZUF42aNE4av52JvdDPWth2jbP88HPTDyp4', publicKey: 'AF9HLq2Rsv2fVfLPtsWxT7Y3S9ZTv6Mw4ZTp8K8LNdEp' }
 
 </code></pre>
-
 <p>Or use an existing one (TestNet, use Z for MainNet)</p>
-<pre><code class="js">
+<pre><code class="language-js">
 let mySeed = seedUtils.Seed.fromExistingPhrase(yourSeed, 'T');
 
 </code></pre>
-
 <p>And then encrypt it</p>
-<pre><code class="js">
+<pre><code class="language-js">
 const seedEncrypted = newSeed.encrypt(encryptionKey, 2048);
 
 </code></pre>
-
 <p>Decrypt it later</p>
-<pre><code class="js">let seedDecrypted = seedUtils.decryptSeed(seedEncrypted,encryptionKey,2048 );
+<pre><code class="language-js">let seedDecrypted = seedUtils.decryptSeed(seedEncrypted,encryptionKey,2048 );
 
 </code></pre>
-
 <h3 id="balance-info">Balance Info</h3>
 <p>You can get the balance of an account ZBS or Asset using the following methods;</p>
 <pre><code>let nodeAddress = &quot;http://node1.0bsnetwork.com&quot;
@@ -197,12 +193,11 @@ const bal = await addressBalance(address, assetId, nodeAddress);
 
 const assetBal = await addressAssetBalance(user.get('walletaddress'), config.assetId, config.node_address);
 </code></pre>
-
 <p>Note: Remember to divide the balance to get the appropriate value with decimals (For example, 2 decimals, / 100)</p>
 <h3 id="transactions">Transactions</h3>
 <p>The idea is really simple - you create transaction and sign it from a minimal set of required params.
 If you want to create a Transfer transaction the minimum you need to provide is <strong>amount</strong> and <strong>recipient</strong> as defined in <a href="../transactions/">Transfer params</a>:</p>
-<pre><code class="js">
+<pre><code class="language-js">
 const { transfer } = require('@0bsnetwork/zbs-transactions')
 const seed = 'some example seed phrase'
 const signedTranserTx = transfer({
@@ -212,9 +207,8 @@ const signedTranserTx = transfer({
   timestamp: 1536917842558
 }, seed)
 </code></pre>
-
 <p>Output will be a signed transfer transaction:</p>
-<pre><code class="js">{
+<pre><code class="language-js">{
   id: '8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq',
   type: 4,
   version: 2,
@@ -231,23 +225,20 @@ const signedTranserTx = transfer({
   ]
 }
 </code></pre>
-
 <p>You can also create transaction, but not sign it:</p>
-<pre><code class="javascript">const unsignedTransferTx = transfer({
+<pre><code class="language-javascript">const unsignedTransferTx = transfer({
   amount: 1,
   recipient: '3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2',
   //senderPublicKey is required if you omit seed
   senderPublicKey: '6nR7CXVV7Zmt9ew11BsNzSvVmuyM5PF6VPbWHW9BHgPq'
 })
 </code></pre>
-
 <p>Now you are able to POST it to 0bsNetwork or store for future purpose or you can add another signature from other party:</p>
-<pre><code class="js">const otherPartySeed = 'other party seed phrase'
+<pre><code class="language-js">const otherPartySeed = 'other party seed phrase'
 const transferSignedWithTwoParties = transfer(signedTranserTx, seed)
 </code></pre>
-
 <p>So now there are two proofs:</p>
-<pre><code class="js">{
+<pre><code class="language-js">{
   id: '8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq',
   type: 4,
   version: 2,
@@ -265,15 +256,13 @@ const transferSignedWithTwoParties = transfer(signedTranserTx, seed)
   ]
 }
 </code></pre>
-
 <h3 id="broadcast">Broadcast</h3>
 <p>To send transaction you can use either node api or broadcast helper function:</p>
-<pre><code class="javascript">const {broadcast} =  require('@0bsnetwork/zbs-transaction');
+<pre><code class="language-javascript">const {broadcast} =  require('@0bsnetwork/zbs-transaction');
 const nodeUrl = 'https://node1.testnet-0bsnetwork.com';
 
 broadcast(signedTx, nodeUrl).then(resp =&gt; console.log(resp))
 </code></pre>
-
 <h2 id="transaction-examples">Transaction Examples</h2>
 <h3 id="issue">Issue</h3>
 <pre><code>const { issue, broadcast } = require('@0bsnetwork/zbs-transactions')
@@ -289,7 +278,6 @@ broadcast(signedTx, &quot;https://node1.testnet-0bsnetwork.com&quot;)
     .then(resp =&gt; console.log(resp))
     .catch(e =&gt; console.error(`.catch(${e})`));
 </code></pre>
-
 <h3 id="reissue">Reissue:</h3>
 <pre><code>const { reissue, broadcast } = require('@0bsnetwork/zbs-transactions')
 const signedTx = reissue({
@@ -303,7 +291,6 @@ broadcast(signedTx, &quot;https://node1.testnet-0bsnetwork.com&quot;)
     .then(resp =&gt; console.log(resp))
     .catch(e =&gt; console.error(`.catch(${e})`));
 </code></pre>
-
 <h3 id="transfer-transaction">Transfer Transaction</h3>
 <pre><code>const { transfer, broadcast } = require('@0bsnetwork/zbs-transactions')
 const signedTx = transfer({
@@ -316,7 +303,6 @@ broadcast(signedTx, &quot;https://node1.testnet-0bsnetwork.com&quot;)
     .then(resp =&gt; console.log(resp))
     .catch(e =&gt; console.error(`.catch(${e})`));
 </code></pre>
-
 <h3 id="burn-transaction">Burn Transaction</h3>
 <p>Burning tokens can be useful for systems where a token is used to activate or fund a service and once the service has been used the token can be burnt.</p>
 <pre><code>const constants = require('./constants')
@@ -332,7 +318,6 @@ broadcast(signedTx, &quot;https://node1.testnet-0bsnetwork.com&quot;)
     .then(resp =&gt; console.log(resp))
     .catch(e =&gt; console.error(`.catch(${e})`));
 </code></pre>
-
 <h3 id="exchange-transaction">Exchange Transaction</h3>
 <h3 id="lease-transaction">Lease Transaction</h3>
 <pre><code>const { lease, broadcast } = require('@0bsnetwork/zbs-transactions')
@@ -346,7 +331,6 @@ broadcast(signedTx, &quot;https://node1.testnet-0bsnetwork.com&quot;)
     .then(resp =&gt; console.log(resp))
     .catch(e =&gt; console.error(`.catch(${e})`));
 </code></pre>
-
 <h3 id="lease-cancel">Lease Cancel</h3>
 <pre><code>const { cancelLease, broadcast } = require('@0bsnetwork/zbs-transactions')
 const signedTx = cancelLease(
@@ -359,7 +343,6 @@ broadcast(signedTx, &quot;https://node1.testnet-0bsnetwork.com&quot;)
     .then(resp =&gt; console.log(resp))
     .catch(e =&gt; console.error(`.catch(${e})`));
 </code></pre>
-
 <h3 id="create-alias">Create Alias</h3>
 <pre><code>const { alias, broadcast } = require('@0bsnetwork/zbs-transactions')
 const signedTx = alias(
@@ -373,7 +356,6 @@ broadcast(signedTx, &quot;https://node1.testnet-0bsnetwork.com&quot;)
     .then(resp =&gt; console.log(resp))
     .catch(e =&gt; console.error(`.catch(${e})`));
 </code></pre>
-
 <h3 id="mass-transfer">Mass Transfer</h3>
 <pre><code>const { massTransfer, broadcast } = require('@0bsnetwork/zbs-transactions')
 
@@ -394,7 +376,6 @@ broadcast(signedTx, &quot;https://node1.testnet-0bsnetwork.com&quot;)
     .then(resp =&gt; console.log(resp))
     .catch(e =&gt; console.error(`.catch(${e})`));
 </code></pre>
-
 <h3 id="data">Data</h3>
 <pre><code>const { data, broadcast } = require('@0bsnetwork/zbs-transactions')
 
@@ -411,7 +392,6 @@ broadcast(signedTx, &quot;https://node1.testnet-0bsnetwork.com&quot;)
     .then(resp =&gt; console.log(resp))
     .catch(e =&gt; console.error(`.catch(${e})`));
 </code></pre>
-
 <h3 id="index">Index</h3>
 <p>Example code:</p>
 <pre><code>const { transfer, broadcast } = require('@0bsnetwork/zbs-transactions')
@@ -426,7 +406,6 @@ broadcast(signedTx, &quot;https://node1.testnet-0bsnetwork.com&quot;)
     .then(resp =&gt; console.log(resp))
     .catch(e =&gt; console.error(`.catch(${e})`));
 </code></pre>
-
 <h2 id="signing-transactions">Signing Transactions</h2>
 <p>Signing transactions manually is quite complex, and usually its best to use a library to do so, however if you find you dont have a library available for your platform of choice, you may need to do it manually. The process involves concatenting the byte values of fields from the transaction to create a long byte array, and signing this using Curve25519 and your private key, and inserting this into the transaction payload.</p>
 <p>Rather than include excessive details here on how to do that, the below code sample in C Sharp should be readable enough to understand how the process works, and you can also examine the code of our other libraries as they are all open source. If you need specific details or guidance, please do contact us using the details on the <a href="..">Front Page</a></p>
@@ -463,17 +442,18 @@ broadcast(signedTx, &quot;https://node1.testnet-0bsnetwork.com&quot;)
   </div>
 
   <div class="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-      
-        <span><a href="../nodeapi/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../react/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../nodeapi/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../react/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
 </div>
     <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
     <script src="../js/theme.js" defer></script>
       <script src="../search/main.js" defer></script>
     <script defer>
